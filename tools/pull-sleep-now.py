@@ -13,6 +13,13 @@ SRC = pathlib.Path.home() / "dev/sleep-now/docs"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "public/p/sleep-now"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
+# 체크아웃이 뒤처져 있으면 옛 파일을 도로 얹게 된다. 먼저 확인하고 멈춘다.
+need = [SRC / "manual.html", SRC / "phases.html", SRC / "explore/1-이름"]
+missing = [str(p) for p in need if not p.exists()]
+if missing:
+    raise SystemExit("sleep-now 체크아웃이 최신이 아니다 — git pull 부터.\n  없음: "
+                     + "\n  없음: ".join(missing))
+
 OUT.mkdir(parents=True, exist_ok=True)
 (OUT / "pages").mkdir(exist_ok=True)
 
