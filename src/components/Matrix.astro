@@ -1,0 +1,32 @@
+---
+interface Props {
+  /** 열 이름 — 첫 칸은 행 머리다 */
+  cols: string[];
+  /** 행 — 첫 칸이 머리, 나머지가 각 열의 값 */
+  rows: { head: string; note?: string; cells: string[] }[];
+  caption?: string;
+}
+const { cols, rows, caption } = Astro.props;
+---
+
+<figure class="matrix">
+  <table>
+    <thead>
+      <tr>{cols.map(c => <th scope="col">{c}</th>)}</tr>
+    </thead>
+    <tbody>
+      {rows.map(r => (
+        <tr>
+          <th scope="row">
+            {r.head}
+            {r.note && <span class="nt">{r.note}</span>}
+          </th>
+          {r.cells.map((c, i) => (
+            <td data-col={cols[i + 1]}>{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

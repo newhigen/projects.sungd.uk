@@ -313,6 +313,35 @@ a { color: inherit; }
 .strip figcaption { margin-top: 0.55rem; max-width: none; }
 .strip figcaption b { color: var(--ink-2); font-weight: 600; }
 
+/* ── 상황 × 자리 표 ───────────────────────────────── */
+
+.matrix { max-width: none; margin: 2.1rem 0 2.5rem; overflow-x: auto; }
+.matrix table { width: 100%; border-collapse: collapse; }
+.matrix th, .matrix td {
+  text-align: left;
+  vertical-align: top;
+  font-weight: 400;
+  padding: 0.75rem 1.1rem 0.75rem 0;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+.matrix thead th {
+  border-top: 0;
+  border-bottom: 1px solid var(--rule-mid);
+  padding-top: 0;
+  color: var(--ink-3);
+}
+.matrix tbody th { width: 9rem; font-weight: 600; color: var(--ink); }
+.matrix tbody th .nt {
+  display: block;
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+}
+.matrix td { color: var(--ink-2); }
+.matrix td:last-child { padding-right: 0; }
+
 /* ── 이럴 때 이렇게 ───────────────────────────────── */
 
 .cases {
@@ -481,6 +510,21 @@ figcaption {
 
   .strip { grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr)); gap: 1rem 0.8rem; }
   .strip figcaption { font-size: 0.6875rem; }
+  /* 표를 접어 구간마다 한 덩이로 — 값 앞에 열 이름을 붙인다 */
+  .matrix thead { display: none; }
+  .matrix table, .matrix tbody, .matrix tr, .matrix th, .matrix td { display: block; }
+  .matrix tr { padding: 0.7rem 0; border-top: 1px solid var(--rule-mid); }
+  .matrix th, .matrix td { border: 0; padding: 0; }
+  .matrix tbody th { width: auto; margin-bottom: 0.3rem; }
+  .matrix td { font-size: 0.75rem; padding-left: 5.5rem; position: relative; margin-top: 0.15rem; }
+  .matrix td::before {
+    content: attr(data-col);
+    position: absolute;
+    left: 0;
+    width: 5rem;
+    color: var(--ink-3);
+  }
+
   .cases { grid-template-columns: 1fr; gap: 1.1rem; margin: 1.2rem 0 1.8rem; }
   .cases h3 { font-size: 0.875rem; }
   .cases p { font-size: 0.8125rem; }
