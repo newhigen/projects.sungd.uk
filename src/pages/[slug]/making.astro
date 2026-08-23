@@ -1,0 +1,44 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Tabs from '../../components/Tabs.astro';
+
+export async function getStaticPaths() {
+  const all = await getCollection('making');
+  const out = [];
+  for (const entry of all) {
+    const project = await getEntry('projects', entry.id);
+    if (!project || project.data.draft) continue;
+    out.push({ params: { slug: entry.id }, props: { entry, project } });
+  }
+  return out;
+}
+
+const { entry, project } = Astro.props;
+const { Content } = await render(entry);
+const d = project.data;
+---
+
+<Base title={`${d.title} 개발기`} description={entry.data.tagline} image={d.cover}>
+  <header class="doc-head">
+    <h1>{d.title}</h1>
+    <p class="tagline">{entry.data.tagline}</p>
+    <Tabs here="making" slug={project.id} />
+  </header>
+
+  <div class="doc-body">
+    <aside class="rail">
+      <dl>
+        <dt>언제</dt>
+        <dd class="when">{d.period}</dd>
+        {d.tags.length > 0 && <><dt>무엇으로</dt><dd>{d.tags.join(' · ')}</dd></>}
+        <dt>이 앱은</dt>
+        <dd><a href={`/${project.id}`}>소개 보기</a></dd>
+      </dl>
+    </aside>
+
+    <article class="prose">
+      <Content />
+    </article>
+  </div>
+</Base>

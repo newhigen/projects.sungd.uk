@@ -265,6 +265,64 @@ section + section { margin-top: 3.75rem; }
   color: var(--ink-2);
 }
 
+/* ── 탭 — 소개 · 개발기 ───────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: 1.6rem;
+  margin-top: 1.5rem;
+  border-bottom: 1px solid var(--rule-mid);
+}
+.tabs a {
+  margin-bottom: -1px;
+  padding: 0 0 0.55rem;
+  border-bottom: 2px solid transparent;
+  font-size: 0.875rem;
+  color: var(--ink-3);
+  text-decoration: none;
+}
+.tabs a:hover { color: var(--ink-2); }
+.tabs a.on {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom-color: var(--rule-ink);
+}
+/* 탭이 이미 선을 그었으면 본문 위 선은 겹친다 */
+.doc-head:has(.tabs) + .doc-body { border-top: 0; }
+
+/* ── 흐름 도식 ────────────────────────────────────── */
+
+.flow { max-width: none; margin: 2.3rem 0 2.6rem; }
+.flow ol {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  margin: 0;
+  padding: 0;
+}
+.flow li {
+  position: relative;
+  padding: 1rem 1.1rem 0 0;
+  border-top: 1px solid var(--rule-mid);
+}
+.flow li::before {
+  content: "";
+  position: absolute;
+  top: -4.5px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1.5px var(--rule-mid);
+}
+.flow li.key::before { background: var(--link); box-shadow: none; }
+.flow .at { display: block; font-family: var(--mono); font-size: 0.6875rem; color: var(--ink-3); }
+.flow .nm { display: block; margin-top: 0.15rem; font-size: 0.875rem; font-weight: 500; }
+.flow li.key .nm { color: var(--link); }
+.flow .nt { display: block; margin-top: 0.1rem; font-size: 0.75rem; color: var(--ink-3); line-height: 1.5; }
+
 /* ── 그림 ─────────────────────────────────────────── */
 
 figure { margin: 2.1rem 0 2.4rem; max-width: 44rem; }
@@ -376,6 +434,20 @@ figcaption {
   .tl .dt { display: block; text-align: left; font-size: 0.6875rem; }
   .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
   .tl .ds { display: block; font-size: 0.75rem; }
+
+  .tabs { gap: 1.2rem; margin-top: 1.1rem; }
+  .tabs a { font-size: 0.8125rem; }
+
+  .flow { margin: 1.7rem 0 1.9rem; }
+  .flow ol { grid-auto-flow: row; }
+  .flow li {
+    padding: 0 0 0.95rem 1.05rem;
+    border-top: 0;
+    border-left: 1px solid var(--rule-mid);
+  }
+  .flow li:last-child { padding-bottom: 0; }
+  .flow li::before { top: 0.25rem; left: -4.5px; }
+  .flow .nm { font-size: 0.8125rem; }
 
   .doc-head { margin: 1.5rem 0 1.4rem; }
   .doc-head h1 { font-size: 1.4rem; }

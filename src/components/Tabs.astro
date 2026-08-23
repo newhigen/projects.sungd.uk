@@ -1,0 +1,13 @@
+---
+interface Props {
+  /** 지금 보고 있는 쪽 */
+  here: 'intro' | 'making';
+  slug: string;
+}
+const { here, slug } = Astro.props;
+---
+
+<nav class="tabs">
+  <a href={`/${slug}`} class:list={[{ on: here === 'intro' }]}>소개</a>
+  <a href={`/${slug}/making`} class:list={[{ on: here === 'making' }]}>개발기</a>
+</nav>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  /** 한 줄로 흐르는 단계들 — 시각 · 이름 · 한 줄 */
+  steps: { at: string; name: string; note?: string; key?: boolean }[];
+  caption?: string;
+}
+const { steps, caption } = Astro.props;
+---
+
+<figure class="flow">
+  <ol>
+    {steps.map(s => (
+      <li class:list={[{ key: s.key }]}>
+        <span class="at">{s.at}</span>
+        <span class="nm">{s.name}</span>
+        {s.note && <span class="nt">{s.note}</span>}
+      </li>
+    ))}
+  </ol>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

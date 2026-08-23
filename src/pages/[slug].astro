@@ -1,6 +1,7 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Tabs from '../components/Tabs.astro';
 
 export async function getStaticPaths() {
   // 아직 안 여는 것은 페이지도 안 만든다 — 목록에 이름만 남는다.
@@ -13,12 +14,15 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
+// 개발기가 따로 있으면 두 화면을 탭으로 잇는다.
+const making = await getEntry('making', entry.id);
 ---
 
 <Base title={d.title} description={d.tagline} image={d.cover}>
   <header class="doc-head">
     <h1>{d.title}</h1>
     <p class="tagline">{d.tagline}</p>
+    {making && <Tabs here="intro" slug={entry.id} />}
   </header>
 
   <div class="doc-body">
