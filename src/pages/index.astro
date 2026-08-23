@@ -10,12 +10,11 @@ function num(p: string) {
 }
 
 const sorted = [...all].sort((a, b) => num(b.data.period) - num(a.data.period));
-const featured = sorted.find(p => p.data.feature);
-const rest = sorted.filter(p => p !== featured);
+const anyDraft = sorted.some(p => p.data.draft);
 
-const ORDER = ['Claude·Agent', '앱', '데이터·대시보드', '의사결정·리서치', '개발·엔지니어링'];
-const byCategory = new Map<string, typeof rest>();
-for (const p of rest) {
+const ORDER = ['앱', 'Claude·Agent', '데이터·대시보드', '의사결정·리서치', '개발·엔지니어링'];
+const byCategory = new Map<string, typeof sorted>();
+for (const p of sorted) {
   const c = p.data.category;
   if (!byCategory.has(c)) byCategory.set(c, []);
   byCategory.get(c)!.push(p);
@@ -26,35 +25,28 @@ const categories = [
 ];
 ---
 
-<Base title="만든 것들">
-  <h1>만든 것들</h1>
+<Base title="프로젝트">
+  <h1>프로젝트</h1>
   <p class="lede">
     직접 쓰려고 만든 앱과 도구. 대개 내 하루에 걸리적거리던 것에서 시작했고, 만든 뒤에도
-    계속 쓰고 있는 것만 올려 둔다.
+    계속 쓰고 있는 것만 올려 둔다.{anyDraft && <> 이름만 있는 줄은 아직 안 연 것.</>}
   </p>
-
-  {featured && (
-    <a class="feature" href={`/${featured.id}`}>
-      {featured.data.coverLight
-        ? <>
-            <img src={featured.data.coverLight} alt="" class="only-light" loading="eager" />
-            <img src={featured.data.cover} alt="" class="only-dark" loading="eager" />
-          </>
-        : featured.data.cover && <img src={featured.data.cover} alt="" loading="eager" />}
-      <div class="name">{featured.data.title}</div>
-      <p class="desc">{featured.data.tagline}</p>
-    </a>
-  )}
 
   {categories.map(cat => (
     <section class="group">
       <h2 class="group-label">{cat}<span class="n">{byCategory.get(cat)!.length}</span></h2>
       {byCategory.get(cat)!.map(p => (
-        <a class="row" href={`/${p.id}`}>
-          <span class="name">{p.data.title}</span>
-          <span class="desc">{p.data.tagline}</span>
-          <span class="when">{p.data.period}</span>
-        </a>
+        p.data.draft
+          ? <div class="row off">
+              <span class="name">{p.data.title}</span>
+              <span class="desc">{p.data.tagline}</span>
+              <span class="when">{p.data.period}</span>
+            </div>
+          : <a class="row" href={`/${p.id}`}>
+              <span class="name">{p.data.title}</span>
+              <span class="desc">{p.data.tagline}</span>
+              <span class="when">{p.data.period}</span>
+            </a>
       ))}
     </section>
   ))}

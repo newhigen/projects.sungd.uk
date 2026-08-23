@@ -305,3 +305,8 @@ figcaption {
   .only-dark { display: block; }
   .only-light { display: none; }
 }
+
+/* 아직 안 연 줄 — 이름만 남기고 눌리지 않는다 */
+.row.off { color: var(--ink-3); cursor: default; }
+.row.off:hover { background: none; }
+.row.off .name { font-weight: 400; }

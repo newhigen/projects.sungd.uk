@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Claude 워밍업"
 tagline: "출근 전 Claude quota 윈도우를 미리 깨워 하루 토큰을 고르게 분산."
 period: "2026.05.29"

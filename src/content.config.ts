@@ -16,8 +16,8 @@ const projects = defineCollection({
     /** 열어볼 것 하나 — 사이트 안 경로도 된다 */
     link: z.string().optional(),
     linkLabel: z.string().optional(),
-    /** 목록 맨 위에 크게 세울 것. 하나만 true */
-    feature: z.boolean().default(false),
+    /** 아직 안 여는 것. 목록에 이름만 남고 페이지는 안 만든다 */
+    draft: z.boolean().default(false),
     /** 목록 맨 위와 글머리에 세우는 그림 */
     cover: z.string().optional(),
     /** 낮에 쓸 판이 따로 있으면 */

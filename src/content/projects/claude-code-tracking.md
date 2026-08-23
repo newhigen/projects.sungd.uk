@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Claude Code 트래킹"
 tagline: "릴리스마다 \"오늘 써볼 만한 것\"을 골라주는 changelog 큐레이션."
 period: "2026.05.28"

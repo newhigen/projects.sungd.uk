@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Claude 대시보드 패치"
 tagline: "claude-dashboard status line을 개인 취향으로 커스터마이즈하는 패치."
 period: "2026.05.25"

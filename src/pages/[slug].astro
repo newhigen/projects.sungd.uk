@@ -3,8 +3,11 @@ import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 
 export async function getStaticPaths() {
+  // 아직 안 여는 것은 페이지도 안 만든다 — 목록에 이름만 남는다.
   const all = await getCollection('projects');
-  return all.map(entry => ({ params: { slug: entry.id }, props: { entry } }));
+  return all
+    .filter(entry => !entry.data.draft)
+    .map(entry => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
 const { entry } = Astro.props;

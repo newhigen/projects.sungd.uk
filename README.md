@@ -1,6 +1,6 @@
 # projects.sungd.uk
 
-만든 것들 — 앱 · 도구 · 대시보드 · 분석. [projects.sungd.uk](https://projects.sungd.uk)
+프로젝트 — 앱 · 도구 · 대시보드 · 분석. [projects.sungd.uk](https://projects.sungd.uk)
 
 전에는 `resume.sungd.uk/projects` 에 있었다. 주소는 이력서인데 라우트로 보면 프로젝트가
 더 컸고, 갈래도 화면도 다시 짜야 해서 제 주소로 뗐다.

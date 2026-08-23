@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Claude 워치"
 tagline: "여러 Claude Code 창 중 답을 기다리는 창을 한눈에 보여주는 모니터."
 period: "2026.05.23"
