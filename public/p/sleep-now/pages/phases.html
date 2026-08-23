@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구간별 다섯 자리</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='5' y='7' width='22' height='18' fill='none' stroke='%23141414' stroke-width='2'/%3E%3Cpath d='M5 14h22' stroke='%232563eb' stroke-width='1.9'/%3E%3Cpath d='M16 7v18' stroke='%232563eb' stroke-width='1.9'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{
+  --ink:#141414; --ink2:#3d3d3a; --muted:#6a6a66; --faint:#9b9b96;
+  --rule:#f0f0ee; --rule2:#e3e3e0; --accent:#2563eb;
+  --sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif;
+  --mono:"Google Sans Code",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);
+     font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1760px;margin:0 auto;padding:56px 32px 96px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 4px;font-size:15.5px}
+.meta{color:var(--faint);font-size:13.5px;margin:0 0 40px;font-family:var(--mono)}
+h2{font-size:18px;font-weight:600;margin:52px 0 14px;letter-spacing:-.01em}
+p{margin:0 0 12px;color:var(--ink2)}
+.note{border-top:2px solid var(--ink);border-bottom:1px solid var(--rule2);
+      padding:14px 0 16px;margin:0 0 8px}
+.note p:last-child{margin-bottom:0}
+
+.scroll{overflow-x:auto;margin:0 -32px;padding:0 32px}
+table.grid{border-collapse:collapse;table-layout:fixed;width:1660px}
+table.grid th,table.grid td{vertical-align:top;padding:14px 10px;border-bottom:1px solid var(--rule)}
+table.grid col.lab{width:100px}
+table.grid col.ph{width:380px}
+table.grid thead th{border-bottom:1px solid var(--rule2);text-align:left;padding-bottom:12px}
+.phname{font-size:16px;font-weight:600;display:block}
+.phcond{font-family:var(--mono);font-size:11.5px;color:var(--muted);
+        display:block;margin-top:4px;line-height:1.5}
+th.lab{text-align:left;font-size:13.5px;font-weight:600;color:var(--ink2);
+       padding-top:16px;line-height:1.4}
+th.lab small{display:block;font-weight:400;color:var(--faint);font-size:12px;margin-top:2px}
+.shot{display:block;width:100%;border-radius:5px;background:#111}
+.cap{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.none{font-size:12.5px;color:var(--faint);font-style:normal}
+
+table.txt{border-collapse:collapse;width:100%;margin:6px 0 0;
+          font-variant-numeric:tabular-nums}
+table.txt th,table.txt td{text-align:left;padding:9px 14px 9px 0;
+          border-bottom:1px solid var(--rule);font-size:14px;vertical-align:top}
+table.txt thead th{border-bottom:1px solid var(--rule2);color:var(--muted);
+          font-weight:500;font-size:13px}
+ul{margin:0 0 12px;padding-left:18px;color:var(--ink2)}
+li{margin-bottom:7px}
+li b{font-weight:600;color:var(--ink)}
+code{font-family:var(--mono);font-size:12.5px;background:#f7f7f6;
+     padding:1px 5px;border-radius:3px}
+.foot{color:var(--faint);font-size:13px;margin-top:56px;border-top:1px solid var(--rule2);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>구간별 다섯 자리</h1>
+<p class="sub">같은 밤을 네 구간으로 나눠, 다섯 자리가 각각 무슨 말을 하는지 나란히 놓았다.</p>
+<p class="meta">SM-S936N · One UI 8.5 / Android 16 · 2026-08-23 오후 실기기 촬영</p>
+
+<div class="note">
+<p><b>낮에 찍었다.</b> 시각은 실제 밤과 다르다 — 목표 취침·밤 시작을 오후로 옮겨 각 구간을 만들었고,
+그래서 «지금 자면» 기상이 밤 11시대로 나온다. 구간 판정과 문구 골격은 밤과 같다.</p>
+</div>
+
+<h2>네 구간</h2>
+<table class="txt">
+<thead><tr><th style="width:120px">구간</th><th style="width:330px">조건</th><th>무엇을 세나</th></tr></thead>
+<tbody>
+<tr><td>활동</td><td><code>activeHours</code> — 안 누웠고 기상~밤 시작 사이</td><td>목표 취침까지</td></tr>
+<tr><td>목표 전</td><td><code>beforeBedtime</code> — 밤은 시작됐고 목표 취침 전</td><td>목표 취침까지</td></tr>
+<tr><td>목표 지남</td><td>위 어디에도 안 걸리는 나머지</td><td>목표보다 얼마나 늦었나</td></tr>
+<tr><td>누운 뒤</td><td><code>sleepStartedTonight != null &amp;&amp; alarm != null</code></td><td>지금까지 잔 시간</td></tr>
+</tbody>
+</table>
+<p style="margin-top:12px;font-size:14px">
+판정 순서는 <b>누운 뒤 → 활동 → 목표 전 → 목표 지남</b> 이다. 누운 뒤가 맨 앞이라
+활동 시간에 취침을 눌러도 누운 뒤로 간다.</p>
+
+<h2>다섯 자리 × 네 구간</h2>
+<div class="scroll">
+<table class="grid">
+<colgroup><col class="lab"><col class="ph"><col class="ph"><col class="ph"><col class="ph"></colgroup>
+<thead>
+<tr>
+  <th></th>
+  <th><span class="phname">활동</span><span class="phcond">밤 시작을 18:00 으로 밀어 만듦</span></th>
+  <th><span class="phname">목표 전</span><span class="phcond">밤 시작 15:00 · 목표 취침 22:45</span></th>
+  <th><span class="phname">목표 지남</span><span class="phcond">오늘만 목표 취침 15:26</span></th>
+  <th><span class="phname">누운 뒤</span><span class="phcond">14:36에 누움 · 알람 21:51</span></th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+  <th class="lab">나우바<br>미리보기<small>잠금화면 알약</small></th>
+  <td><a href="phases/a-활동-nb.png"><img class="shot" src="phases/a-활동-nb.png" alt=""></a>
+      <p class="cap">활동 시간 / 남은 시간</p></td>
+  <td><a href="phases/b-목표전-nb.png"><img class="shot" src="phases/b-목표전-nb.png" alt=""></a>
+      <p class="cap">취침까지 / 남은 시간</p></td>
+  <td><a href="phases/c-목표지남-nb.png"><img class="shot" src="phases/c-목표지남-nb.png" alt=""></a>
+      <p class="cap">지금 자면 몇 시 기상 / 늦은 시간</p></td>
+  <td><a href="phases/d-누운뒤-nb.png"><img class="shot" src="phases/d-누운뒤-nb.png" alt=""></a>
+      <p class="cap">지금 일어나면 몇 분 / 잔 시간</p></td>
+</tr>
+
+<tr>
+  <th class="lab">나우바<br>펼침<small>알약을 누르면</small></th>
+  <td><a href="phases/a-활동-nbx.png"><img class="shot" src="phases/a-활동-nbx.png" alt=""></a>
+      <p class="cap">활동 시간엔 버튼이 없다 — 의도한 것</p></td>
+  <td><a href="phases/b-목표전-nbx.png"><img class="shot" src="phases/b-목표전-nbx.png" alt=""></a>
+      <p class="cap">버튼 셋 — 침대에 누웠어요 · 목표대로 · 지금부터</p></td>
+  <td><a href="phases/c-목표지남-nbx.png"><img class="shot" src="phases/c-목표지남-nbx.png" alt=""></a>
+      <p class="cap">버튼 셋은 목표 전과 같다</p></td>
+  <td><a href="phases/d-누운뒤-nbx.png"><img class="shot" src="phases/d-누운뒤-nbx.png" alt=""></a>
+      <p class="cap">진행바 + 취침 다시 · 취침 해제</p></td>
+</tr>
+
+<tr>
+  <th class="lab">상단바<small>칩</small></th>
+  <td><a href="phases/a-활동-status.png"><img class="shot" src="phases/a-활동-status.png" alt=""></a>
+      <p class="cap">뛰는 사람 · 6시간 16분</p></td>
+  <td><a href="phases/b-목표전-status.png"><img class="shot" src="phases/b-목표전-status.png" alt=""></a>
+      <p class="cap">침대 · 6시간 16분 — 숫자가 활동과 같다</p></td>
+  <td><a href="phases/c-목표지남-status.png"><img class="shot" src="phases/c-목표지남-status.png" alt=""></a>
+      <p class="cap">느낌표 · 2시간 18분</p></td>
+  <td><a href="phases/d-누운뒤-status.png"><img class="shot" src="phases/d-누운뒤-status.png" alt=""></a>
+      <p class="cap">Zz · 1시간 48분</p></td>
+</tr>
+
+<tr>
+  <th class="lab">상단바<br>펼침<small>알림창</small></th>
+  <td><a href="phases/a-활동-shade.png"><img class="shot" src="phases/a-활동-shade.png" alt=""></a>
+      <p class="cap">«실시간 정보» 묶음 맨 위. 나우바 펼침과 같은 내용</p></td>
+  <td><a href="phases/b-목표전-shade.png"><img class="shot" src="phases/b-목표전-shade.png" alt=""></a>
+      <p class="cap">나우바 펼침과 같은 카드가 넓게 펼쳐진다</p></td>
+  <td><a href="phases/c-목표지남-shade.png"><img class="shot" src="phases/c-목표지남-shade.png" alt=""></a>
+      <p class="cap">늦은 밤에는 이름 자리에 기상 시각이 온다</p></td>
+  <td><a href="phases/d-누운뒤-shade.png"><img class="shot" src="phases/d-누운뒤-shade.png" alt=""></a>
+      <p class="cap">진행바가 목표 수면을 채운다</p></td>
+</tr>
+
+<tr>
+  <th class="lab">앱 화면<small>전체</small></th>
+  <td><a href="phases/a-활동-app.png"><img class="shot" src="phases/a-활동-app.png" alt=""></a>
+      <p class="cap">취침 버튼도 준비 버튼도 없다</p></td>
+  <td><a href="phases/b-목표전-app.png"><img class="shot" src="phases/b-목표전-app.png" alt=""></a>
+      <p class="cap">«가장 빠른 출근» 줄과 목표대로 버튼에만 도착이 붙었다</p></td>
+  <td><a href="phases/c-목표지남-app.png"><img class="shot" src="phases/c-목표지남-app.png" alt=""></a>
+      <p class="cap">둘 다 회사 도착 없음 — 새벽 1시대 도착</p></td>
+  <td><a href="phases/d-누운뒤-app.png"><img class="shot" src="phases/d-누운뒤-app.png" alt=""></a>
+      <p class="cap">취침 다시 · 취침 해제 폭이 맞았다</p></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<h2>붙여 놓고 보니</h2>
+<ul>
+<li><b>상태표시줄 아이콘이 네 구간을 다 가른다.</b> 뛰는 사람 · 침대 · 느낌표 · Zz.
+목표를 넘기면 느낌표로 바뀌어서, 칩에 «늦음» 이라고 적지 않아도 읽힌다 — 적어 두니
+«2시간 16분 늦음» 이 칩 너비를 넘겨 잘렸다.</li>
+<li><b>승격 알림에 버튼 셋이 들어간다.</b> 코드에는 «둘까지, 셋을 넣으면 시스템이 잘라낸다»
+고 적혀 있었는데 One UI 8.5 에서는 나우바 펼침에도 알림창에도 셋이 다 붙는다. 그래서 눕기 전
+두 구간에 «침대에 누웠어요» 를 앞에 두었다.</li>
+<li><b>활동과 목표 전의 칩 숫자가 같다.</b> 둘 다 목표 취침까지를 센다. 구분되는 건
+아이콘(뛰는 사람 / 침대)뿐이다. 펼치면 이름이 달라 구별된다.</li>
+<li><b>회사 도착은 06:40~12:00 안일 때만 나온다.</b> 낮에 찍어 «지금 자면» 기상이 밤 11시대라
+도착이 새벽 1시대가 됐고, 목표 기상(06:00)으로 계산한 07:50만 살아남았다 — 앱 화면의
+«가장 빠른 출근» 줄과 목표대로 버튼.</li>
+<li><b>활동 구간은 펼쳐도 버튼이 없다.</b> 낮에 취침 버튼을 내밀 이유가 없어서 뺀 것이라
+그대로다.</li>
+<li><b>고친 것 — 펼친 카드의 문장 중복.</b> 처음 찍었을 때는 헤더 줄(<code>setSubText</code>)과
+본문에 같은 값이 들어가 네 구간 모두 같은 문장이 두 번 찍혔다. subText 를 뺐다. 접힌
+알약은 제목과 칩만 쓰기 때문에 알약은 그대로다. 세는 두 구간의 작은 줄도
+«몇 시간 몇 분 남음» 으로 맞췄다.</li>
+</ul>
+
+<h2>출근 설정</h2>
+<p>도착 시각은 세 값에서 나온다 — 목표 기상 + 준비 시간 + 회사까지. 그 결과를
+«가장 빠른 출근» 으로 설정 안에도 얹어, 숫자를 만지면 결과가 바로 보인다.
+목표 기상 06:00 에 준비 30분과 출근길 1시간 20분을 더하면 07:50 이다.</p>
+<p><b>출근 시각</b>은 도착 계산에 안 들어간다. 늦는지 알려줄 때만 쓴다 — 도착이 그 시각보다
+늦으면 얼마나 늦는지 앱 화면에 한 줄이 뜬다.</p>
+<p style="margin-top:16px">
+<a href="phases/설정-출근.png"><img src="phases/설정-출근.png" alt="출근 설정"
+   style="width:100%;max-width:560px;border-radius:6px;display:block"></a></p>
+
+<p class="foot">찍는 법: 구간마다 <code>shared_prefs</code> 를 갈아 끼우고 앱을 다시 띄운 뒤
+앱 화면 → 홈(상단바) → 알림창 → 잠금(나우바) → 알약 탭(펼침) 순으로 <code>screencap</code>.
+나우바 알약을 펼치는 자리는 <code>uiautomator</code> 로 잡은 <code>nowbar_icon</code> 좌표다.</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .fig { stroke: #141719; }
+    @media (prefers-color-scheme: dark) { .fig { stroke: #ededea; } }
+  </style>
+  <g class="fig" fill="none" stroke-width="3" stroke-linejoin="round">
+    <rect x="4.5" y="4.5" width="10" height="10" rx="1.5"/>
+    <rect x="17.5" y="4.5" width="10" height="10" rx="1.5"/>
+    <rect x="4.5" y="17.5" width="10" height="10" rx="1.5"/>
+  </g>
+</svg>

@@ -1,0 +1,89 @@
+---
+title: 오늘 당겨 쓰면
+tagline: 밤새 상단 바에 «지금 누우면 몇 시에 일어나는지» 를 띄우는 안드로이드 앱
+period: "2026.08"
+category: 앱
+tags: [Android, Kotlin, One UI]
+feature: true
+cover: /p/sleep-now/app-dark.png
+coverLight: /p/sleep-now/app-light.png
+headCover: false
+link: /p/sleep-now/manual.html
+linkLabel: 설명서
+---
+
+import Fig from '../../components/Fig.astro';
+import Shots from '../../components/Shots.astro';
+
+밤 열한 시에 유튜브를 하나 더 트는 순간, 그 대가는 내일 아침이 치른다. 그런데 그 순간
+눈앞에 있는 건 영상 길이지 내일 기상 시각이 아니다. 이 앱은 그 시각을 밤새 상단 바에
+띄워 둔다. 누울 때 버튼 한 번이면 알람까지 잡힌다.
+
+<Fig src="/p/sleep-now/demo.mp4" video phone
+  caption="밤에 «목표대로» 를 누르고 아침에 알람을 끄기까지 21초." />
+
+## 밤에 궁금한 건 하나다
+
+수면 앱은 많은데 대부분 잔 뒤를 말한다 — 어젯밤 몇 시간 잤고 깊은 잠이 얼마였는지.
+정작 판단이 필요한 순간은 눕기 전이고, 그때 알고 싶은 건 하나다. **지금 누우면 몇 시에
+일어나나.** 그리고 그 답은 폰을 켜서 앱을 열기 전에 보여야 뜻이 있다.
+
+그래서 이 앱의 본체는 앱 화면이 아니라 **알림**이다. One UI 8 의 Now Bar 에 올려 두면
+잠금화면 아래쪽에 그 값이 계속 떠 있고, 1분마다 다시 그려서 숫자는 늘 지금 기준이다.
+
+<Fig src="/p/sleep-now/nowbar.png" wide
+  caption="잠금화면 Now Bar. 폰을 켜지 않아도 남은 시간이 보인다." />
+
+## 화면 하나에 타임라인 하나
+
+앱을 열면 밤 하나가 세로로 서 있다. 지금 · 목표 취침 · 지금 자면 기상 · 목표대로면
+기상 · 회사 도착이 한 축에 놓이고, 줄 사이에는 그 사이가 몇 분인지 적힌다. 시각만
+있으면 «그래서 얼마나» 를 매번 머리로 빼야 한다.
+
+<Fig src="/p/sleep-now/app-light.png" srcDark="/p/sleep-now/app-dark.png" phone
+  caption="왼쪽 괄호 둘이 같은 길이(7시간 30분)를 잰다. 위가 목표, 아래가 지금 누웠을 때 — 늦은 만큼 아침이 통째로 밀린 게 보인다." />
+
+처음에는 타임라인 밑에 목록이 있었다. 목표 · 가장 빠른 출근 · 상단 바 스위치 · 상세
+설정이 가로선 넉 줄로. 성격이 다른 셋 — 읽는 값 · 켜고 끄는 스위치 · 다른 화면으로 가는
+줄 — 이 같은 표에 섞여 있었고, 앞 둘은 타임라인이 이미 그리던 값이었다. 목록을 통째로
+걷어내고 타임라인이 다 말하게 했다.
+
+## 어떻게 골랐나
+
+이름부터 색까지 같은 걸음을 썼다. **질문을 하나로 좁히고, 후보를 실제 크기로 그려 놓고,
+화면에서 고르고, 앱에 넣어 폰에서 다시 본다.** 말로 «좀 더 담백하게» 를 주고받으면 다음
+판에서 또 «좀 더» 가 되는데, 후보 열둘을 한 화면에 놓으면 한 번에 끝난다.
+
+<Shots items={[
+  { src: '/p/sleep-now/shot-name.png', caption: '이름 — 문장을 끊는 계열 스물', href: '/p/sleep-now/pages/name.html' },
+  { src: '/p/sleep-now/shot-icon-moon.png', caption: '런처 아이콘 — 달 계열 열둘', href: '/p/sleep-now/pages/icon-moon.html' },
+  { src: '/p/sleep-now/shot-statusbar.png', caption: '상단 바 아이콘 — 실제 크기로 스물여덟', href: '/p/sleep-now/pages/statusbar.html' },
+  { src: '/p/sleep-now/shot-lower.png', caption: '아래 목록 — 다시 짜는 다섯 안', href: '/p/sleep-now/pages/lower.html' },
+  { src: '/p/sleep-now/shot-timeline.png', caption: '타임라인에 다 싣기 — 열일곱 안', href: '/p/sleep-now/pages/timeline.html' },
+  { src: '/p/sleep-now/shot-palette.png', caption: '색 — 팔레트 열 벌, 밤낮 나란히', href: '/p/sleep-now/pages/palette.html' },
+]} />
+
+그리는 도중에 문제가 드러나기도 했다. 목표 줄들을 상자 하나로 묶으려다, 목표 취침과
+«목표대로면 기상» 사이에 «지금 자면 기상» 이 낀다는 걸 알았다. 목표 줄은 붙어 있지
+않다. 묶는 대신 줄마다 배경을 칠했다.
+
+<Fig src="/p/sleep-now/shot-icon-final.png" wide
+  caption="런처 아이콘은 열일곱 판을 돌았다. 하루치 눈금 100 에 오늘 줄이 40 을 넘고, 내일 줄은 그 40 을 뺏겨 눈금 앞에서 끝난다 — 이름과 같은 말을 하는 그림." />
+
+## 알게 된 것
+
+- **시간축이 하나면 인접이 곧 짝이 아니다.** 회사 도착은 자리를 두 번 옮겼다. 제 줄을
+  주면 목표를 넘긴 밤에 «7시 45분 기상 → 5분 뒤 회사 도착» 처럼 읽혀서 옆말로 뺐다가,
+  사이 시간이 안 보인다는 이유로 다시 줄로 돌리며 «어느 기상의 도착인지» 를 달았다.
+- **말 안 되는 값은 계산돼도 안 띄운다.** 도착이 06:40~12:00 밖이면 숨긴다. 새벽 4시
+  도착을 «회사 도착» 이라고 적어 두는 건 정보가 아니라 소음이었다.
+- **순검정은 층을 못 만든다.** `#08090C` 에서는 한 톤 들어 올린 면이 거의 안 떠서 밴드를
+  한참 밝게 잡아야 했다. 회청으로 한 계단 올리니 대비를 낮췄는데도 층이 더 잘 읽혔다.
+- **공휴일 표는 앱에 박지 않는다.** 해마다 고쳐야 하고 대체·임시공휴일을 놓친다. 폰
+  달력에 이미 다 들어 있어서 그걸 읽는다 — 삼성은 «공휴일», 구글은 «대한민국의 휴일».
+
+## 더 보기
+
+- [설명서](/p/sleep-now/manual.html) — 화면마다 설명선, 하루 순서, 이럴 때 이렇게
+- [구간 대조판](/p/sleep-now/pages/phases.html) — 같은 밤을 네 구간으로 나눠, 다섯 자리가
+  각각 뭐라고 말하는지 나란히

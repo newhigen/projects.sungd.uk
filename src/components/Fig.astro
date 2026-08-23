@@ -1,0 +1,28 @@
+---
+interface Props {
+  src: string;
+  /** 밤에 쓸 판이 따로 있으면 — src 는 낮 쪽이 된다 */
+  srcDark?: string;
+  alt?: string;
+  caption?: string;
+  /** 폰 화면 — 폭을 좁게 잡는다 */
+  phone?: boolean;
+  /** 글 폭보다 넓게 */
+  wide?: boolean;
+  /** mp4 면 재생기로 */
+  video?: boolean;
+}
+const { src, srcDark, alt = '', caption, phone = false, wide = false, video = false } = Astro.props;
+---
+
+<figure class:list={[{ phone, wide }]}>
+  {video
+    ? <video src={src} controls muted playsinline preload="metadata"></video>
+    : srcDark
+      ? <>
+          <img src={src} alt={alt} class="only-light" loading="lazy" />
+          <img src={srcDark} alt={alt} class="only-dark" loading="lazy" />
+        </>
+      : <img src={src} alt={alt} loading="lazy" />}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

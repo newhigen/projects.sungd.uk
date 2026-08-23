@@ -1,0 +1,307 @@
+/* projects.sungd.uk — sungd.uk 랜딩과 같은 토큰·글꼴을 쓴다. */
+
+:root {
+  --bg: #f7f8fa;
+  --ink: rgba(10, 14, 20, 0.82);
+  --ink-2: rgba(10, 14, 20, 0.62);
+  --ink-3: rgba(10, 14, 20, 0.46);
+  --rule: rgba(10, 14, 20, 0.1);
+  --rule-strong: rgba(10, 14, 20, 0.24);
+  --hover: rgba(10, 14, 20, 0.045);
+  --link: #2f5ea8;
+  --sans: "Inter Tight", Pretendard, -apple-system, system-ui, sans-serif;
+  --mono: "Google Sans Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111318;
+    --ink: rgba(233, 238, 245, 0.88);
+    --ink-2: rgba(233, 238, 245, 0.64);
+    --ink-3: rgba(233, 238, 245, 0.46);
+    --rule: rgba(233, 238, 245, 0.13);
+    --rule-strong: rgba(233, 238, 245, 0.3);
+    --hover: rgba(233, 238, 245, 0.055);
+    --link: #93b7ec;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.75;
+  font-variant-numeric: tabular-nums;
+}
+
+a { color: inherit; }
+
+.wrap {
+  max-width: 47rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+/* ── 머리 ─────────────────────────────────────────── */
+
+.top {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  margin-bottom: 3.25rem;
+}
+.top a { text-decoration: none; }
+.top a:hover { color: var(--ink-2); }
+.top .here { color: var(--ink-2); }
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.6rem;
+  line-height: 1.35;
+}
+
+.lede {
+  color: var(--ink-2);
+  margin: 0 0 3rem;
+  max-width: 34rem;
+}
+
+/* ── 목록 (index) ─────────────────────────────────── */
+
+.feature {
+  display: block;
+  text-decoration: none;
+  margin-bottom: 3.5rem;
+}
+.feature img {
+  display: block;
+  width: 100%;
+  max-width: 19rem;
+  margin: 0 0 1.25rem;
+}
+.feature .name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.feature .desc {
+  color: var(--ink-2);
+  margin: 0.15rem 0 0;
+  max-width: 32rem;
+}
+.feature:hover .name { color: var(--link); }
+
+.group { margin-bottom: 2.75rem; }
+.group-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.group-label .n { margin-left: 0.4rem; }
+
+.row {
+  display: grid;
+  grid-template-columns: 10.5rem 1fr auto;
+  gap: 0 1rem;
+  align-items: baseline;
+  padding: 0.6rem 0.5rem;
+  margin: 0 -0.5rem;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.row:hover { background: var(--hover); }
+.row .name { font-weight: 500; }
+.row:hover .name { color: var(--link); }
+.row .desc {
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.row .when {
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr auto;
+  }
+  .row .desc {
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+}
+
+/* ── 글 (detail) ──────────────────────────────────── */
+
+.head { margin-bottom: 2.5rem; }
+.tagline {
+  color: var(--ink-2);
+  margin: 0 0 1.1rem;
+  max-width: 36rem;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.1rem;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+}
+.meta a { color: var(--link); text-decoration: none; }
+.meta a:hover { text-decoration: underline; }
+
+.prose { max-width: 38rem; }
+.prose > p,
+.prose > ul,
+.prose > ol { margin: 0 0 1.15rem; }
+.prose h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 2.9rem 0 0.9rem;
+}
+.prose h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 2rem 0 0.6rem;
+}
+.prose ul, .prose ol { padding-left: 1.15rem; }
+.prose li { margin-bottom: 0.35rem; }
+.prose li::marker { color: var(--ink-3); }
+.prose a { color: var(--link); text-decoration-color: var(--rule-strong); text-underline-offset: 2px; }
+.prose strong { font-weight: 600; }
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.875em;
+  color: var(--ink-2);
+}
+.prose pre {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+.prose blockquote {
+  margin: 0 0 1.15rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule-strong);
+  color: var(--ink-2);
+}
+
+/* ── 그림 ─────────────────────────────────────────── */
+
+figure { margin: 1.9rem 0 2.1rem; }
+figure img, figure video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+figure.phone img, figure.phone video { max-width: 17.5rem; }
+figure.wide { max-width: 47rem; }
+figcaption {
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  margin-top: 0.55rem;
+  line-height: 1.6;
+}
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 1.4rem 1.1rem;
+  margin: 1.9rem 0 2.1rem;
+  max-width: 47rem;
+}
+.shots figure { margin: 0; }
+.shots img {
+  width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+.shots figcaption { margin-top: 0.4rem; }
+
+/* ── 꼬리 ─────────────────────────────────────────── */
+
+.foot {
+  margin-top: 4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  gap: 1.1rem;
+  font-size: 0.8125rem;
+}
+.foot a { color: var(--ink-3); text-decoration: none; }
+.foot a:hover { color: var(--ink-2); }
+
+/* ── 이럴 때 쓴다 ─────────────────────────────────── */
+
+.use {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+.use li { display: flex; gap: 0.55rem; }
+.use li::before { content: "—"; color: var(--ink-3); flex-shrink: 0; }
+
+/* ── 흐름 도식 (.dg) — 본문 HTML 이 쓰는 이름 ──────── */
+
+.dg {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin: 1.9rem 0 2.1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+}
+.dg-node {
+  flex: 1;
+  min-width: 6.5rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+.dg-node b { font-weight: 600; }
+.dg-node span { color: var(--ink-3); }
+.dg-node.key b { color: var(--link); }
+.dg-arr { color: var(--ink-3); font-size: 0.8125rem; }
+.dg-stack { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+
+@media (max-width: 560px) {
+  .dg { flex-direction: column; gap: 0.6rem; }
+  .dg-arr { display: none; }
+  .dg-node { border-left: 1px solid var(--rule); padding-left: 0.7rem; }
+}
+
+/* ── 밤낮 다른 판 ─────────────────────────────────── */
+
+.only-dark { display: none; }
+@media (prefers-color-scheme: dark) {
+  .only-dark { display: block; }
+  .only-light { display: none; }
+}

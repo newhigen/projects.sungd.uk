@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const all = await getCollection('projects');
+
+function num(p: string) {
+  const m = p.match(/(\d{4})\.(\d{2})/);
+  return m ? Number(m[1]) * 100 + Number(m[2]) : 0;
+}
+
+const sorted = [...all].sort((a, b) => num(b.data.period) - num(a.data.period));
+const featured = sorted.find(p => p.data.feature);
+const rest = sorted.filter(p => p !== featured);
+
+const ORDER = ['Claude·Agent', '앱', '데이터·대시보드', '의사결정·리서치', '개발·엔지니어링'];
+const byCategory = new Map<string, typeof rest>();
+for (const p of rest) {
+  const c = p.data.category;
+  if (!byCategory.has(c)) byCategory.set(c, []);
+  byCategory.get(c)!.push(p);
+}
+const categories = [
+  ...ORDER.filter(c => byCategory.has(c)),
+  ...[...byCategory.keys()].filter(c => !ORDER.includes(c)),
+];
+---
+
+<Base title="만든 것들">
+  <h1>만든 것들</h1>
+  <p class="lede">
+    직접 쓰려고 만든 앱과 도구. 대개 내 하루에 걸리적거리던 것에서 시작했고, 만든 뒤에도
+    계속 쓰고 있는 것만 올려 둔다.
+  </p>
+
+  {featured && (
+    <a class="feature" href={`/${featured.id}`}>
+      {featured.data.coverLight
+        ? <>
+            <img src={featured.data.coverLight} alt="" class="only-light" loading="eager" />
+            <img src={featured.data.cover} alt="" class="only-dark" loading="eager" />
+          </>
+        : featured.data.cover && <img src={featured.data.cover} alt="" loading="eager" />}
+      <div class="name">{featured.data.title}</div>
+      <p class="desc">{featured.data.tagline}</p>
+    </a>
+  )}
+
+  {categories.map(cat => (
+    <section class="group">
+      <h2 class="group-label">{cat}<span class="n">{byCategory.get(cat)!.length}</span></h2>
+      {byCategory.get(cat)!.map(p => (
+        <a class="row" href={`/${p.id}`}>
+          <span class="name">{p.data.title}</span>
+          <span class="desc">{p.data.tagline}</span>
+          <span class="when">{p.data.period}</span>
+        </a>
+      ))}
+    </section>
+  ))}
+</Base>

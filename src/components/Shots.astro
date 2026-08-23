@@ -1,0 +1,18 @@
+---
+interface Props {
+  /** [{ src, caption }] — 후보를 늘어놓은 시안 격자 */
+  items: { src: string; caption?: string; href?: string }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="shots">
+  {items.map(it => (
+    <figure>
+      {it.href
+        ? <a href={it.href}><img src={it.src} alt={it.caption ?? ''} loading="lazy" /></a>
+        : <img src={it.src} alt={it.caption ?? ''} loading="lazy" />}
+      {it.caption && <figcaption>{it.caption}</figcaption>}
+    </figure>
+  ))}
+</div>

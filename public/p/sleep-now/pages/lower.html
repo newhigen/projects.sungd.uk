@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가로선 넉 줄</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 9h22M5 16h22M5 23h22' stroke='%23141414' stroke-width='2'/%3E%3Cpath d='M5 16h22' stroke='%232563eb' stroke-width='2.4'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{--ink:#141414;--ink2:#3d3d3a;--muted:#6a6a66;--faint:#9b9b96;
+  --rule:#f0f0ee;--rule2:#e3e3e0;--accent:#2563eb;
+  --sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65}
+.wrap{max-width:1500px;margin:0 auto;padding:56px 32px 96px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 32px;font-size:15.5px}
+h2{font-size:18px;font-weight:600;margin:52px 0 6px}
+p{margin:0 0 12px;color:var(--ink2)}
+.note{border-top:2px solid var(--ink);border-bottom:1px solid var(--rule2);padding:14px 0 16px;margin:0 0 8px}
+.note p:last-child{margin-bottom:0}
+ul{margin:0 0 12px;padding-left:18px;color:var(--ink2)} li{margin-bottom:6px}
+.row{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px}
+.cand{margin:0;width:320px}
+.cand.sm{width:320px}
+figcaption{font-size:14.5px;font-weight:600;margin-bottom:10px}
+figcaption b{color:var(--accent);margin-right:5px}
+.why{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6}
+
+/* ── 화면 모형 */
+.phone{background:#08090C;border-radius:20px;padding:16px 15px 14px;
+  color:#EEF0F3;font-size:12px;line-height:1.45;border:1px solid #191E27}
+.phone.short{padding-bottom:16px}
+.hero{margin-bottom:10px}
+.hrow{display:flex;align-items:center;justify-content:space-between}
+.hlab{color:#8B93A1;font-size:11px}
+.pill{background:#263042;color:#C6D0E0;border-radius:20px;padding:3px 9px;font-size:10.5px}
+.hbig{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:2px}
+.tonight{display:flex;justify-content:flex-end;margin:8px 0 12px}
+.chip{white-space:nowrap;background:#263042;color:#C6D0E0;border-radius:20px;padding:5px 11px;font-size:11px}
+.tl{margin:12px 0 14px;padding-left:2px}
+.tlrow{display:flex;align-items:center;gap:7px;padding:3.5px 0;font-size:11px;position:relative}
+.tlrow b{font-weight:600;color:#EEF0F3;min-width:76px}
+.tlrow span{color:#8B93A1}
+.dot{width:6px;height:6px;border-radius:50%;background:#5A616D;flex:none}
+.dot.now{background:#7EA6E8} .dot.work{background:#C6D0E0}
+.edit{margin-left:auto;color:#8E9AB0;text-decoration:none;font-size:10.5px;
+  border:1px solid #263042;border-radius:12px;padding:1px 7px}
+.hr{height:1px;background:#1E222A}
+.list .li{display:flex;align-items:center;justify-content:space-between;padding:11px 1px;font-size:12px}
+.list.tight .li{padding:9px 1px}
+.list .li span{color:#EEF0F3}
+.list .li em{color:#8B93A1;font-style:normal;display:flex;align-items:center;gap:6px}
+.sw{width:24px;height:14px;border-radius:9px;background:#3E6BB8;display:inline-block;position:relative}
+.sw:after{content:"";position:absolute;right:2px;top:2px;width:10px;height:10px;border-radius:50%;background:#EEF0F3}
+.card{background:#0E1218;border:1px solid #191E27;border-radius:14px;padding:12px 13px;margin:2px 0 6px}
+.cardtop{display:flex;align-items:center;justify-content:space-between}
+.clab{color:#8B93A1;font-size:11px}
+.mini{white-space:nowrap;flex:none;background:#263042;color:#C6D0E0;border-radius:20px;padding:3px 9px;font-size:10.5px}
+.cbig{font-size:14.5px;font-weight:600;margin-top:5px}
+.csub{color:#8B93A1;font-size:11.5px;margin-top:4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 10px}
+.grid2>div{background:#0E1218;border:1px solid #191E27;border-radius:14px;padding:11px 12px}
+.grid2 b{display:block;font-size:14px;font-weight:600;margin-top:4px}
+.grid2 em{display:block;color:#8B93A1;font-style:normal;font-size:11px;margin-top:2px}
+.oneline{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 1px;font-size:11.5px;color:#C6D0E0}
+.dock{margin-top:16px;border-top:1px solid #12151B;padding-top:12px}
+.prep{background:#161B24;border-radius:11px;text-align:center;padding:9px;font-size:12px;color:#C6D0E0}
+.two{display:flex;gap:8px;margin-top:8px}
+.btn{flex:1;border-radius:13px;padding:10px 8px;text-align:center}
+.btn em{display:block;font-style:normal;font-size:10.5px;opacity:.75}
+.btn b{display:block;font-size:13px;font-weight:600;margin-top:2px}
+.btn.sec{background:#263042;color:#C6D0E0}
+.btn.pri{background:#DDE3EC;color:#131F35}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>가로선 넉 줄</h1>
+<p class="sub">타임라인 아래 목록과 «오늘만 취침 시간 조정» 자리를 다시 짠다.</p>
+
+<div class="note">
+<p><b>지금 무엇이 걸리나.</b> 네 줄이 다 같은 «이름 — 값» 꼴이라 성격이 다른 셋이 한 목록에
+섞여 있다 — 읽는 값(목표 · 가장 빠른 출근), 켜고 끄는 스위치(상단 바), 다른 화면으로 가는 줄
+(상세 설정). 가로선이 넉 줄 그어져 화면 아래가 표처럼 보인다.
+«오늘만 취침 시간 조정» 은 목표를 오늘만 바꾸는 일인데 목표에서 멀리, 히어로 아래에 있다.</p>
+</div>
+
+<h2>아래 목록 다섯 안</h2>
+<div class="row">
+<figure class="cand">
+  <figcaption><b>A</b> 지금</figcaption>
+  <div class="phone">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tonight"><span class="chip">오늘만 취침 시간 조정</span></div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div>
+    <div class="list">
+      <div class="hr"></div>
+      <div class="li"><span>목표</span><em>오전 6시 기상 · 7시간 15분 수면</em></div>
+      <div class="hr"></div>
+      <div class="li"><span>🧳 가장 빠른 출근</span><em>오전 7시 50분 도착</em></div>
+      <div class="hr"></div>
+      <div class="li"><span>상단 바에 띄우기</span><em>하루 종일 <i class="sw"></i></em></div>
+      <div class="hr"></div>
+      <div class="li"><span>⚙ 상세 설정</span><em>›</em></div>
+      <div class="hr"></div>
+    </div>
+    <div class="dock">
+      <div class="prep">침대에 누웠어요</div>
+      <div class="two"><div class="btn sec"><em>지금부터</em><b>오후 11시 38분 기상</b></div>
+      <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div>
+    </div></div>
+  <p class="why">네 줄이 같은 무게로 서고 가로선이 넉 줄. 읽는 값·스위치·이동이 한 목록에 섞여 있다.</p>
+</figure><figure class="cand">
+  <figcaption><b>B</b> 루틴 한 장 + 설정 두 줄</figcaption>
+  <div class="phone">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div>
+    <div class="card">
+      <div class="cardtop"><span class="clab">목표</span><span class="mini">오늘만</span></div>
+      <div class="cbig">오전 6시 기상 · 7시간 15분 수면</div>
+      <div class="csub">🧳 회사 오전 7시 50분 도착</div>
+    </div>
+    <div class="list tight">
+      <div class="li"><span>상단 바에 띄우기</span><em>하루 종일 <i class="sw"></i></em></div>
+      <div class="li"><span>⚙ 상세 설정</span><em>›</em></div>
+    </div>
+    <div class="dock">
+      <div class="prep">침대에 누웠어요</div>
+      <div class="two"><div class="btn sec"><em>지금부터</em><b>오후 11시 38분 기상</b></div>
+      <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div>
+    </div></div>
+  <p class="why">목표와 도착은 한 덩어리(둘 다 «내 루틴»)로 묶고, 스위치와 이동만 아래 두 줄로 남긴다. «오늘만» 은 목표 옆으로.</p>
+</figure><figure class="cand">
+  <figcaption><b>C</b> 두 칸 나란히</figcaption>
+  <div class="phone">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tonight"><span class="chip">오늘만 취침 시간 조정</span></div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div>
+    <div class="grid2">
+      <div><span class="clab">목표</span><b>오전 6시 기상</b><em>7시간 15분 수면</em></div>
+      <div><span class="clab">가장 빠른 출근</span><b>오전 7시 50분</b><em>회사 도착</em></div>
+    </div>
+    <div class="hr"></div>
+    <div class="list tight">
+      <div class="li"><span>상단 바에 띄우기</span><em>하루 종일 <i class="sw"></i></em></div>
+      <div class="li"><span>⚙ 상세 설정</span><em>›</em></div>
+    </div>
+    <div class="dock">
+      <div class="prep">침대에 누웠어요</div>
+      <div class="two"><div class="btn sec"><em>지금부터</em><b>오후 11시 38분 기상</b></div>
+      <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div>
+    </div></div>
+  <p class="why">목표와 도착을 좌우로 세워 값이 크게 읽힌다. 세로 길이를 가장 많이 줄인다.</p>
+</figure><figure class="cand">
+  <figcaption><b>D</b> 한 줄로 접기</figcaption>
+  <div class="phone">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div>
+    <div class="oneline">
+      <span>오전 6시 기상 · 7시간 15분 · 회사 오전 7시 50분 도착</span>
+      <span class="mini">오늘만</span>
+    </div>
+    <div class="hr"></div>
+    <div class="list tight">
+      <div class="li"><span>⚙ 상세 설정</span><em>›</em></div>
+    </div>
+    <div class="dock">
+      <div class="prep">침대에 누웠어요</div>
+      <div class="two"><div class="btn sec"><em>지금부터</em><b>오후 11시 38분 기상</b></div>
+      <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div>
+    </div></div>
+  <p class="why">루틴을 한 줄로 합치고 상단 바 스위치는 상세 설정으로 내린다. 아래가 거의 비워진다.</p>
+</figure><figure class="cand">
+  <figcaption><b>E</b> 타임라인에 맡기기</figcaption>
+  <div class="phone">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tonight"><span class="chip">오늘만 취침 시간 조정</span></div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div>
+    <div class="list tight" style="margin-top:14px">
+      <div class="li"><span>⚙ 상세 설정</span><em>›</em></div>
+    </div>
+    <div class="dock">
+      <div class="prep">침대에 누웠어요</div>
+      <div class="two"><div class="btn sec"><em>지금부터</em><b>오후 11시 38분 기상</b></div>
+      <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div>
+    </div></div>
+  <p class="why">목표 기상·회사 도착은 이미 타임라인에 줄로 있다. 아래에서는 빼고 상세 설정만 남긴다.</p>
+</figure>
+</div>
+
+<h2>«오늘만 조정» 자리</h2>
+<div class="row">
+<figure class="cand sm">
+  <figcaption>1 · 지금 — 히어로 아래 칩</figcaption>
+  <div class="phone short">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tonight"><span class="chip">오늘만 취침 시간 조정</span></div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div></div>
+  <p class="why">글이 길어 히어로 아래를 한 줄 통째로 먹는다. 오늘만 쓰는 기능치고 자리값이 크다.</p>
+</figure><figure class="cand sm">
+  <figcaption>2 · 목표 옆 작은 버튼</figcaption>
+  <div class="phone short">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div>
+    <div class="card">
+      <div class="cardtop"><span class="clab">목표</span><span class="mini">오늘만</span></div>
+      <div class="cbig">오전 6시 기상 · 7시간 15분 수면</div>
+      <div class="csub">🧳 회사 오전 7시 50분 도착</div>
+    </div>
+    </div>
+  <p class="why">오늘만 바꾸는 건 목표라, 목표 옆이 뜻이 맞는다. 위가 조용해진다.</p>
+</figure><figure class="cand sm">
+  <figcaption>3 · 타임라인 «목표 취침» 줄에서</figcaption>
+  <div class="phone short">
+    <div class="hero">
+      <div class="hrow"><span class="hlab">목표 취침까지</span><span class="pill">🕐 알람</span></div>
+      <div class="hbig">5시간 22분</div>
+    </div>
+    <div class="tl">
+      <div class="tlrow"><i class="dot now"></i><b>오후 5시 23분</b><span>지금</span></div>
+      <div class="tlrow"><i class="dot"></i><b>오후 10시 45분</b><span>목표 취침</span><u class="edit">조정 ›</u></div>
+      <div class="tlrow"><i class="dot"></i><b>오전 6시</b><span>목표대로면 기상</span></div>
+      <div class="tlrow"><i class="dot work"></i><b>오전 7시 50분</b><span>회사 도착</span></div>
+    </div></div>
+  <p class="why">바꿀 대상 바로 그 줄에서 누른다. 대신 타임라인이 읽는 것 + 누르는 것이 섞인다.</p>
+</figure>
+</div>
+
+<h2>내 생각</h2>
+<p><b>B + 2 를 고르겠다.</b> 목표와 «가장 빠른 출근» 은 둘 다 내 루틴이 만든 값이라 한 덩어리로
+묶이는 게 맞고, 묶으면 가로선이 넉 줄에서 없어진다(카드 테두리 하나로 대신). 남는 두 줄은
+스위치와 이동뿐이라 목록으로 둬도 성격이 안 섞인다. «오늘만» 은 바꿀 대상인 목표 옆에 붙어
+뜻이 맞고, 히어로 아래 긴 칩이 빠져 위가 조용해진다.</p>
+<ul>
+<li>C 는 세로를 제일 많이 줄이지만 카드 둘이 나란히 서서 «둘 중 고르는 것» 처럼 읽힌다.</li>
+<li>D 는 시원한데 상단 바 스위치가 상세 설정으로 들어가 버린다 — 밤마다 만지는 건 아니어도
+지금은 홈에서 한 번에 끄고 켠다.</li>
+<li>E 는 타임라인이 밤마다 모양이 바뀌는 게 문제다. 쉬는 날 앞 밤엔 회사 줄이 없고,
+누운 뒤엔 목표 기상 줄이 알람 줄에 밀린다 — 루틴을 늘 같은 자리에서 확인할 수 없다.</li>
+</ul>
+
+</div></body></html>

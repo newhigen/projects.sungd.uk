@@ -1,0 +1,60 @@
+---
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = '조성덕이 만든 것들 — 앱 · 도구 · 대시보드 · 분석', image } = Astro.props;
+const full = title === '만든 것들' ? '만든 것들 — 조성덕' : `${title} — 만든 것들`;
+const ogImage = image ? new URL(image, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={full} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+  </head>
+  <body>
+    <div class="wrap">
+      <nav class="top">
+        <a href="/" class:list={[{ here: Astro.url.pathname === '/' }]}>만든 것들</a>
+        <a href="https://resume.sungd.uk">이력서</a>
+        <a href="https://writing.sungd.uk">글</a>
+        <a href="https://sungd.uk">sungd.uk</a>
+      </nav>
+
+      <slot />
+
+      <footer class="foot">
+        <a href="https://github.com/newhigen">GitHub</a>
+        <a href="https://resume.sungd.uk">이력서</a>
+        <a href="https://sungd.uk">sungd.uk</a>
+      </footer>
+    </div>
+  </body>
+</html>

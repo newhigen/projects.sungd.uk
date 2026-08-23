@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>어둠과 밝음</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 6h12v20H4z' fill='%23141414'/%3E%3Cpath d='M16 6h12v20H16z' fill='none' stroke='%232563eb' stroke-width='2'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{--pg:#fff;--pi:#141414;--pm:#6a6a66;--pr:#e3e3e0;
+ --sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--pi);font-family:var(--sans);font-size:15px;line-height:1.65}
+.wrap{max-width:1180px;margin:0 auto;padding:56px 32px 96px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:var(--pm);margin:0 0 6px;font-size:15.5px}
+.note{border-top:2px solid var(--pi);border-bottom:1px solid var(--pr);padding:14px 0 16px;margin:24px 0 8px}
+.note p{margin:0;color:#3d3d3a}
+h2{font-size:19px;font-weight:600;margin:52px 0 4px}
+.why{color:var(--pm);font-size:14px;margin:0 0 16px}
+.pair{display:flex;gap:26px;flex-wrap:wrap}
+figure{margin:0} figcaption{font-size:13px;color:var(--pm);margin-bottom:8px}
+ul{padding-left:18px;color:#3d3d3a} li{margin-bottom:7px}
+
+.phone{width:330px;background:var(--bg);color:var(--ink);border-radius:20px;
+ padding:14px 15px 12px;border:1px solid var(--hair);font-size:11.5px;line-height:1.45}
+.hd{display:flex;justify-content:flex-end;gap:7px}
+.chip{background:var(--chipbg);color:var(--chipfg);border-radius:20px;padding:4px 11px;font-size:10.5px}
+.chip.sq{padding:4px 8px}
+.tl{margin:14px 0 0;padding-left:26px;position:relative}
+.tl:before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:var(--hair)}
+.r{position:relative;display:flex;align-items:center;gap:8px;padding:4px 7px;margin:0 -7px;border-radius:7px}
+.r.goal{background:var(--band)}
+.r b{font-weight:600;min-width:82px}
+.r span{color:var(--dim)} .r span.al{color:var(--alarm)}
+.r u{margin-left:auto;color:var(--faint);font-size:10px;text-decoration:none}
+.r u.pill{border:1px solid var(--chipbg);border-radius:12px;padding:1px 8px;color:var(--dim)}
+.mk{position:absolute;left:-25px;width:15px;height:15px;color:var(--dim);background:var(--bg);border-radius:50%}
+.mk.alarm{color:var(--alarm)}
+.dot{position:absolute;left:-22px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.g{color:var(--faint);font-size:10.5px;padding:5px 0}
+.g.accent{color:var(--accent)}
+.mid{padding:8px 0 4px}
+.mrow{text-align:right;color:var(--dim);font-size:10.5px;padding:3px 0}
+.mline{display:flex;align-items:center;gap:10px}
+.mline i{flex:1;height:1px;background:var(--hair)}
+.glen{color:var(--faint);font-size:10.5px}
+.hero{text-align:center;padding:34px 0 30px}
+.hlab{color:var(--dim);font-size:11px}
+.hval{font-size:27px;font-weight:300;letter-spacing:-.02em;margin-top:2px}
+.hval em{font-style:normal;font-size:13px;color:var(--dim);margin-left:7px}
+.dock{border-top:1px solid var(--hair);padding-top:11px}
+.prep{background:var(--chipbg);color:var(--chipfg);border-radius:11px;text-align:center;padding:9px;font-size:12px}
+.two{display:flex;gap:8px;margin-top:8px}
+.btn{flex:1;border-radius:13px;padding:10px 8px;text-align:center}
+.btn em{display:block;font-style:normal;font-size:10px;opacity:.72}
+.btn b{display:block;font-size:12.5px;font-weight:600;margin-top:2px}
+.btn.sec{background:var(--chipbg);color:var(--chipfg)}
+.btn.pri{background:var(--pribg);color:var(--prifg)}
+.p0.dk{--bg:#08090C;--card:#0E1218;--ink:#EEF0F3;--dim:#8B93A1;--faint:#5A616D;--hair:#1E222A;--band:#141A24;--accent:#4A7EC4;--alarm:#F0B46A;--chipbg:#263042;--chipfg:#C6D0E0;--pribg:#DDE3EC;--prifg:#131F35}
+.p0.lt{--bg:#FBFBFA;--card:#FFFFFF;--ink:#16181C;--dim:#5D6470;--faint:#8B909A;--hair:#E6E7EA;--band:#EFF2F6;--accent:#2F5EA8;--alarm:#B0761B;--chipbg:#E9ECF1;--chipfg:#2A3341;--pribg:#243349;--prifg:#F3F6FA}
+.p1.dk{--bg:#0A1018;--card:#101A25;--ink:#E9F0F4;--dim:#88A0AE;--faint:#5A6E7B;--hair:#1B2A36;--band:#132231;--accent:#5AA9B8;--alarm:#E8B26B;--chipbg:#1D3444;--chipfg:#BCD4DF;--pribg:#CFE4EA;--prifg:#0E2430}
+.p1.lt{--bg:#F4F7F9;--card:#FFFFFF;--ink:#0F2233;--dim:#4E6B7C;--faint:#8095A2;--hair:#DDE6EB;--band:#E9F0F4;--accent:#1E7386;--alarm:#A8721A;--chipbg:#E1EAEF;--chipfg:#1B3A4B;--pribg:#164254;--prifg:#EFF6F8}
+.p2.dk{--bg:#0F0E0C;--card:#171512;--ink:#F2EFE9;--dim:#9C9488;--faint:#6A6459;--hair:#262320;--band:#1D1A16;--accent:#C9A227;--alarm:#E8B36A;--chipbg:#2C2822;--chipfg:#DBD3C6;--pribg:#E6DCC8;--prifg:#221D15}
+.p2.lt{--bg:#FAF8F4;--card:#FFFFFF;--ink:#1B1814;--dim:#6B6459;--faint:#948C7E;--hair:#EAE5DC;--band:#F2EEE6;--accent:#8A6A12;--alarm:#A0731C;--chipbg:#EFEAE0;--chipfg:#332C22;--pribg:#2E2921;--prifg:#F7F3EA}
+.p3.dk{--bg:#0C0A14;--card:#141122;--ink:#EDEAF6;--dim:#948DB4;--faint:#635C80;--hair:#231E36;--band:#17142A;--accent:#9A8CD8;--alarm:#E9B57A;--chipbg:#282243;--chipfg:#C9C2E4;--pribg:#DCD7EF;--prifg:#1B1730}
+.p3.lt{--bg:#F8F6FC;--card:#FFFFFF;--ink:#191527;--dim:#5F5880;--faint:#8B85A6;--hair:#E7E3F0;--band:#F0EDF8;--accent:#5B4CA8;--alarm:#9E7018;--chipbg:#EBE7F5;--chipfg:#2B2545;--pribg:#302A55;--prifg:#F4F2FB}
+.p4.dk{--bg:#12161C;--card:#1A1F27;--ink:#E8ECF1;--dim:#93A0AF;--faint:#67717E;--hair:#252C36;--band:#1E242D;--accent:#7FA6D9;--alarm:#EBB271;--chipbg:#2A323D;--chipfg:#C3CDDA;--pribg:#D6DEE8;--prifg:#19212C}
+.p4.lt{--bg:#EEF1F5;--card:#FFFFFF;--ink:#1A2028;--dim:#586372;--faint:#87909D;--hair:#DDE2E9;--band:#E4E9F0;--accent:#3C6698;--alarm:#A2761E;--chipbg:#E2E7EE;--chipfg:#26303C;--pribg:#28323F;--prifg:#EFF2F6}
+.p5.dk{--bg:#0E1114;--card:#161A1F;--ink:#E9ECEF;--dim:#949BA3;--faint:#676D75;--hair:#232830;--band:#191E24;--accent:#9FB4CC;--alarm:#EBB271;--chipbg:#272D36;--chipfg:#C4CBD4;--pribg:#D8DEE5;--prifg:#151920}
+.p5.lt{--bg:#F2F4F6;--card:#FFFFFF;--ink:#171A1E;--dim:#5C646E;--faint:#8A9099;--hair:#E2E5E9;--band:#E8EBEF;--accent:#4A6480;--alarm:#A2761E;--chipbg:#E6E9ED;--chipfg:#232932;--pribg:#242A33;--prifg:#F1F3F6}
+.p6.dk{--bg:#0B120E;--card:#121B15;--ink:#E7EFE9;--dim:#8CA694;--faint:#62786A;--hair:#1C2A21;--band:#14201A;--accent:#7FB48C;--alarm:#E6B473;--chipbg:#1E2E24;--chipfg:#C2D5C8;--pribg:#D5E4D9;--prifg:#0F1E15}
+.p6.lt{--bg:#F3F7F4;--card:#FFFFFF;--ink:#102016;--dim:#4E6B58;--faint:#85998C;--hair:#DDE7E0;--band:#E8F0EA;--accent:#2F7048;--alarm:#9E7018;--chipbg:#E4EDE7;--chipfg:#17301F;--pribg:#1B4029;--prifg:#F0F6F2}
+.p7.dk{--bg:#14110F;--card:#1C1815;--ink:#F0EBE6;--dim:#A0958C;--faint:#6E655D;--hair:#282320;--band:#1E1A17;--accent:#C4705A;--alarm:#EBC08A;--chipbg:#2C2723;--chipfg:#D8CFC6;--pribg:#E7DDD2;--prifg:#221C17}
+.p7.lt{--bg:#FAF7F4;--card:#FFFFFF;--ink:#1D1815;--dim:#6E645B;--faint:#968C82;--hair:#EBE5DE;--band:#F2EDE7;--accent:#A2543A;--alarm:#9C6F18;--chipbg:#EFE9E1;--chipfg:#332A23;--pribg:#33291F;--prifg:#F8F4EE}
+.p8.dk{--bg:#000000;--card:#0B0B0C;--ink:#F5F6F7;--dim:#8E9299;--faint:#61656B;--hair:#1A1B1E;--band:#121316;--accent:#4C8DFF;--alarm:#F0B46A;--chipbg:#1E2026;--chipfg:#CBD0D8;--pribg:#E8EAEE;--prifg:#0A0B0D}
+.p8.lt{--bg:#FFFFFF;--card:#FFFFFF;--ink:#0B0C0E;--dim:#5B6068;--faint:#8A8F97;--hair:#E5E6E9;--band:#F1F2F4;--accent:#1F5FE0;--alarm:#A2761E;--chipbg:#EDEEF1;--chipfg:#1E2128;--pribg:#0F1114;--prifg:#F7F8F9}
+.p9.dk{--bg:#101010;--card:#181818;--ink:#EDEDED;--dim:#949494;--faint:#6A6A6A;--hair:#242424;--band:#1B1B1B;--accent:#C8C8C8;--alarm:#D6A75F;--chipbg:#262626;--chipfg:#CFCFCF;--pribg:#E4E4E4;--prifg:#151515}
+.p9.lt{--bg:#F4F4F4;--card:#FFFFFF;--ink:#171717;--dim:#5E5E5E;--faint:#8C8C8C;--hair:#E3E3E3;--band:#EBEBEB;--accent:#3C3C3C;--alarm:#9C7018;--chipbg:#E8E8E8;--chipfg:#242424;--pribg:#232323;--prifg:#F2F2F2}
+</style></head>
+<body><div class="wrap">
+<h1>어둠과 밝음</h1>
+<p class="sub">같은 화면을 열 팔레트로. 왼쪽이 밤에 쓰는 어둠, 오른쪽이 낮에 쓰는 밝음.</p>
+
+<div class="note"><p><b>이 앱은 어둠이 기본이다.</b> 실제로 여는 때가 밤 열 시에서 새벽 두 시
+사이다 — 밝음은 활동 시간에 잠깐 열어 볼 때 쓰는 쪽이지 주인공이 아니다. 그래서 어둠 쪽에서
+먼저 고르고, 밝음은 그 색을 낮으로 옮긴 짝으로 본다.</p></div>
+
+<section class="pal">
+  <h2>먹</h2><p class="why">지금 쓰는 색. 거의 검정에 강철빛 하나. 밤에 눈이 안 아프고, 런처 아이콘과 같은 계열이다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p0 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p0 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>밤바다</h2><p class="why">푸른 기가 도는 어둠. 검정보다 한 걸음 부드럽고 «밤» 이라는 말이 색에서 온다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p1 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p1 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>잉크</h2><p class="why">따뜻한 검정에 등불 같은 앰버. 알람 색이 이미 앰버라 화면 전체가 그 하나로 묶인다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p2 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p2 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>자정</h2><p class="why">남보라로 기운 어둠에 라벤더. 잠과 가장 가까운 색이지만 취향을 탄다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p3 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p3 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>슬레이트</h2><p class="why">순검정을 피한 회청. 대비를 낮춰 새벽에 눈이 덜 부시고 밴드가 자연스럽게 뜬다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p4 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p4 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>달빛</h2><p class="why">은회색으로 기운 파랑. 색이라기보다 밝기로만 말한다 — 다섯 중 가장 조용하다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p5 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p5 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>숲밤</h2><p class="why">깊은 초록에 세이지. 흔치 않은 색인데 자극이 없어 자기 전에 잘 맞는다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p6 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p6 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>모래</h2><p class="why">따뜻한 회색에 테라코타. 잉크보다 부드럽고, 밝음으로 넘어가도 눈이 편하다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p7 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p7 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>먹지</h2><p class="why">진짜 검정에 선명한 파랑 하나. OLED 에서 바탕이 아예 꺼지고 액센트만 뜬다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p8 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p8 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section><section class="pal">
+  <h2>재</h2><p class="why">완전 무채색. 색은 알람 하나에만 남기고 나머지는 밝기로만 가른다.</p>
+  <div class="pair">
+    <figure><figcaption>어둠</figcaption><div class="phone p9 dk">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+    <figure><figcaption>밝음</figcaption><div class="phone p9 lt">
+  <div class="hd"><span class="chip">알람</span><span class="chip sq">⚙</span></div>
+  <div class="tl">
+    <div class="r"><i class="dot"></i><b>오후 10시 30분</b><span>지금</span></div>
+    <div class="g accent">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M3.4,10.6h17.2v4.6H3.4z M4.4,6.6h5.6v4H4.4z M3.6,15.2h1.6v3H3.6z M18.8,15.2h1.6v3h-1.6z" fill="currentColor"/></svg><b>오후 10시 45분</b><span>목표 취침</span><u class="pill">조정 ›</u></div>
+    <div class="mid"><div class="mrow">오늘 · 8월 23일 (일)</div>
+      <div class="mline"><span class="glen">7시간</span><i></i></div>
+      <div class="mrow">내일 · 8월 24일 (월)</div></div>
+    <div class="r"><svg class="mk alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12,10.2v3.6h2.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><b>오전 5시 45분</b><span class="al">지금 자면 기상</span></div>
+    <div class="g">15분</div>
+    <div class="r goal"><svg class="mk" viewBox="0 0 24 24"><path d="M6.6,14.55 a5.4,5.4 0 0 1 10.8,0 Z" fill="currentColor"/><path d="M12,7.55V5.35M6.64,10.05L4.95,8.64M17.36,10.05L19.05,8.64" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M2.8,16.9H21.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" fill="none"/></svg><b>오전 6시</b><span>목표대로면 기상</span><u>회사 오전 7시 50분</u></div>
+  </div>
+  <div class="hero"><div class="hlab">목표 취침까지</div>
+    <div class="hval">3시간 14분<em>남음</em></div></div>
+  <div class="dock"><div class="prep">침대에 누웠어요</div>
+    <div class="two"><div class="btn sec"><em>지금부터</em><b>오전 5시 45분 기상</b></div>
+    <div class="btn pri"><em>목표대로</em><b>오전 6시 기상</b></div></div></div>
+</div></figure>
+  </div>
+</section>
+
+<h2>내 생각</h2>
+<p>열 벌을 놓고 보면 셋으로 갈린다 — 지금 색을 다듬는 쪽(먹 · 슬레이트 · 달빛 · 재),
+색을 하나 들여오는 쪽(밤바다 · 숲밤 · 자정 · 모래 · 잉크), 대비를 끝까지 미는 쪽(먹지).</p>
+<ul>
+<li><b>슬레이트 · 달빛</b> 이 안전한 두 장이다. 순검정(#08090C)은 목표 밴드처럼 «한 톤만 들어
+올린» 면이 거의 안 떠서 밴드를 #141A24 까지 올려야 겨우 보였다. 바탕을 한 계단 올리면 그 문제가
+사라지고 새벽에 눈도 덜 부시다. 둘 중 달빛이 더 조용하고, 슬레이트가 조금 더 또렷하다.</li>
+<li><b>먹지</b> 는 정반대 답이다. 진짜 검정이라 OLED 에서 바탕 화소가 아예 꺼져 배터리에 유리하고,
+파랑 하나만 떠서 «지금» 이 어디인지 단번에 보인다. 대신 밴드는 여전히 안 뜨므로 목표는
+밴드 대신 글자 밝기로 갈라야 한다.</li>
+<li><b>숲밤 · 모래</b> 는 색을 들여오면서도 자극이 없다. 숲밤은 흔치 않아 이 앱만의 얼굴이 되고,
+모래는 잉크의 따뜻함을 남기면서 앰버가 액센트를 먹는 문제가 없다(액센트는 테라코타, 알람은 앰버).</li>
+<li><b>재</b> 는 색을 아예 포기하고 알람에만 남긴 안이다. 가장 오래 질리지 않지만 «지금» 점과
+카운트다운이 회색이라 어느 게 살아 움직이는 값인지 약해진다.</li>
+<li>고르기 어려우면 <b>슬레이트를 기본으로 하고 먹지를 «완전 검정» 선택지로</b> 두는 방법도 있다 —
+설정에 한 줄이면 되고, 배터리를 아끼고 싶은 사람은 그쪽을 켠다.</li>
+</ul>
+
+</div></body></html>
