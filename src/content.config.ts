@@ -20,6 +20,8 @@ const projects = defineCollection({
     draft: z.boolean().default(false),
     /** 목록 맨 위와 글머리에 세우는 그림 */
     cover: z.string().optional(),
+    /** 카드에 서는 앱 아이콘 (정사각 png) */
+    icon: z.string().optional(),
     /** 낮에 쓸 판이 따로 있으면 */
     coverLight: z.string().optional(),
     /** 글머리에 그림을 자동으로 세울지. 본문에서 직접 배치하면 끈다 */

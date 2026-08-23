@@ -80,39 +80,101 @@ a { color: inherit; }
 
 /* ── 목록 ─────────────────────────────────────────── */
 
-.lede { margin: 1.6rem 0 2.75rem; max-width: 44rem; color: var(--ink-2); }
+.lede { margin: 1.6rem 0 2.9rem; max-width: 44rem; color: var(--ink-2); text-wrap: pretty; }
 
-.ledger { width: 100%; border-collapse: collapse; }
-.ledger th,
-.ledger td {
-  text-align: left;
-  font-weight: 400;
-  vertical-align: baseline;
-  padding: 0.62rem 1.25rem 0.62rem 0;
-  border-top: 1px solid var(--rule);
+.sec {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--rule-mid);
 }
-.ledger tr.first th,
-.ledger tr.first td { border-top: 1px solid var(--rule-mid); padding-top: 1.5rem; }
+.sec .n { margin-left: 0.5rem; font-family: var(--mono); font-size: 0.75rem; }
+.note { margin: -0.5rem 0 1.4rem; font-size: 0.8125rem; color: var(--ink-3); }
+section + section { margin-top: 3.75rem; }
 
-.ledger .cat { width: 11rem; font-size: 0.8125rem; color: var(--ink-3); white-space: nowrap; }
-.ledger .nm { width: 14rem; white-space: nowrap; }
-.ledger .nm a {
-  font-weight: 600;
+/* 지금 쓰는 것 — 무엇이 살아 있는지 한눈에 */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(23rem, 27rem));
+  gap: 1rem;
+}
+.card {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 0 1.05rem;
+  align-items: start;
+  padding: 1.15rem 1.25rem 1.1rem;
+  border-radius: 11px;
+  box-shadow: inset 0 0 0 1px var(--rule-mid);
   text-decoration: none;
-  text-underline-offset: 3px;
+  transition: box-shadow 0.15s ease;
 }
-.ledger .nm a:hover { color: var(--link); text-decoration: underline; }
-.ledger .ds { color: var(--ink-2); font-size: 0.9375rem; }
-.ledger .dt {
-  width: 6rem;
-  text-align: right;
-  padding-right: 0;
+.card:hover { box-shadow: inset 0 0 0 1px var(--ink-3); }
+.card .icon {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  grid-row: span 3;
+}
+.card .nm { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+.card:hover .nm { color: var(--link); }
+.card .ds { margin: 0.2rem 0 0; font-size: 0.875rem; color: var(--ink-2); text-wrap: pretty; }
+.card .mt {
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--ink-3);
+}
+
+/* 지나온 것 — 시간이 축이다 */
+.tl { position: relative; }
+.tl::before {
+  content: "";
+  position: absolute;
+  left: 6.5rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 1px;
+  background: var(--rule);
+}
+.tl .yr {
+  position: relative;
+  margin: 1.9rem 0 0.7rem;
   font-family: var(--mono);
   font-size: 0.8125rem;
   color: var(--ink-3);
 }
-.ledger tr.off .nm,
-.ledger tr.off .ds { color: var(--ink-3); }
+.tl .yr:first-child { margin-top: 0; }
+.tl .ev {
+  position: relative;
+  display: grid;
+  grid-template-columns: 5.25rem 11rem minmax(0, 1fr);
+  gap: 0 1.25rem;
+  align-items: baseline;
+  padding: 0.42rem 0;
+}
+.tl .ev::before {
+  content: "";
+  position: absolute;
+  left: calc(6.5rem - 4px);
+  top: 1.05em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--rule-mid);
+}
+.tl .dt {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--ink-3);
+}
+.tl .nm { padding-left: 1.25rem; color: var(--ink-2); }
+.tl .ds { font-size: 0.875rem; color: var(--ink-3); }
 
 /* ── 글 ───────────────────────────────────────────── */
 
@@ -297,24 +359,23 @@ figcaption {
   .masthead nav { gap: 0.85rem; font-size: 0.75rem; }
   .lede { margin: 1.15rem 0 1.9rem; }
 
-  .ledger, .ledger tbody, .ledger tr, .ledger th, .ledger td { display: block; }
-  .ledger th, .ledger td,
-  .ledger tr.first th, .ledger tr.first td { padding: 0; border: 0; }
-  .ledger tr { padding: 0.5rem 0; border-top: 1px solid var(--rule); }
-  .ledger tr.first { border-top: 0; padding-top: 0; }
-  .ledger .cat:empty { display: none; }
-  .ledger .cat:not(:empty) {
-    margin: 1.7rem 0 0.15rem;
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid var(--rule-mid);
-    font-size: 0.75rem;
-    width: auto;
-  }
-  .ledger tr.first .cat:not(:empty) { margin-top: 0; }
-  .ledger .nm { width: auto; white-space: normal; }
-  .ledger .nm a { font-size: 0.9375rem; }
-  .ledger .ds { font-size: 0.8125rem; margin-top: 0.05rem; }
-  .ledger .dt { width: auto; text-align: left; font-size: 0.6875rem; margin-top: 0.1rem; }
+  .cards { grid-template-columns: 1fr; gap: 0.7rem; }
+  .card { padding: 0.95rem 1rem; }
+  .card .icon { width: 2.25rem; height: 2.25rem; margin-bottom: 0.6rem; }
+  .card .nm { font-size: 0.9375rem; }
+  .card .ds { font-size: 0.8125rem; }
+  .card .mt { margin-top: 0.7rem; font-size: 0.6875rem; }
+
+  section + section { margin-top: 2.6rem; }
+  .note { font-size: 0.75rem; }
+
+  .tl::before { left: 3px; }
+  .tl .yr { margin: 1.5rem 0 0.5rem; font-size: 0.75rem; }
+  .tl .ev { display: block; padding: 0.42rem 0 0.42rem 1.1rem; }
+  .tl .ev::before { left: 0; top: 0.95em; }
+  .tl .dt { display: block; text-align: left; font-size: 0.6875rem; }
+  .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
+  .tl .ds { display: block; font-size: 0.75rem; }
 
   .doc-head { margin: 1.5rem 0 1.4rem; }
   .doc-head h1 { font-size: 1.4rem; }
