@@ -28,6 +28,7 @@ const making = await getEntry('making', entry.id);
   <div class="doc-body">
     <aside class="rail">
       <dl>
+        {d.kind && <><dt>무엇</dt><dd>{d.kind}</dd></>}
         <dt>언제</dt>
         <dd class="when">{d.period}</dd>
         {d.tags.length > 0 && <><dt>무엇으로</dt><dd>{d.tags.join(' · ')}</dd></>}

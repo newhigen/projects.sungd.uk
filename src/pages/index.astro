@@ -37,6 +37,7 @@ for (const p of past) {
         {live.map(p => (
           <a class="card" href={`/${p.id}`}>
             {p.data.icon && <img class="icon" src={p.data.icon} alt="" />}
+            {p.data.kind && <div class="kd">{p.data.kind}</div>}
             <div class="nm">{p.data.title}</div>
             <p class="ds">{p.data.tagline}</p>
             <div class="mt">

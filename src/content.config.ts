@@ -18,6 +18,8 @@ const projects = defineCollection({
     linkLabel: z.string().optional(),
     /** 아직 안 여는 것. 목록에 이름만 남고 페이지는 안 만든다 */
     draft: z.boolean().default(false),
+    /** 이게 무엇인가 — «안드로이드 앱» · «대시보드» 처럼. 카드와 기둥 맨 위에 선다 */
+    kind: z.string().optional(),
     /** 카드에 서는 앱 아이콘 (정사각 png) */
     icon: z.string().optional(),
     /** 글머리에 세우는 그림 · 낮에 쓸 판 */
