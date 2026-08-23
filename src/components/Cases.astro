@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** 이럴 때 이렇게 — 상황 하나에 무엇이 일어나는지 */
+  items: { when: string; what: string }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="cases">
+  {items.map(it => (
+    <section>
+      <h3>{it.when}</h3>
+      <p set:html={it.what} />
+    </section>
+  ))}
+</div>

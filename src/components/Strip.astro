@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** 폰 화면 몇 장을 나란히 — 각각 무슨 자리인지 아래에 적는다 */
+  items: { src: string; label: string; note?: string }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="strip">
+  {items.map(it => (
+    <figure>
+      <img src={it.src} alt={it.label} loading="lazy" />
+      <figcaption><b>{it.label}</b>{it.note && <><br />{it.note}</>}</figcaption>
+    </figure>
+  ))}
+</div>

@@ -92,7 +92,7 @@ a { color: inherit; }
 }
 .sec .n { margin-left: 0.5rem; font-family: var(--mono); font-size: 0.75rem; }
 .note { margin: -0.5rem 0 1.4rem; font-size: 0.8125rem; color: var(--ink-3); }
-section + section { margin-top: 3.75rem; }
+.wrap > section + section { margin-top: 3.75rem; }
 
 /* 지금 쓰는 것 — 무엇이 살아 있는지 한눈에 */
 .cards {
@@ -290,6 +290,41 @@ section + section { margin-top: 3.75rem; }
 /* 탭이 이미 선을 그었으면 본문 위 선은 겹친다 */
 .doc-head:has(.tabs) + .doc-body { border-top: 0; }
 
+/* ── 화면 몇 장 나란히 ────────────────────────────── */
+
+.strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 1.5rem 1.2rem;
+  margin: 2.1rem 0 2.5rem;
+}
+.strip figure { margin: 0; max-width: none; }
+.strip img {
+  width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.strip figcaption { margin-top: 0.55rem; max-width: none; }
+.strip figcaption b { color: var(--ink-2); font-weight: 600; }
+
+/* ── 이럴 때 이렇게 ───────────────────────────────── */
+
+.cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1.5rem 2.5rem;
+  margin: 1.6rem 0 2.4rem;
+}
+.cases section { padding-top: 0.85rem; border-top: 1px solid var(--rule-mid); }
+.cases h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.cases p { margin: 0; font-size: 0.875rem; color: var(--ink-2); text-wrap: pretty; }
+.cases b { color: var(--ink); font-weight: 600; }
+
 /* ── 흐름 도식 ────────────────────────────────────── */
 
 .flow { max-width: none; margin: 2.3rem 0 2.6rem; }
@@ -424,7 +459,7 @@ figcaption {
   .card .ds { font-size: 0.8125rem; }
   .card .mt { margin-top: 0.7rem; font-size: 0.6875rem; }
 
-  section + section { margin-top: 2.6rem; }
+  .wrap > section + section { margin-top: 2.6rem; }
   .note { font-size: 0.75rem; }
 
   .tl::before { left: 3px; }
@@ -437,6 +472,12 @@ figcaption {
 
   .tabs { gap: 1.2rem; margin-top: 1.1rem; }
   .tabs a { font-size: 0.8125rem; }
+
+  .strip { grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: 1.1rem 0.8rem; }
+  .strip figcaption { font-size: 0.6875rem; }
+  .cases { grid-template-columns: 1fr; gap: 1.1rem; margin: 1.2rem 0 1.8rem; }
+  .cases h3 { font-size: 0.875rem; }
+  .cases p { font-size: 0.8125rem; }
 
   .flow { margin: 1.7rem 0 1.9rem; }
   .flow ol { grid-auto-flow: row; }
