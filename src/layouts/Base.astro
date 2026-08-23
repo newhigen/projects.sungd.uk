@@ -8,7 +8,8 @@ interface Props {
 }
 
 const { title, description = '조성덕이 만든 앱 · 도구 · 대시보드 · 분석', image } = Astro.props;
-const full = title === '프로젝트' ? '프로젝트 — 조성덕' : `${title} — 프로젝트`;
+const home = Astro.url.pathname === '/';
+const full = home ? '프로젝트 — 조성덕' : `${title} — 프로젝트`;
 const ogImage = image ? new URL(image, Astro.site).href : undefined;
 ---
 
@@ -41,12 +42,14 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
   </head>
   <body>
     <div class="wrap">
-      <nav class="top">
-        <a href="/" class:list={[{ here: Astro.url.pathname === '/' }]}>프로젝트</a>
-        <a href="https://resume.sungd.uk">이력서</a>
-        <a href="https://writing.sungd.uk">글</a>
-        <a href="https://sungd.uk">sungd.uk</a>
-      </nav>
+      <header class="masthead">
+        <a class="site" href="/">프로젝트</a>
+        <nav>
+          <a href="https://resume.sungd.uk">이력서</a>
+          <a href="https://writing.sungd.uk">글</a>
+          <a href="https://sungd.uk">sungd.uk</a>
+        </nav>
+      </header>
 
       <slot />
 

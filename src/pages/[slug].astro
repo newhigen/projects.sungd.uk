@@ -16,42 +16,53 @@ const d = entry.data;
 ---
 
 <Base title={d.title} description={d.tagline} image={d.cover}>
-  <header class="head">
+  <header class="doc-head">
     <h1>{d.title}</h1>
     <p class="tagline">{d.tagline}</p>
-    <div class="meta">
-      <span>{d.period}</span>
-      {d.tags.length > 0 && <span>{d.tags.join(' · ')}</span>}
-      {d.github && <a href={d.github}>GitHub ↗</a>}
-      {d.link && <a href={d.link}>{d.linkLabel ?? '열어보기'} ↗</a>}
-    </div>
-    {d.use.length > 0 && (
-      <ul class="use">{d.use.map(u => <li>{u}</li>)}</ul>
-    )}
   </header>
 
-  {d.headCover && d.cover && (
-    <figure>
-      <img src={d.cover} alt="" class:list={[{ 'only-dark': d.coverLight }]} />
-      {d.coverLight && <img src={d.coverLight} alt="" class="only-light" />}
-    </figure>
-  )}
+  <div class="doc-body">
+    <aside class="rail">
+      <dl>
+        <dt>언제</dt>
+        <dd class="when">{d.period}</dd>
+        {d.tags.length > 0 && <><dt>무엇으로</dt><dd>{d.tags.join(' · ')}</dd></>}
+        {(d.github || d.link) && (
+          <>
+            <dt>열어보기</dt>
+            {d.github && <dd><a href={d.github}>GitHub ↗</a></dd>}
+            {d.link && <dd><a href={d.link}>{d.linkLabel ?? '사이트'} ↗</a></dd>}
+          </>
+        )}
+      </dl>
+      {d.use.length > 0 && <ul>{d.use.map(u => <li>{u}</li>)}</ul>}
+    </aside>
 
-  <article class="prose">
-    <Content />
-  </article>
+    <div>
+      {d.headCover && d.cover && (
+        <figure>
+          <img src={d.cover} alt="" class:list={[{ 'only-dark': d.coverLight }]} />
+          {d.coverLight && <img src={d.coverLight} alt="" class="only-light" />}
+        </figure>
+      )}
 
-  {d.shots.length > 0 && (
-    <section>
-      <h2 class="group-label">그전 모습</h2>
-      <div class="shots">
-        {d.shots.map(s => (
-          <figure>
-            <img src={s.src} alt={s.label} loading="lazy" />
-            <figcaption>{s.label}{s.note && <><br />{s.note}</>}</figcaption>
-          </figure>
-        ))}
-      </div>
-    </section>
-  )}
+      <article class="prose">
+        <Content />
+      </article>
+
+      {d.shots.length > 0 && (
+        <section>
+          <h2 class="prose">그전 모습</h2>
+          <div class="shots">
+            {d.shots.map(s => (
+              <figure>
+                <img src={s.src} alt={s.label} loading="lazy" />
+                <figcaption>{s.label}{s.note && <><br />{s.note}</>}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
 </Base>

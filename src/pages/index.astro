@@ -23,31 +23,31 @@ const categories = [
   ...ORDER.filter(c => byCategory.has(c)),
   ...[...byCategory.keys()].filter(c => !ORDER.includes(c)),
 ];
+
+// 갈래 이름은 그 묶음 첫 줄에만 적는다 — 나머지 줄은 왼쪽을 비워 둔다.
+const rows = categories.flatMap(cat =>
+  byCategory.get(cat)!.map((p, i) => ({ p, cat: i === 0 ? cat : '', first: i === 0 }))
+);
 ---
 
 <Base title="프로젝트">
-  <h1>프로젝트</h1>
   <p class="lede">
     직접 쓰려고 만든 앱과 도구. 대개 내 하루에 걸리적거리던 것에서 시작했고, 만든 뒤에도
     계속 쓰고 있는 것만 올려 둔다.{anyDraft && <> 이름만 있는 줄은 아직 안 연 것.</>}
   </p>
 
-  {categories.map(cat => (
-    <section class="group">
-      <h2 class="group-label">{cat}<span class="n">{byCategory.get(cat)!.length}</span></h2>
-      {byCategory.get(cat)!.map(p => (
-        p.data.draft
-          ? <div class="row off">
-              <span class="name">{p.data.title}</span>
-              <span class="desc">{p.data.tagline}</span>
-              <span class="when">{p.data.period}</span>
-            </div>
-          : <a class="row" href={`/${p.id}`}>
-              <span class="name">{p.data.title}</span>
-              <span class="desc">{p.data.tagline}</span>
-              <span class="when">{p.data.period}</span>
-            </a>
+  <table class="ledger">
+    <tbody>
+      {rows.map(({ p, cat, first }) => (
+        <tr class:list={[{ first, off: p.data.draft }]}>
+          <th class="cat" scope="row">{cat}</th>
+          <td class="nm">
+            {p.data.draft ? p.data.title : <a href={`/${p.id}`}>{p.data.title}</a>}
+          </td>
+          <td class="ds">{p.data.tagline}</td>
+          <td class="dt">{p.data.period}</td>
+        </tr>
       ))}
-    </section>
-  ))}
+    </tbody>
+  </table>
 </Base>
