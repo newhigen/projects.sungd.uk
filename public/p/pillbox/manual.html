@@ -1,0 +1,276 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<title>약수첩 — 쓰는 법</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%232B2926'/%3E%3Cg transform='rotate(-32 12 12)'%3E%3Crect x='8.6' y='4.8' width='6.8' height='14.4' rx='3.4' fill='%23E6DFD3'/%3E%3C/g%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{--ink:#141414;--sec:#3d3d3a;--mut:#6a6a66;--faint:#9b9b96;--rule:#e3e3e0;--hair:#f0f0ee;--acc:#2E6BC4;
+--sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif}
+*{box-sizing:border-box} body{margin:0;background:#fff;color:var(--ink);font:15.5px/1.7 var(--sans)}
+.wrap{max-width:1180px;margin:0 auto;padding:56px 30px 120px}
+h1{font-size:36px;letter-spacing:-.025em;font-weight:600;margin:0 0 10px}
+h2{font-size:22px;font-weight:600;margin:64px 0 6px;padding-top:20px;border-top:2px solid var(--ink)}
+h3{font-size:17px;font-weight:600;margin:38px 0 4px}
+.sub{color:var(--mut);font-size:17px;margin:0 0 6px} .meta{color:var(--faint);font-size:13.5px;margin:0 0 10px}
+p{margin:8px 0} .lead{color:var(--sec);margin:2px 0 14px}
+svg.shot{display:block;width:100%;height:auto;margin:14px 0 6px} svg.shot text{font-family:var(--sans)}
+svg.flow{display:block;width:100%;height:auto;margin:18px 0 8px} svg.flow text{font-family:var(--sans)}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14.5px}
+th{text-align:left;font-weight:600;border-bottom:1px solid var(--rule);padding:8px 10px 8px 0}
+td{border-bottom:1px solid var(--hair);padding:8px 10px 8px 0;vertical-align:top} td:first-child{white-space:nowrap}
+.note{color:var(--mut);font-size:14px;border-top:1px solid var(--rule);padding-top:14px;margin-top:34px}
+.pill{display:block;max-width:420px;width:100%;height:auto;margin:14px 0;border:1px solid var(--hair);border-radius:14px}
+code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--hair);padding:1px 5px;border-radius:4px}
+</style></head><body><div class="wrap">
+
+<h1>약수첩 — 쓰는 법</h1>
+<p class="sub">먹고 바르고 넣는 약을 홈 화면에서 챙기는 앱. 화면 보는 법과 하루 순서.</p>
+<p class="meta">화면은 9월 2일 오후 3시 52분 기준. 아침은 5시 24분에 다 챙겼고, 낮은 레스타시스, 인공눈물은 두 번 넣은 상태예요.</p>
+
+<h2>이 앱이 하는 일</h2>
+<p class="lead">하루 네 구간(아침 · 낮 · 오후 · 밤)에 무엇을 챙겨야 하는지 정해 두면, 홈 화면 위젯이 «지금 것 했나» 를
+보여 주고 안 챙긴 채 시각이 지나면 알림이 와요. 미리 해 두면 알림은 안 와요. 인공눈물은 구간 밖에 따로 서요 —
+정해진 시간이 없고, 마지막으로 넣은 지 얼마나 됐는지만 봐요.</p>
+
+<h3>홈 화면 위젯</h3>
+<p class="lead">2칸짜리예요. 윗줄에 <b>지금 구간</b>의 약이 그림으로 서고, 아랫줄에 나머지 세 구간이 이름과 표식으로 서요 —
+다 챙겼으면 초록 체크, 남았으면 남은 개수. 맨 아래가 인공눈물 띠예요. 약 그림은 눌러도 안 바뀌어요 —
+보는 자리고, 체크는 앱에서 해요. 어디를 눌러도 앱이 열려요.</p>
+<p class="lead"><i>위젯 사진은 폰에서 찍어 docs/img/widget.png 로 두면 여기 들어간다.</i></p>
+<p class="lead">인공눈물 띠는 주머니에서 잘못 눌리는 자리라 <b>두 번 눌러야</b> 들어가요. 한 번 누르면 띠가 «한 번 더 눌러서 확정» 으로
+바뀌고 4초 안에 다시 누르면 기록돼요. 간격(기본 60분)이 지나면 물방울이 빨개져요.</p>
+
+<h2>하루 순서</h2>
+<svg class="flow" viewBox="0 0 2300 400" xmlns="http://www.w3.org/2000/svg" role="img">
+<line x1="140" y1="150" x2="1580" y2="150" stroke="#d8d8d4" stroke-width="4"/>
+<circle cx="140" cy="150" r="12" fill="#2E6BC4"/>
+<text x="140" y="90" font-size="34" fill="#6a6a66" text-anchor="middle">오전 5:20</text>
+<text x="140" y="215" font-size="40" font-weight="600" fill="#141414" text-anchor="middle">아침</text>
+<text x="140" y="263" font-size="32" fill="#3d3d3a" text-anchor="middle">알림 · 위젯</text>
+<circle cx="620" cy="150" r="12" fill="#2E6BC4"/>
+<text x="620" y="90" font-size="34" fill="#6a6a66" text-anchor="middle">오전 10:30</text>
+<text x="620" y="215" font-size="40" font-weight="600" fill="#141414" text-anchor="middle">낮</text>
+<text x="620" y="263" font-size="32" fill="#3d3d3a" text-anchor="middle">레스타시스</text>
+<circle cx="1100" cy="150" r="12" fill="#2E6BC4"/>
+<text x="1100" y="90" font-size="34" fill="#6a6a66" text-anchor="middle">오후 3:45</text>
+<text x="1100" y="215" font-size="40" font-weight="600" fill="#141414" text-anchor="middle">오후</text>
+<text x="1100" y="263" font-size="32" fill="#3d3d3a" text-anchor="middle">여섯 개</text>
+<circle cx="1580" cy="150" r="12" fill="#2E6BC4"/>
+<text x="1580" y="90" font-size="34" fill="#6a6a66" text-anchor="middle">오후 8:00</text>
+<text x="1580" y="215" font-size="40" font-weight="600" fill="#141414" text-anchor="middle">밤</text>
+<text x="1580" y="263" font-size="32" fill="#3d3d3a" text-anchor="middle">레스타시스</text>
+<circle cx="2060" cy="150" r="12" fill="#3BA9CC"/>
+<text x="2060" y="90" font-size="34" fill="#6a6a66" text-anchor="middle">언제든</text>
+<text x="2060" y="215" font-size="40" font-weight="600" fill="#141414" text-anchor="middle">인공눈물</text>
+<text x="2060" y="263" font-size="32" fill="#3d3d3a" text-anchor="middle">60분마다 · 위젯 띠</text>
+<text x="860" y="360" font-size="32" fill="#6a6a66" text-anchor="middle">구간 시각에 안 챙긴 게 있을 때만 알림이 온다 — 미리 해 두면 조용하다</text>
+</svg>
+
+<h2>오늘 화면</h2>
+<p class="lead">앱을 열면 오늘이에요. 구간마다 카드 하나, 아래에 인공눈물과 타임라인.</p>
+<h3>위 — 구간 카드</h3>
+<svg class="shot" viewBox="0 0 2620 1920" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+<image href="img/main_top.png" xlink:href="img/main_top.png" x="0" y="0" width="1080" height="1920"/>
+<ellipse cx="910.0" cy="460.0" rx="86.0" ry="41.0" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1002 460.0 H 1150 V 460.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1002" cy="460.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="426.0" font-size="42" font-weight="600" fill="#141414">구간이 끝나면 «다 했어요»</text>
+<text x="1340" y="486.0" font-size="35" fill="#3d3d3a">구간마다 카드 하나. 이름 옆 시각이 알림이 오는 시각이고,</text>
+<text x="1340" y="534.0" font-size="35" fill="#3d3d3a">오른쪽에 그 구간 상태가 서요.</text>
+<ellipse cx="885.5" cy="614.0" rx="110.5" ry="42.0" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1002 614.0 H 1150 V 666.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1002" cy="614.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="632.0" font-size="42" font-weight="600" fill="#141414">체크한 시각</text>
+<text x="1340" y="692.0" font-size="35" fill="#3d3d3a">줄을 누르면 체크되고 시각이 남아요. 몇 분 안에는 다시 눌러</text>
+<text x="1340" y="740.0" font-size="35" fill="#3d3d3a">되돌릴 수 있어요(기본 5분).</text>
+<rect x="216" y="991" width="593" height="84" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 821 1033.0 H 1150 V 1033.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="821" cy="1033.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="999.0" font-size="42" font-weight="600" fill="#141414">영양제는 한 줄로</text>
+<text x="1340" y="1059.0" font-size="35" fill="#3d3d3a">한 번에 먹는 영양제는 한 줄로 뭉쳐요. 누르면 넷이 같이</text>
+<text x="1340" y="1107.0" font-size="35" fill="#3d3d3a">체크돼요.</text>
+<ellipse cx="916.0" cy="1677.0" rx="80.0" ry="41.0" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1002 1677.0 H 1150 V 1677.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1002" cy="1677.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1643.0" font-size="42" font-weight="600" fill="#141414">지금 구간</text>
+<text x="1340" y="1703.0" font-size="35" fill="#3d3d3a">지금 구간은 판이 밝아요. 남은 개수가 서고, 아래 줄들이 «안</text>
+<text x="1340" y="1751.0" font-size="35" fill="#3d3d3a">했어요» 예요.</text>
+</svg>
+<h3>아래 — 인공눈물과 타임라인</h3>
+<svg class="shot" viewBox="0 0 2620 1920" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+<image href="img/main_tail.png" xlink:href="img/main_tail.png" x="0" y="0" width="1080" height="1920"/>
+<rect x="85" y="661" width="910" height="150" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1007 736.0 H 1150 V 736.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1007" cy="736.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="702.0" font-size="42" font-weight="600" fill="#141414">인공눈물</text>
+<text x="1340" y="762.0" font-size="35" fill="#3d3d3a">정해진 시간이 없어요. 넣을 때 여기서 누르거나 위젯 띠를 두</text>
+<text x="1340" y="810.0" font-size="35" fill="#3d3d3a">번 눌러요. 위에 «2시간 2분 전» 이 마지막으로 넣은 때예요.</text>
+<ellipse cx="948.0" cy="940.0" rx="86.0" ry="41.0" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1040 940.0 H 1150 V 940.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1040" cy="940.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="930.0" font-size="42" font-weight="600" fill="#141414">지난 날은 여기서</text>
+<text x="1340" y="990.0" font-size="35" fill="#3d3d3a">오늘 것만 여기 있고, 어제부터는 «지난 기록» 으로 가요.</text>
+<rect x="52" y="896" width="844" height="89" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 908 940.5 H 1150 V 1122.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="908" cy="940.5" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1088.0" font-size="42" font-weight="600" fill="#141414">오늘 한 일이 시간순으로</text>
+<text x="1340" y="1148.0" font-size="35" fill="#3d3d3a">약은 같은 분끼리 한 줄로 묶이고 인공눈물은 넣을 때마다 따로</text>
+<text x="1340" y="1196.0" font-size="35" fill="#3d3d3a">서요. 잘못 들어간 줄은 꾹 눌러 지워요.</text>
+<rect x="41" y="1606" width="500" height="150" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 553 1681.0 H 1150 V 1681.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="553" cy="1681.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1647.0" font-size="42" font-weight="600" fill="#141414">약을 넣고 빼는 곳</text>
+<text x="1340" y="1707.0" font-size="35" fill="#3d3d3a">무엇을 먹는지는 «약 목록», 언제 어떻게 알릴지는 «설정»</text>
+<text x="1340" y="1755.0" font-size="35" fill="#3d3d3a">이에요.</text>
+</svg>
+
+<h2>알림</h2>
+<p class="lead">까먹었을 때만 와요.</p>
+<table>
+<tr><th>언제</th><th>어떻게</th></tr>
+<tr><td>구간 시각이 되면</td><td>그 구간이 안 끝나 있을 때만 알림 하나. 남은 것 이름만 나열해요</td></tr>
+<tr><td>이미 눌러 뒀으면</td><td>안 와요</td></tr>
+<tr><td>알림에서 «먹었어요»</td><td>그 구간이 통째로 체크돼요</td></tr>
+<tr><td>정해 둔 시간이 지나면</td><td>알림이 스스로 사라져요. 그 구간이 끝났으니까요</td></tr>
+<tr><td>타일은 자정까지</td><td>늦게라도 눌러 채울 수 있어요</td></tr>
+<tr><td>토요일 오전 9시</td><td>일주일치 약통을 채우라는 알림. 요일·시각은 설정에서</td></tr>
+</table>
+
+<h2>기록</h2>
+<p class="lead">챙긴 것은 영구히 남아요. 오늘 화면의 «지난 기록» 으로 들어가요.</p>
+<svg class="shot" viewBox="0 0 2620 1980" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+<image href="img/history.png" xlink:href="img/history.png" x="0" y="0" width="1080" height="1920"/>
+<rect x="41" y="251" width="998" height="74" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 288.0 H 1150 V 288.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="288.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="254.0" font-size="42" font-weight="600" fill="#141414">얼마나 쌓였나</text>
+<text x="1340" y="314.0" font-size="35" fill="#3d3d3a">챙긴 것은 영구히 남아요. 자정에 지워지는 건 «오늘 다 했나»</text>
+<text x="1340" y="362.0" font-size="35" fill="#3d3d3a">뿐이에요.</text>
+<ellipse cx="957.0" cy="449.5" rx="50.0" ry="40.5" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1013 449.5 H 1150 V 494.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1013" cy="449.5" r="9" fill="#2E6BC4"/>
+<text x="1340" y="460.0" font-size="42" font-weight="600" fill="#141414">날짜마다 접고 펴요</text>
+<text x="1340" y="520.0" font-size="35" fill="#3d3d3a">오늘은 펴져 있고 지난 날은 접혀 있어요. 머리줄에 그날 약 몇</text>
+<text x="1340" y="568.0" font-size="35" fill="#3d3d3a">번 · 인공눈물 몇 번이 서요.</text>
+<rect x="79" y="1816" width="832" height="69" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 923 1850.5 H 1150 V 1850.5 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="923" cy="1850.5" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1816.5" font-size="42" font-weight="600" fill="#141414">일주일치 약통</text>
+<text x="1340" y="1876.5" font-size="35" fill="#3d3d3a">토요일에 약통을 채운 것도 여기 남아요. 알림에서 «채웠어요»</text>
+<text x="1340" y="1924.5" font-size="35" fill="#3d3d3a">를 누르면 기록돼요.</text>
+</svg>
+<p class="lead">잘못 들어간 줄은 타임라인이나 기록에서 <b>꾹 눌러</b> 지워요 — 탭은 스크롤하다 잘못 눌려서요.
+설정 맨 아래에서 CSV 로 내보낼 수 있어요(날짜 · 시각 · 종류 · 약 · 구간).</p>
+
+<h2>설정</h2>
+<p class="lead">«언제 · 어떻게 알릴지» 가 여기 모여 있어요. «무엇을 먹나» 는 약 목록이에요.</p>
+<h3>알림과 구간 시각</h3>
+<svg class="shot" viewBox="0 0 2620 1920" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+<image href="img/settings_top.png" xlink:href="img/settings_top.png" x="0" y="0" width="1080" height="1920"/>
+<rect x="52" y="537" width="856" height="84" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 920 579.0 H 1150 V 579.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="920" cy="579.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="569.0" font-size="42" font-weight="600" fill="#141414">끄면 위젯만</text>
+<text x="1340" y="629.0" font-size="35" fill="#3d3d3a">알림을 아예 안 받고 위젯으로만 쓰는 방법이에요.</text>
+<rect x="41" y="739" width="998" height="96" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 787.0 H 1150 V 787.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="787.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="753.0" font-size="42" font-weight="600" fill="#141414">네 구간이 몇 시인지</text>
+<text x="1340" y="813.0" font-size="35" fill="#3d3d3a">이 시각에 안 챙긴 게 있으면 알림이 와요. 미리 눌러 뒀으면</text>
+<text x="1340" y="861.0" font-size="35" fill="#3d3d3a">안 와요.</text>
+<ellipse cx="967.5" cy="971.0" rx="66.5" ry="41.0" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1040 971.0 H 1150 V 971.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1040" cy="971.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="961.0" font-size="42" font-weight="600" fill="#141414">시각 고치기</text>
+<text x="1340" y="1021.0" font-size="35" fill="#3d3d3a">구간 이름은 못 바꾸고 시각만 바꿔요.</text>
+<rect x="41" y="1445" width="998" height="96" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 1493.0 H 1150 V 1493.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="1493.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1459.0" font-size="42" font-weight="600" fill="#141414">알림이 스스로 사라지기까지</text>
+<text x="1340" y="1519.0" font-size="35" fill="#3d3d3a">그 구간이 지나면 알림도 소용없어서 정해 둔 시간 뒤에</text>
+<text x="1340" y="1567.0" font-size="35" fill="#3d3d3a">내려요. 타일은 자정까지 눌러 채울 수 있어요.</text>
+</svg>
+<h3>인공눈물과 되돌리기</h3>
+<svg class="shot" viewBox="0 0 2620 1920" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+<image href="img/settings_bottom.png" xlink:href="img/settings_bottom.png" x="0" y="0" width="1080" height="1920"/>
+<rect x="41" y="194" width="998" height="122" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 255.0 H 1150 V 255.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="255.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="245.0" font-size="42" font-weight="600" fill="#141414">인공눈물 간격</text>
+<text x="1340" y="305.0" font-size="35" fill="#3d3d3a">이 간격이 지나면 위젯 띠의 물방울이 빨개져요. 기본 60분.</text>
+<rect x="52" y="628" width="856" height="84" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 920 670.0 H 1150 V 670.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="920" cy="670.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="660.0" font-size="42" font-weight="600" fill="#141414">인공눈물도 알릴지</text>
+<text x="1340" y="720.0" font-size="35" fill="#3d3d3a">기본은 끔. 켜면 간격이 지났을 때 한 번 알려요.</text>
+<rect x="41" y="830" width="998" height="96" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 878.0 H 1150 V 878.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="878.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="844.0" font-size="42" font-weight="600" fill="#141414">되돌리기 유예</text>
+<text x="1340" y="904.0" font-size="35" fill="#3d3d3a">잘못 눌렀을 때만 고치라고 두는 시간이에요. 지나면 체크가</text>
+<text x="1340" y="952.0" font-size="35" fill="#3d3d3a">그대로 굳어요.</text>
+</svg>
+<p class="lead">소리 · 진동 · 잠금화면 표시는 안드로이드가 맡아요 — 설정 화면의 «시스템 알림 설정 열기» 로 넘어가요.
+위젯 미리보기도 여기 있어요 — 모양·색을 바꾼 뒤 홈에 올리기 전에 보는 자리예요.</p>
+
+<h2>약 목록</h2>
+<p class="lead">아이콘은 그리지 않고 모양과 색을 골라 만들어요.</p>
+<svg class="shot" viewBox="0 0 2620 1920" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+<image href="img/meds.png" xlink:href="img/meds.png" x="0" y="0" width="1080" height="1920"/>
+<rect x="52" y="289" width="976" height="73" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1040 325.5 H 1150 V 325.5 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1040" cy="325.5" r="9" fill="#2E6BC4"/>
+<text x="1340" y="315.5" font-size="42" font-weight="600" fill="#141414">순서가 곧 위젯</text>
+<text x="1340" y="375.5" font-size="35" fill="#3d3d3a">위아래 화살표로 옮기면 위젯 타일 순서가 그대로 바뀌어요.</text>
+<rect x="178" y="1087" width="559" height="69" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 749 1121.5 H 1150 V 1121.5 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="749" cy="1121.5" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1087.5" font-size="42" font-weight="600" fill="#141414">영양제 표시</text>
+<text x="1340" y="1147.5" font-size="35" fill="#3d3d3a">영양제로 둔 것은 같은 구간의 다른 영양제와 위젯에서 한</text>
+<text x="1340" y="1195.5" font-size="35" fill="#3d3d3a">타일로 뭉쳐요.</text>
+<rect x="41" y="1680" width="998" height="150" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 1755.0 H 1150 V 1755.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="1755.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1721.0" font-size="42" font-weight="600" fill="#141414">새 약</text>
+<text x="1340" y="1781.0" font-size="35" fill="#3d3d3a">이름 · 짧은 이름 · 모양 · 색 · 언제 먹나. 아이콘은 그리지</text>
+<text x="1340" y="1829.0" font-size="35" fill="#3d3d3a">않고 모양과 색을 골라요.</text>
+</svg>
+<h3>약 하나 고치기</h3>
+<svg class="shot" viewBox="0 0 2620 1920" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+<image href="img/edit.png" xlink:href="img/edit.png" x="0" y="0" width="1080" height="1920"/>
+<rect x="255" y="345" width="784" height="74" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 382.0 H 1150 V 382.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="382.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="372.0" font-size="42" font-weight="600" fill="#141414">위젯 타일 미리보기</text>
+<text x="1340" y="432.0" font-size="35" fill="#3d3d3a">모양과 색을 바꾸면 여기가 바로 따라 바뀌어요.</text>
+<rect x="41" y="816" width="998" height="74" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 853.0 H 1150 V 853.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="853.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="819.0" font-size="42" font-weight="600" fill="#141414">짧은 이름</text>
+<text x="1340" y="879.0" font-size="35" fill="#3d3d3a">위젯과 알림에는 이게 들어가요. 일곱 글자까지는 자동으로</text>
+<text x="1340" y="927.0" font-size="35" fill="#3d3d3a">줄어 다 들어가요.</text>
+<rect x="41" y="1076" width="998" height="74" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 1113.0 H 1150 V 1113.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="1113.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1079.0" font-size="42" font-weight="600" fill="#141414">모양 열셋</text>
+<text x="1340" y="1139.0" font-size="35" fill="#3d3d3a">물방울 · 안약 병 · 기울인 병 · 정제 · 연질캡슐 · 캡슐 ·</text>
+<text x="1340" y="1187.0" font-size="35" fill="#3d3d3a">연고 튜브 …</text>
+<rect x="41" y="1447" width="998" height="74" rx="20" fill="none" stroke="#2E6BC4" stroke-width="5"/>
+<path d="M 1051 1484.0 H 1150 V 1484.0 H 1310" fill="none" stroke="#2E6BC4" stroke-width="4"/>
+<circle cx="1051" cy="1484.0" r="9" fill="#2E6BC4"/>
+<text x="1340" y="1474.0" font-size="42" font-weight="600" fill="#141414">색 열셋</text>
+<text x="1340" y="1534.0" font-size="35" fill="#3d3d3a">«하양» 은 낮 위젯에서 사라져서 낮에만 연회색으로 바뀌어요.</text>
+</svg>
+<p class="lead">아래로 내리면 «언제 먹나» 에서 구간을 고르고, «영양제로 둔다» 를 켜면 같은 구간의 다른 영양제와 한 타일로 뭉쳐요.
+정식 이름과 언제 먹나는 있어야 저장돼요.</p>
+
+<h2>만드는 쪽</h2>
+<p class="lead">코드는 <code>newhigen-labs/pillbox</code>. 갤럭시 S25+ · One UI 8 전용이고 스토어에 안 올려요 —
+<code>assembleDebug</code> 로 깔아 써요. 이 설명서는 <code>tools/shoot_manual.py</code>(에뮬레이터에서 찍기)와
+<code>tools/gen_manual.py</code>(붙이기)로 뽑아요. 화면이 바뀌면 둘을 다시 돌려요 — 설명선은 화면 글자로 찾아서 문구가
+바뀌면 못 찾고 멈춰요. 왜 이렇게 생겼는지는 <code>README.md</code> 와 <code>HISTORY.md</code>, 고르던 시안은
+<code>docs/explore/</code>.</p>
+
+<p class="note">2026-09-03 · 약수첩 0.1</p>
+</div></body></html>

@@ -1,0 +1,111 @@
+---
+title: 약수첩
+tagline: 먹고 바르고 넣는 약을 홈 화면 위젯에서 챙기는 안드로이드 앱
+period: "2026.09"
+category: 앱
+kind: 안드로이드 앱
+tags: [Android, Kotlin, One UI, 위젯]
+icon: /p/pillbox/icon.png
+cover: /p/pillbox/widget-dark.png
+coverLight: /p/pillbox/widget-light.png
+headCover: false
+github: https://github.com/newhigen-labs/pillbox
+link: /p/pillbox/manual.html
+linkLabel: 설명서
+use:
+  - "하루 네 구간에 무엇을 챙기는지 정해 둔다"
+  - "홈 화면 2칸 위젯으로 «지금 것 했나» 를 본다"
+  - "안 챙긴 채 시각이 지나면 그때만 알림이 온다"
+  - "인공눈물은 마지막으로 넣은 지 얼마나 됐는지만 본다"
+---
+
+import Fig from '../../components/Fig.astro';
+import Flow from '../../components/Flow.astro';
+import Strip from '../../components/Strip.astro';
+import Cases from '../../components/Cases.astro';
+import Shots from '../../components/Shots.astro';
+
+약 알림 앱은 많은데 대부분 «알림을 지우는 것» 과 «약을 먹는 것» 이 따로 논다. 알림은 지웠는데
+먹었는지는 모르고, 먹었는데 알림은 또 온다. 이 앱은 그 둘을 붙였다 — **미리 챙겨 두면 알림이
+아예 안 오고**, 홈 화면 위젯이 «지금 것 했나» 만 보여 준다.
+
+<Fig src="/p/pillbox/widget-light.png" srcDark="/p/pillbox/widget-dark.png"
+  caption="홈 화면 2×1 위젯. 윗줄이 지금 구간(오후)의 약, 아랫줄이 나머지 세 구간의 상태 — 다 챙겼으면 체크, 남았으면 개수. 맨 아래가 인공눈물 띠." />
+
+## 알약만이 아니다
+
+먹는 약·영양제에 바르는 연고(엘리델)와 넣는 안약(레스타시스·인공눈물)까지 든다. 그래서
+이름이 «약통» 이 아니라 «약수첩» 이고, 아이콘도 약 하나하나를 **제형대로** 그린다 — 물방울 ·
+기울인 안약 병 · 연고 튜브 · 정제 · 연질캡슐. 색은 실제 약통 색이라 기억에 붙는다.
+
+<Fig src="/p/pillbox/main_top.png" phone
+  caption="앱의 오늘 화면. 구간마다 카드 하나, 줄을 누르면 체크되고 시각이 남는다. 영양제는 한 줄로 뭉친다." />
+
+## 위젯은 보는 자리다
+
+처음엔 위젯에서 약을 눌러 체크하게 했다. 4×3 이었다. 쓰다 보니 **위젯에서 하는 일은
+«챙겼나» 보는 것뿐**이었고 체크는 앱에서 해도 됐다. 그래서 위젯에서 누르기를 걷고
+4×2 → 4×1 → 2×1 로 줄였다. 2칸은 폭만 반이 되고 높이는 그대로라, 네 구간을 다
+늘어놓는 대신 **지금 구간만 약을 그리고 나머지는 표식으로** 줄였다.
+
+<Shots items={[
+  { src: "/p/pillbox/shot-compact.png", caption: "4×1 — 시각·이름을 걷은 배치 셋", href: "/p/pillbox/pages/compact.html" },
+  { src: "/p/pillbox/shot-two-cells.png", caption: "2×1 — 폭이 반이면 뭐가 남나, 다섯", href: "/p/pillbox/pages/two-cells.html" },
+]} />
+
+인공눈물만 위젯에서 누른다. 정해진 시간이 없고 하루에 몇 번이든 넣는 것이라 앱을 열 일이
+아니어서다. 주머니에서 잘못 눌리는 자리라 **두 번 눌러야** 들어가고, 간격(기본 60분)이
+지나면 물방울이 빨개진다.
+
+## 하루가 어떻게 흐르나
+
+<Flow caption="구간 시각에 안 챙긴 게 있을 때만 알림이 온다. 미리 해 두면 조용하다." steps={[
+  { at: "오전 5:20", name: "아침", note: "약 셋 + 영양제" },
+  { at: "오전 10:30", name: "낮", note: "레스타시스" },
+  { at: "오후 3:45", name: "오후", note: "여섯 개", key: true },
+  { at: "오후 8:00", name: "밤", note: "레스타시스" },
+  { at: "언제든", name: "인공눈물", note: "60분마다 · 위젯 띠", key: true },
+]} />
+
+<Strip items={[
+  { src: "/p/pillbox/main_tail.png", label: "인공눈물과 타임라인", note: "오늘 한 일이 시간순으로" },
+  { src: "/p/pillbox/history.png", label: "지난 기록", note: "챙긴 것은 영구히 남는다" },
+  { src: "/p/pillbox/settings_top.png", label: "설정", note: "언제 · 어떻게 알릴지" },
+  { src: "/p/pillbox/edit.png", label: "약 고치기", note: "모양과 색을 골라 만든다" },
+]} />
+
+## 이럴 때 이렇게
+
+<Cases items={[
+  { when: "아침에 약을 먹고",
+    what: "앱을 열어 아침 카드의 줄을 누른다. 영양제 넷은 한 줄이라 한 번에 체크된다. 5시 20분이 돼도 알림은 안 온다 — 이미 했으니까." },
+  { when: "깜빡했을 때",
+    what: "구간 시각에 알림이 하나 온다. 남은 것 이름만 적혀 있고, <b>먹었어요</b> 를 누르면 그 구간이 통째로 체크된다. 정해 둔 시간이 지나면 알림은 스스로 사라진다." },
+  { when: "인공눈물을 넣을 때",
+    what: "위젯 띠를 두 번 누른다. 한 번 누르면 «한 번 더 눌러서 확정», 4초 안에 다시 누르면 기록된다. 잘못 넣었으면 앱의 «방금 것 취소»." },
+  { when: "잘못 눌렀을 때",
+    what: "몇 분 안에는 같은 줄을 다시 눌러 되돌린다(기본 5분). 지나면 그대로 굳는다 — 잘못 눌렀을 때만 고치라고 두는 시간이다." },
+  { when: "토요일 아침",
+    what: "일주일치 약통을 채우라는 알림이 온다. 매일 챙기는 일이 아니라 위젯에 안 세우고 알림으로만 알린다. «채웠어요» 를 누르면 기록에 남는다." },
+]} />
+
+## 아이콘은 네 앱이 같이 쓴다
+
+이 앱을 하면서 안드로이드 앱이 넷이 됐다 — 챙김 · 한달 · 오늘 당겨 쓰면 · 약수첩. 아이콘을
+따로따로 그리지 않고 **한 규칙**을 정했다. 따뜻한 먹 판에 미색 그림, 그 뒤에 황토로 같은
+그림을 살짝 어긋나게 먼저 찍는다 — 인쇄가 밀린 것처럼. 판 모양은 One UI 가 깎으니 못 정하고,
+개성은 그림과 그 자국에 실었다. 후보 스물넷 중에서 원색이 든 것은 다 떨어졌다.
+
+<Shots items={[
+  { src: "/p/pillbox/shot-icon-family.png", caption: "넷을 한 결로 — 여섯 규칙", href: "/p/pillbox/pages/icon-family.html" },
+  { src: "/p/pillbox/shot-icon-muted.png", caption: "원색을 빼고 — 뿌연 색과 무채색 여덟", href: "/p/pillbox/pages/icon-muted.html" },
+  { src: "/p/pillbox/shot-icon-final.png", caption: "먹 판에 인쇄 밀림 — 섞는 법 넷", href: "/p/pillbox/pages/icon-final.html" },
+]} />
+
+## 써 보려면
+
+One UI 8(안드로이드 16). 갤럭시 S25+ 에서 만들고 확인했다. 스토어에 안 올리고 `assembleDebug`
+로 깔아 쓴다. 약과 구간은 앱 안에서 넣고 빼니, 다른 약을 먹는 사람도 그대로 쓸 수 있다.
+
+- [설명서](/p/pillbox/manual.html) — 화면마다 설명선, 하루 순서, 알림 규칙
+- [위젯 타일 시안](/p/pillbox/pages/tiles.html) · [제형 그림 시안](/p/pillbox/pages/forms.html) — 약을 무엇으로 그릴지 고르던 것
