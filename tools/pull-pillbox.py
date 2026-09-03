@@ -48,7 +48,8 @@ for name, body, bg in (("widget-dark", dark, "#1D1F2E"), ("widget-light", light,
                  f'<div style="transform:scale(2.0);transform-origin:center">{body}</div></body></html>', encoding="utf-8")
     shot(h, OUT / f"{name}.png", "420,320"); h.unlink()
 
-# ── 3. 앱 화면 — 설명서용으로 찍은 것을 그대로
+# ── 3. 앱 화면 — 설명서용으로 찍은 것을 그대로. 위젯은 폰에서 찍은 것
+shutil.copy2(DOCS / "img" / "widget.png", OUT / "widget.png")
 for n in ("main_top", "main_tail", "history", "settings_top", "meds", "edit"):
     shrink(DOCS / "img" / f"{n}.png", OUT / f"{n}.png", 620)
 
