@@ -1,20 +1,38 @@
 ---
 interface Props {
-  /** 변천사 한 줄 — 시기, 무엇이 바뀌었나. 그림은 바뀐 화면이 있을 때만 */
-  items: { at: string; title: string; note: string; img?: string; w?: number }[];
+  /** 변천사 한 장 — 시기, 무엇이 바뀌었나. 그림은 화면이 바뀐 단계에만 */
+  items: { at: string; title: string; note: string; img?: string; wide?: boolean; w?: number }[];
 }
 const { items } = Astro.props;
 ---
 
-<div class="evo">
-  {items.map(it => (
-    <div class:list={['ev', { pic: !!it.img }]}>
-      <div class="at">{it.at}</div>
-      <div class="tx">
+<div class="evo" data-edge="start">
+  <div class="track">
+    {items.map(it => (
+      <div class="card">
+        <div class="at">{it.at}</div>
         <b>{it.title}</b>
         <p set:html={it.note} />
-        {it.img && <img src={it.img} alt="" loading="lazy" style={`width:${(it.w ?? 318) * 0.92}px`} />}
+        {it.img && (
+          <div class:list={['pic', { wide: it.wide, free: !!it.w }]}>
+            <img src={it.img} alt="" loading="lazy" style={it.w ? `width:${it.w}px` : undefined} />
+          </div>
+        )}
       </div>
-    </div>
-  ))}
+    ))}
+  </div>
 </div>
+
+<script>
+  // 양 끝을 흐려서 잘린 카드가 잘린 것처럼 안 보이게 — 끝에 닿으면 그쪽 흐림은 걷는다
+  document.querySelectorAll<HTMLElement>('.evo').forEach(el => {
+    const mark = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      if (max < 8) return el.setAttribute('data-edge', 'none');
+      el.setAttribute('data-edge', el.scrollLeft < 8 ? 'start' : el.scrollLeft > max - 8 ? 'end' : 'mid');
+    };
+    el.addEventListener('scroll', mark, { passive: true });
+    addEventListener('resize', mark);
+    mark();
+  });
+</script>
