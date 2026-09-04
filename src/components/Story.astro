@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** 하루 장면 — 시각과 그때 무슨 일이 일어나는지 */
+  items: { at: string; what: string }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="story">
+  {items.map(it => (
+    <div>
+      <span class="at">{it.at}</span>
+      <p set:html={it.what} />
+    </div>
+  ))}
+</div>

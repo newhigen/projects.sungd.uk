@@ -269,6 +269,15 @@ a { color: inherit; }
   letter-spacing: -0.01em;
   margin: 3.1rem 0 0.9rem;
 }
+/* 첫 문단 앞 질문 한 줄 — 본문보다 크고 진하게 */
+.prose p.q {
+  max-width: var(--measure);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.45;
+  margin: 0 0 1rem;
+}
 .prose h3 { font-size: 0.9375rem; font-weight: 600; margin: 2.1rem 0 0.6rem; }
 .prose ul, .prose ol { padding-left: 1.15rem; }
 .prose li { margin-bottom: 0.4rem; }
@@ -316,6 +325,44 @@ a { color: inherit; }
 }
 /* 탭이 이미 선을 그었으면 본문 위 선은 겹친다 */
 .doc-head:has(.tabs) + .doc-body { border-top: 0; }
+
+/* ── 숫자 몇 개 · 하루 장면 ──────────────────────── */
+
+.nums {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 1.8rem 0 2.2rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--rule-mid);
+  border-bottom: 1px solid var(--rule-mid);
+}
+.nums b {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.nums span {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+.story { max-width: var(--measure); margin: 1.5rem 0 2.2rem; }
+.story > div {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--rule);
+}
+.story .at { font-family: var(--mono); font-size: 0.8125rem; color: var(--ink-3); }
+.story p { margin: 0; font-size: 0.9375rem; text-wrap: pretty; }
+.story b { font-weight: 600; }
 
 /* ── 화면 몇 장 나란히 ────────────────────────────── */
 
@@ -530,6 +577,9 @@ figcaption {
   .tabs { gap: 1.2rem; margin-top: 1.1rem; }
   .tabs a { font-size: 0.8125rem; }
 
+  .nums { grid-template-columns: 1fr; gap: 0.9rem; }
+  .nums b { font-size: 1.25rem; }
+  .story > div { grid-template-columns: 3.6rem 1fr; gap: 0.7rem; }
   .strip { grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr)); gap: 1rem 0.8rem; }
   .strip figcaption { font-size: 0.6875rem; }
   /* 표를 접어 구간마다 한 덩이로 — 값 앞에 열 이름을 붙인다 */
@@ -569,7 +619,16 @@ figcaption {
   .rail { font-size: 0.75rem; margin-bottom: 1.5rem; }
 
   .prose h2 { font-size: 0.9375rem; margin: 2.2rem 0 0.65rem; }
-  .prose h3 { font-size: 0.875rem; }
+  /* 첫 문단 앞 질문 한 줄 — 본문보다 크고 진하게 */
+.prose p.q {
+  max-width: var(--measure);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.45;
+  margin: 0 0 1rem;
+}
+.prose h3 { font-size: 0.875rem; }
 
   figure { margin: 1.5rem 0 1.7rem; }
   figure.phone img, figure.phone video { max-width: 14rem; }
