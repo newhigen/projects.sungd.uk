@@ -65,8 +65,7 @@ a { color: inherit; }
   align-items: baseline;
   justify-content: space-between;
   gap: 1.5rem;
-  padding-bottom: 0.7rem;
-  border-bottom: 2px solid var(--rule-ink);
+  padding-bottom: 1.6rem;
 }
 .masthead .site {
   font-size: 1rem;
@@ -86,9 +85,7 @@ a { color: inherit; }
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--ink-3);
-  margin: 0 0 1.1rem;
-  padding-bottom: 0.45rem;
-  border-bottom: 1px solid var(--rule-mid);
+  margin: 0 0 1.2rem;
 }
 .sec .n { margin-left: 0.5rem; font-family: var(--mono); font-size: 0.75rem; }
 .note { margin: -0.5rem 0 1.4rem; font-size: 0.8125rem; color: var(--ink-3); }
@@ -204,8 +201,7 @@ a { color: inherit; }
   grid-template-columns: 13rem minmax(0, 1fr);
   /* 칸 안의 그림 원래 크기가 칸을 밀지 않게 — 없으면 폰에서 가로로 넘친다 */
   gap: 0 3.5rem;
-  border-top: 1px solid var(--rule-mid);
-  padding-top: 1.75rem;
+  padding-top: 2.2rem;
 }
 
 .rail {
@@ -222,9 +218,7 @@ a { color: inherit; }
 .rail a:hover { text-decoration: underline; }
 .rail ul {
   list-style: none;
-  margin: 1.4rem 0 0;
-  padding: 1.1rem 0 0;
-  border-top: 1px solid var(--rule);
+  margin: 1.8rem 0 0;
 }
 .rail li { display: flex; gap: 0.45rem; margin-bottom: 0.3rem; }
 .rail li::before { content: "—"; color: var(--ink-3); flex-shrink: 0; }
@@ -336,7 +330,6 @@ a { color: inherit; }
   display: flex;
   gap: 1.6rem;
   margin-top: 1.5rem;
-  border-bottom: 1px solid var(--rule-mid);
 }
 .tabs a {
   margin-bottom: -1px;
@@ -352,8 +345,7 @@ a { color: inherit; }
   font-weight: 600;
   border-bottom-color: var(--rule-ink);
 }
-/* 탭이 이미 선을 그었으면 본문 위 선은 겹친다 */
-.doc-head:has(.tabs) + .doc-body { border-top: 0; }
+
 
 /* ── 숫자 몇 개 · 하루 장면 ──────────────────────── */
 
@@ -414,15 +406,13 @@ a { color: inherit; }
   text-align: left;
   vertical-align: top;
   font-weight: 400;
-  padding: 0.75rem 1.1rem 0.75rem 0;
-  border-top: 1px solid var(--rule);
+  padding: 0.55rem 1.1rem 0.55rem 0;
   font-size: 0.8125rem;
   line-height: 1.55;
 }
 .matrix thead th {
-  border-top: 0;
-  border-bottom: 1px solid var(--rule-mid);
   padding-top: 0;
+  padding-bottom: 0.7rem;
   color: var(--ink-3);
 }
 .matrix tbody th { width: 9rem; font-weight: 600; color: var(--ink); }
@@ -443,7 +433,7 @@ a { color: inherit; }
   gap: 1.5rem 2.5rem;
   margin: 1.6rem 0 2.4rem;
 }
-.cases section { padding-top: 0.85rem; border-top: 1px solid var(--rule-mid); }
+.cases section { padding-top: 0; }
 .cases h3 {
   margin: 0 0 0.35rem;
   font-size: 0.9375rem;
@@ -467,7 +457,6 @@ a { color: inherit; }
 .flow li {
   position: relative;
   padding: 1rem 1.1rem 0 0;
-  border-top: 1px solid var(--rule-mid);
 }
 .flow li::before {
   content: "";
@@ -523,9 +512,7 @@ figcaption {
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 0.9rem;
-  margin: 2rem 0 2.2rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--rule);
+  margin: 2.2rem 0 2.4rem;
   max-width: var(--measure);
 }
 .dg-node { flex: 1; min-width: 6.5rem; display: flex; flex-direction: column;
@@ -548,8 +535,6 @@ figcaption {
 
 .foot {
   margin-top: 5rem;
-  padding-top: 1.1rem;
-  border-top: 1px solid var(--rule);
   display: flex;
   gap: 1.2rem;
   font-size: 0.8125rem;
@@ -610,7 +595,7 @@ figcaption {
   /* 표를 접어 구간마다 한 덩이로 — 값 앞에 열 이름을 붙인다 */
   .matrix thead { display: none; }
   .matrix table, .matrix tbody, .matrix tr, .matrix th, .matrix td { display: block; }
-  .matrix tr { padding: 0.7rem 0; border-top: 1px solid var(--rule-mid); }
+  .matrix tr { padding: 0.9rem 0 0; }
   .matrix th, .matrix td { border: 0; padding: 0; }
   .matrix tbody th { width: auto; margin-bottom: 0.3rem; }
   .matrix td { font-size: 0.75rem; padding-left: 5.5rem; position: relative; margin-top: 0.15rem; }
