@@ -1,0 +1,20 @@
+---
+interface Props {
+  /** 변천사 한 줄 — 시기, 무엇이 바뀌었나. 그림은 바뀐 화면이 있을 때만 */
+  items: { at: string; title: string; note: string; img?: string; w?: number }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="evo">
+  {items.map(it => (
+    <div class:list={['ev', { pic: !!it.img }]}>
+      <div class="at">{it.at}</div>
+      <div class="tx">
+        <b>{it.title}</b>
+        <p set:html={it.note} />
+        {it.img && <img src={it.img} alt="" loading="lazy" style={`width:${(it.w ?? 318) * 0.92}px`} />}
+      </div>
+    </div>
+  ))}
+</div>

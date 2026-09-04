@@ -381,6 +381,40 @@ a { color: inherit; }
 }
 
 
+/* ── 변천사 ──────────────────────────────────────── */
+
+.evo { max-width: none; margin: 1.8rem 0 2.6rem; }
+.evo .ev {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0 1.4rem;
+  padding: 0 0 1.5rem;
+}
+.evo .ev.pic { padding-bottom: 2.2rem; }
+.evo .at {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  padding-top: 0.15rem;
+}
+.evo .tx b { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--ink); }
+.evo .tx p {
+  margin: 0.15rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--prose);
+  line-height: 1.75;
+  max-width: 32rem;
+}
+.evo .tx img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin-top: 0.9rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 10px rgba(40, 35, 80, 0.1);
+}
+
 /* ── 숫자 몇 개 · 하루 장면 ──────────────────────── */
 
 .nums {
@@ -624,6 +658,8 @@ figcaption {
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }
   .nums b { font-size: 1.25rem; }
   .story > div { grid-template-columns: 3.6rem 1fr; gap: 0.7rem; }
+  .evo .ev { grid-template-columns: 1fr; gap: 0.2rem; }
+  .evo .tx img { width: 100% !important; }
   .strip { grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr)); gap: 1rem 0.8rem; }
   .strip figcaption { font-size: 0.6875rem; }
   /* 표를 접어 구간마다 한 덩이로 — 값 앞에 열 이름을 붙인다 */
