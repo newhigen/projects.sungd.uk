@@ -283,17 +283,15 @@ a { color: inherit; }
 .prose > ul,
 .prose > ol { margin: 0 0 1.15rem; }
 .prose > :first-child { margin-top: 0; }
-/* 큰 절 — 위에 실선을 둬서 층이 바뀌는 것이 보이게 */
+/* 큰 절 — 층은 크기와 여백으로만 낸다 */
 .prose h2 {
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.022em;
   line-height: 1.3;
-  margin: 3.4rem 0 1rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--rule);
+  margin: 3.9rem 0 1rem;
 }
-.prose > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.prose > h2:first-child { margin-top: 0; }
 /* 첫 문단 앞 질문 한 줄 — 본문보다 크고 진하게 */
 .prose p.q {
   max-width: var(--measure);
@@ -363,10 +361,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin: 1.8rem 0 2.2rem;
-  padding: 1.1rem 0;
-  border-top: 1px solid var(--rule-mid);
-  border-bottom: 1px solid var(--rule-mid);
+  margin: 2.2rem 0 2.6rem;
 }
 .nums b {
   display: block;
@@ -388,8 +383,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: 4.6rem 1fr;
   gap: 1rem;
-  padding: 0.6rem 0;
-  border-top: 1px solid var(--rule);
+  padding: 0.45rem 0;
 }
 .story .at { font-family: var(--mono); font-size: 0.8125rem; color: var(--ink-3); }
 .story p { margin: 0; font-size: 0.9375rem; text-wrap: pretty; }
