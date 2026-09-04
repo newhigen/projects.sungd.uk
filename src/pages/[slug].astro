@@ -32,19 +32,18 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '그전 모습' });
   <div class="doc-body">
     <aside class="rail">
       <dl>
-        {d.kind && <><dt>무엇</dt><dd>{d.kind}</dd></>}
-        <dt>언제</dt>
+        {d.kind && <><dt>종류</dt><dd>{d.kind}</dd></>}
+        <dt>기간</dt>
         <dd class="when">{d.period}</dd>
-        {d.tags.length > 0 && <><dt>무엇으로</dt><dd>{d.tags.join(' · ')}</dd></>}
+        {d.tags.length > 0 && <><dt>스택</dt><dd>{d.tags.join(' · ')}</dd></>}
         {(d.github || d.link) && (
           <>
-            <dt>열어보기</dt>
+            <dt>링크</dt>
             {d.github && <dd><a href={d.github}>GitHub ↗</a></dd>}
             {d.link && <dd><a href={d.link}>{d.linkLabel ?? '사이트'} ↗</a></dd>}
           </>
         )}
       </dl>
-      {d.use.length > 0 && <ul>{d.use.map(u => <li>{u}</li>)}</ul>}
       <Toc items={toc} />
     </aside>
 

@@ -31,10 +31,10 @@ const d = project.data;
   <div class="doc-body">
     <aside class="rail">
       <dl>
-        {d.kind && <><dt>무엇</dt><dd>{d.kind}</dd></>}
-        <dt>언제</dt>
+        {d.kind && <><dt>종류</dt><dd>{d.kind}</dd></>}
+        <dt>기간</dt>
         <dd class="when">{d.period}</dd>
-        {d.tags.length > 0 && <><dt>무엇으로</dt><dd>{d.tags.join(' · ')}</dd></>}
+        {d.tags.length > 0 && <><dt>스택</dt><dd>{d.tags.join(' · ')}</dd></>}
         <dt>이 앱은</dt>
         <dd><a href={`/${project.id}`}>소개 보기</a></dd>
       </dl>
