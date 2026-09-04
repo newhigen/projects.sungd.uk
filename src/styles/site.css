@@ -19,7 +19,7 @@
 
   --page: 76rem;
   --gut: 2.5rem;
-  --base: 15.5px;
+  --base: 16.5px;
   --measure: 40rem;
   color-scheme: light dark;
 }
@@ -202,13 +202,14 @@ a { color: inherit; }
 .doc-body {
   display: grid;
   grid-template-columns: 13rem minmax(0, 1fr);
+  /* 칸 안의 그림 원래 크기가 칸을 밀지 않게 — 없으면 폰에서 가로로 넘친다 */
   gap: 0 3.5rem;
   border-top: 1px solid var(--rule-mid);
   padding-top: 1.75rem;
 }
 
 .rail {
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
   color: var(--ink-3);
   line-height: 1.7;
 }
@@ -235,22 +236,42 @@ a { color: inherit; }
   position: sticky;
   top: 1.75rem;
 }
-.toc .lb { color: var(--ink-3); margin-bottom: 0.15rem; }
+.toc .lb { color: var(--ink-3); font-size: 0.8125rem; margin-bottom: 0.35rem; }
 .toc ol { list-style: none; margin: 0; padding: 0; }
 .toc li { display: block; margin: 0; }
 .toc li::before { content: none; }
-/* 지금 읽는 절 — 왼쪽 세로선이 따라 내려온다 */
+/* 지금 읽는 자리 — 앞에 점이 찍히고 글자가 진해진다 */
 .toc a {
   display: block;
-  padding: 0.1rem 0 0.1rem 0.7rem;
-  margin-left: -0.7rem;
-  border-left: 2px solid transparent;
+  position: relative;
+  padding: 0.16rem 0 0.16rem 0.95rem;
   color: var(--ink-3);
-  transition: border-color 0.2s, color 0.2s;
+  transition: color 0.2s;
+}
+.toc a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 .toc a:hover { color: var(--ink-2); text-decoration: none; }
-.toc a.on { color: var(--ink); border-left-color: var(--ink); }
-.toc a.sub { padding-left: 1.7rem; font-size: 0.9375em; }
+.toc a.on { color: var(--ink); font-weight: 600; }
+.toc a.on::before { opacity: 1; }
+/* 아래 층 — 더 들여쓰고 한 단계 작게 */
+.toc a.sub {
+  padding-left: 2.3rem;
+  font-size: 0.875em;
+  padding-top: 0.08rem;
+  padding-bottom: 0.08rem;
+}
+.toc a.sub::before { left: 1.35rem; width: 4px; height: 4px; top: 0.78em; }
+.toc a.sub.on { font-weight: 500; }
 .prose h2 { scroll-margin-top: 1.75rem; }
 
 .prose > p,
@@ -556,7 +577,7 @@ figcaption {
 
 @media (max-width: 640px) {
   :root {
-    --base: 14px;
+    --base: 15.5px;
     --gut: 1.15rem;
     --measure: 100%;
   }
@@ -630,7 +651,7 @@ figcaption {
   .prose h3 { font-size: 1.0625rem; }
   .doc-head .tagline { font-size: 0.9375rem; }
   .doc-body { padding-top: 1.15rem; }
-  .rail { font-size: 0.75rem; margin-bottom: 1.5rem; }
+  .rail { font-size: 0.875rem; margin-bottom: 1.5rem; }
 
   .prose h2 { font-size: 0.9375rem; margin: 2.2rem 0 0.65rem; }
   /* 첫 문단 앞 질문 한 줄 — 본문보다 크고 진하게 */
