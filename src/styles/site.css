@@ -441,9 +441,9 @@ a { color: inherit; }
 }
 .evo .row {
   display: grid;
-  grid-template-columns: 3.2rem minmax(0, 1fr);
-  gap: 0 0.6rem;
-  margin-top: 0.5rem;
+  margin-top: 0.45rem;
+  grid-template-columns: 2.3rem minmax(0, 1fr);
+  gap: 0 0.15rem;
   font-size: 0.875rem;
   line-height: 1.65;
 }
