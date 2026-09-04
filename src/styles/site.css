@@ -8,6 +8,7 @@
 :root {
   --bg: #e6e3f0;
   --card: #fbfaff;
+  --card-2: #dfe6f2;
   --shadow: 0 2px 24px rgba(40, 35, 80, 0.08);
   --ink: #221f2b;
   --prose: #3a3646;
@@ -33,6 +34,7 @@
   :root {
     --bg: #16151d;
     --card: #1e1c27;
+    --card-2: #232733;
     --shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
     --ink: #ece9f4;
     --prose: #c7c2d8;
@@ -411,11 +413,11 @@ a { color: inherit; }
   width: max-content;
 }
 .evo .card {
-  flex: 0 0 15.5rem;
+  flex: 0 0 17rem;
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: var(--card-2);
   border-radius: 12px;
   padding: 1rem 1.15rem 1.15rem;
 }
@@ -437,6 +439,23 @@ a { color: inherit; }
   line-height: 1.7;
   color: var(--prose);
 }
+.evo .row {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 0 0.6rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+.evo .row dt {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--ink-3);
+  padding-top: 0.25rem;
+}
+.evo .row dd { margin: 0; color: var(--prose); }
+.evo .row.next dd { color: var(--ink-2); }
+.evo .row b { color: var(--ink); font-weight: 700; }
 .evo .pic {
   margin-top: 0.9rem;
   height: 15rem;
