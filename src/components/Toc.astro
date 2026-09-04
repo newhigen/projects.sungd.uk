@@ -1,7 +1,7 @@
 ---
 /** 왼쪽 난에 붙는 목차. 본문의 h2 를 그대로 잇고, 지금 읽는 절을 진하게 표시한다 */
 interface Props {
-  items: { slug: string; text: string }[];
+  items: { slug: string; text: string; depth?: number }[];
 }
 const { items } = Astro.props;
 ---
@@ -10,7 +10,7 @@ const { items } = Astro.props;
   <nav class="toc" aria-label="목차">
     <div class="lb">목차</div>
     <ol>
-      {items.map(h => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+      {items.map(h => <li><a href={`#${h.slug}`} class:list={[{ sub: h.depth === 3 }]}>{h.text}</a></li>)}
     </ol>
   </nav>
 )}

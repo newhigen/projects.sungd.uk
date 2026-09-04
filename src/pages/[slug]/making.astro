@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
 const { entry, project } = Astro.props;
 const { Content, headings } = await render(entry);
-const toc = headings.filter(h => h.depth === 2).map(({ slug, text }) => ({ slug, text }));
+const toc = headings.filter(h => h.depth <= 3).map(({ slug, text, depth }) => ({ slug, text, depth }));
 const d = project.data;
 ---
 

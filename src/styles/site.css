@@ -186,7 +186,7 @@ a { color: inherit; }
 
 .doc-head { margin: 2.25rem 0 2rem; }
 .doc-head h1 {
-  font-size: 2rem;
+  font-size: 2.6rem;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.25;
@@ -195,7 +195,7 @@ a { color: inherit; }
 .doc-head .tagline {
   margin: 0;
   max-width: var(--measure);
-  font-size: 1.0625rem;
+  font-size: 1.15rem;
   color: var(--ink-2);
 }
 
@@ -250,6 +250,7 @@ a { color: inherit; }
 }
 .toc a:hover { color: var(--ink-2); text-decoration: none; }
 .toc a.on { color: var(--ink); border-left-color: var(--ink); }
+.toc a.sub { padding-left: 1.7rem; font-size: 0.9375em; }
 .prose h2 { scroll-margin-top: 1.75rem; }
 
 .prose > p,
@@ -263,12 +264,17 @@ a { color: inherit; }
 .prose > ul,
 .prose > ol { margin: 0 0 1.15rem; }
 .prose > :first-child { margin-top: 0; }
+/* 큰 절 — 위에 실선을 둬서 층이 바뀌는 것이 보이게 */
 .prose h2 {
-  font-size: 1.0625rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 3.1rem 0 0.9rem;
+  letter-spacing: -0.022em;
+  line-height: 1.3;
+  margin: 3.4rem 0 1rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule);
 }
+.prose > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 /* 첫 문단 앞 질문 한 줄 — 본문보다 크고 진하게 */
 .prose p.q {
   max-width: var(--measure);
@@ -278,7 +284,13 @@ a { color: inherit; }
   line-height: 1.45;
   margin: 0 0 1rem;
 }
-.prose h3 { font-size: 0.9375rem; font-weight: 600; margin: 2.1rem 0 0.6rem; }
+.prose h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  margin: 2.3rem 0 0.7rem;
+  scroll-margin-top: 1.75rem;
+}
 .prose ul, .prose ol { padding-left: 1.15rem; }
 .prose li { margin-bottom: 0.4rem; }
 .prose li::marker { color: var(--ink-3); }
@@ -613,7 +625,9 @@ figcaption {
   .flow .nm { font-size: 0.8125rem; }
 
   .doc-head { margin: 1.5rem 0 1.4rem; }
-  .doc-head h1 { font-size: 1.4rem; }
+  .doc-head h1 { font-size: 1.75rem; }
+  .prose h2 { font-size: 1.25rem; margin-top: 2.6rem; padding-top: 1.1rem; }
+  .prose h3 { font-size: 1.0625rem; }
   .doc-head .tagline { font-size: 0.9375rem; }
   .doc-body { padding-top: 1.15rem; }
   .rail { font-size: 0.75rem; margin-bottom: 1.5rem; }
