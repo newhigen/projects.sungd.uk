@@ -6,15 +6,20 @@
  */
 
 :root {
-  --bg: #f7f8fa;
-  --ink: rgba(10, 14, 20, 0.86);
-  --ink-2: rgba(10, 14, 20, 0.6);
-  --ink-3: rgba(10, 14, 20, 0.44);
-  --rule: rgba(10, 14, 20, 0.09);
-  --rule-mid: rgba(10, 14, 20, 0.18);
-  --rule-ink: rgba(10, 14, 20, 0.82);
-  --link: #2f5ea8;
+  --bg: #e6e3f0;
+  --card: #fbfaff;
+  --shadow: 0 2px 24px rgba(40, 35, 80, 0.08);
+  --ink: #221f2b;
+  --prose: #3a3646;
+  --ink-2: #57536b;
+  --ink-3: #6f6b85;
+  --accent: #8a6a3c;
+  --rule: rgba(34, 31, 43, 0.09);
+  --rule-mid: rgba(34, 31, 43, 0.18);
+  --rule-ink: rgba(34, 31, 43, 0.82);
+  --link: #4a4b93;
   --sans: "Inter Tight", Pretendard, -apple-system, system-ui, sans-serif;
+  --serif: "Noto Serif KR", Pretendard, serif;
   --mono: "Google Sans Code", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --page: 76rem;
@@ -26,14 +31,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #111318;
-    --ink: rgba(233, 238, 245, 0.9);
-    --ink-2: rgba(233, 238, 245, 0.62);
-    --ink-3: rgba(233, 238, 245, 0.44);
-    --rule: rgba(233, 238, 245, 0.12);
-    --rule-mid: rgba(233, 238, 245, 0.24);
-    --rule-ink: rgba(233, 238, 245, 0.82);
-    --link: #93b7ec;
+    --bg: #16151d;
+    --card: #1e1c27;
+    --shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+    --ink: #ece9f4;
+    --prose: #c7c2d8;
+    --ink-2: #a9a4bd;
+    --ink-3: #8c87a3;
+    --accent: #c9a87a;
+    --rule: rgba(236, 233, 244, 0.12);
+    --rule-mid: rgba(236, 233, 244, 0.24);
+    --rule-ink: rgba(236, 233, 244, 0.82);
+    --link: #a9a6e8;
   }
 }
 
@@ -104,11 +113,12 @@ a { color: inherit; }
   align-items: start;
   padding: 1.15rem 1.25rem 1.1rem;
   border-radius: 11px;
-  box-shadow: inset 0 0 0 1px var(--rule-mid);
+  background: var(--card);
+  box-shadow: var(--shadow);
   text-decoration: none;
   transition: box-shadow 0.15s ease;
 }
-.card:hover { box-shadow: inset 0 0 0 1px var(--ink-3); }
+.card:hover { box-shadow: 0 4px 28px rgba(40, 35, 80, 0.14); }
 .card .icon {
   display: block;
   width: 3rem;
@@ -183,8 +193,9 @@ a { color: inherit; }
 
 .doc-head { margin: 2.25rem 0 2rem; }
 .doc-head h1 {
-  font-size: 2.6rem;
-  font-weight: 600;
+  font-family: var(--serif);
+  font-size: 3rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.25;
   margin: 0 0 0.55rem;
@@ -273,14 +284,21 @@ a { color: inherit; }
 .prose > h2,
 .prose > h3 { max-width: var(--measure); }
 
+.prose {
+  font-family: var(--serif);
+  line-height: 1.9;
+  color: var(--prose);
+}
 .prose > p,
 .prose > ul,
-.prose > ol { margin: 0 0 1.15rem; }
+.prose > ol { margin: 0 0 1.2rem; }
 .prose > :first-child { margin-top: 0; }
-/* 큰 절 — 층은 크기와 여백으로만 낸다 */
+/* 큰 절 — 층은 크기와 여백으로만 낸다. 색은 아이콘의 황토 */
 .prose h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-family: var(--serif);
+  color: var(--accent);
+  font-size: 1.6rem;
+  font-weight: 700;
   letter-spacing: -0.022em;
   line-height: 1.3;
   margin: 3.9rem 0 1rem;
@@ -289,15 +307,17 @@ a { color: inherit; }
 /* 첫 문단 앞 질문 한 줄 — 본문보다 크고 진하게 */
 .prose p.q {
   max-width: var(--measure);
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.45;
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
   margin: 0 0 1rem;
 }
 .prose h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
   letter-spacing: -0.012em;
   margin: 2.3rem 0 0.7rem;
   scroll-margin-top: 1.75rem;
@@ -306,7 +326,7 @@ a { color: inherit; }
 .prose li { margin-bottom: 0.4rem; }
 .prose li::marker { color: var(--ink-3); }
 .prose a { color: var(--link); text-decoration-color: var(--rule-mid); text-underline-offset: 2px; }
-.prose strong { font-weight: 600; }
+.prose strong, .prose b { font-weight: 700; color: var(--ink); }
 .prose code { font-family: var(--mono); font-size: 0.875em; color: var(--ink-2); }
 .prose pre {
   font-family: var(--mono);
@@ -623,7 +643,10 @@ figcaption {
   .flow .nm { font-size: 0.8125rem; }
 
   .doc-head { margin: 1.5rem 0 1.4rem; }
-  .doc-head h1 { font-size: 1.75rem; }
+  .doc-head h1 { font-size: 2rem; }
+  .doc-body > div { padding: 1.5rem 1.3rem 2rem; border-radius: 12px; }
+  .doc-body > div > .prose > figure { margin-left: -0.5rem; margin-right: -0.5rem; }
+  .prose p.q { font-size: 1.4rem; }
   .prose h2 { font-size: 1.25rem; margin-top: 2.6rem; padding-top: 1.1rem; }
   .prose h3 { font-size: 1.0625rem; }
   .doc-head .tagline { font-size: 0.9375rem; }
@@ -634,10 +657,11 @@ figcaption {
   /* 첫 문단 앞 질문 한 줄 — 본문보다 크고 진하게 */
 .prose p.q {
   max-width: var(--measure);
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.45;
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
   margin: 0 0 1rem;
 }
 .prose h3 { font-size: 0.875rem; }
