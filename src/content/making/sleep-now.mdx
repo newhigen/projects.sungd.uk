@@ -1,64 +1,64 @@
 ---
-tagline: 이름 하나 정하는 데도 다섯 판을 그렸다 — 무엇 중에서 무엇을 골랐나
+tagline: 이름부터 색까지, 후보 시안을 그려 놓고 고른 기록
 ---
 
 import Fig from '../../components/Fig.astro';
 import Shots from '../../components/Shots.astro';
 
-앱 하나에 정할 게 생각보다 많았다. 이름 · 런처 아이콘 · 상단 바 아이콘 · 글꼴 · 알람음 ·
-버튼 배치 · 색. 하나씩 «후보를 그려 놓고 화면에서 고르는» 같은 걸음으로 지나왔다.
+앱 하나에 결정할 것이 많았다. 이름 · 런처 아이콘 · 상태 표시줄 아이콘 · 글꼴 · 알람음 ·
+버튼 배치 · 색. 모두 «후보를 그려 놓고 화면에서 고르는» 같은 방식으로 정했다.
 
 ## 개발 과정
 
 <div class="tl">
-  <div class="ev"><span class="dt">1</span><span class="nm">이름</span><span class="ds">후보 열셋에서 시작해 계열을 네 번 갈았다. 빚·연체 쪽이 잘 붙었지만 «연체» 는 이미 늦은 밤에만 맞는 말이라 뺐다 → 「오늘 당겨 쓰면」</span></div>
-  <div class="ev"><span class="dt">2</span><span class="nm">런처 아이콘</span><span class="ds">열일곱 판. 점 다이얼 → 달 → 두 막대. 이름이 정해지고 나서야 표식도 같은 말을 하게 다시 짰다</span></div>
-  <div class="ev"><span class="dt">3</span><span class="nm">글꼴과 상단 바 아이콘</span><span class="ds">글꼴 열여덟 짝. 상단 바는 단색 실루엣이라 24dp 에서 뭉개지는지가 갈림길 — 스물여덟 개를 실제 크기로 놓고 골랐다</span></div>
-  <div class="ev"><span class="dt">4</span><span class="nm">알람</span><span class="ds">잠금화면 위로 뜨는 화면이라 잘못 눌러 꺼지면 안 된다 → 밀어서 끄기. 알람음은 눌러서 들어보는 페이지를 만들어 골랐다</span></div>
-  <div class="ev"><span class="dt">5</span><span class="nm">출근과 쉬는 날</span><span class="ds">밤에 진짜 궁금한 건 «그래서 회사에 늦나» 였다. 공휴일 표를 앱에 박는 대신 폰 달력을 읽는다</span></div>
-  <div class="ev"><span class="dt">6</span><span class="nm">화면 통합</span><span class="ds">타임라인 밑 목록 넉 줄을 걷어내고 타임라인이 다 말하게. 다섯 안 중에서 골랐다</span></div>
-  <div class="ev"><span class="dt">7</span><span class="nm">색</span><span class="ds">다크 모드뿐이던 것을 낮·밤 두 벌로. 열 팔레트를 같은 화면에 얹어 견줬다</span></div>
+  <div class="ev"><span class="dt">1</span><span class="nm">이름</span><span class="ds">후보 13개에서 시작해 계열을 네 번 바꿨다. 빚·연체 계열이 잘 맞았지만 «연체» 는 이미 늦은 밤에만 맞는 말이라 제외 → 「오늘 당겨 쓰면」</span></div>
+  <div class="ev"><span class="dt">2</span><span class="nm">런처 아이콘</span><span class="ds">17안. 점 다이얼 → 달 → 두 막대. 이름이 정해진 뒤 심벌도 같은 뜻을 담도록 다시 그렸다</span></div>
+  <div class="ev"><span class="dt">3</span><span class="nm">글꼴과 상태 표시줄 아이콘</span><span class="ds">글꼴 18쌍. 상태 표시줄 아이콘은 단색 실루엣이라 24dp 에서 뭉개지는지가 기준 — 28개를 실제 크기로 놓고 골랐다</span></div>
+  <div class="ev"><span class="dt">4</span><span class="nm">알람</span><span class="ds">잠금화면 위에 뜨는 화면이라 오터치로 꺼지면 안 된다 → 슬라이드 해제. 알람음은 시청 페이지를 만들어 골랐다</span></div>
+  <div class="ev"><span class="dt">5</span><span class="nm">출근과 쉬는 날</span><span class="ds">밤에 실제로 궁금한 것은 «회사에 늦는가» 였다. 공휴일 표를 앱에 넣는 대신 폰 캘린더를 읽는다</span></div>
+  <div class="ev"><span class="dt">6</span><span class="nm">화면 통합</span><span class="ds">타임라인 아래 목록 4줄을 없애고 타임라인에 모두 담았다. 5안 중 선택</span></div>
+  <div class="ev"><span class="dt">7</span><span class="nm">색</span><span class="ds">다크 모드만 있던 것을 라이트·다크 두 벌로. 팔레트 10개를 같은 화면에 적용해 비교했다</span></div>
 </div>
 
 ## 의사결정 방식
 
-처음부터 끝까지 같은 걸음이었다. **질문을 하나로 좁히고, 후보를 실제 크기로 그려 놓고,
-화면에서 고르고, 앱에 넣어 폰에서 다시 본다.** 말로 «좀 더 담백하게» 를 주고받으면 다음
-판에서 또 «좀 더» 가 되는데, 후보 열둘을 한 화면에 놓으면 한 번에 끝난다.
+처음부터 끝까지 같은 절차였다. **질문을 하나로 좁히고, 후보를 실제 크기로 그리고, 화면에서
+고르고, 앱에 넣어 폰에서 다시 본다.** 말로 «좀 더 담백하게» 를 주고받으면 다음 판에서 또
+«좀 더» 가 되지만, 후보 12개를 한 화면에 놓으면 한 번에 끝난다.
 
 <Shots items={[
-  { src: '/p/sleep-now/shot-name.png', caption: '이름 — 문장을 끊는 계열 스물', href: '/p/sleep-now/pages/name.html' },
-  { src: '/p/sleep-now/shot-icon-moon.png', caption: '런처 아이콘 — 달 계열 열둘', href: '/p/sleep-now/pages/icon-moon.html' },
-  { src: '/p/sleep-now/shot-statusbar.png', caption: '상단 바 아이콘 — 실제 크기로 스물여덟', href: '/p/sleep-now/pages/statusbar.html' },
-  { src: '/p/sleep-now/shot-lower.png', caption: '아래 목록 — 다시 짜는 다섯 안', href: '/p/sleep-now/pages/lower.html' },
-  { src: '/p/sleep-now/shot-timeline.png', caption: '타임라인에 다 싣기 — 열일곱 안', href: '/p/sleep-now/pages/timeline.html' },
-  { src: '/p/sleep-now/shot-palette.png', caption: '색 — 팔레트 열 벌, 밤낮 나란히', href: '/p/sleep-now/pages/palette.html' },
+  { src: '/p/sleep-now/shot-name.png', caption: '이름 — 문장형 계열 20안', href: '/p/sleep-now/pages/name.html' },
+  { src: '/p/sleep-now/shot-icon-moon.png', caption: '런처 아이콘 — 달 계열 12안', href: '/p/sleep-now/pages/icon-moon.html' },
+  { src: '/p/sleep-now/shot-statusbar.png', caption: '상태 표시줄 아이콘 — 실제 크기 28안', href: '/p/sleep-now/pages/statusbar.html' },
+  { src: '/p/sleep-now/shot-lower.png', caption: '하단 목록 — 재구성 5안', href: '/p/sleep-now/pages/lower.html' },
+  { src: '/p/sleep-now/shot-timeline.png', caption: '타임라인 통합 — 17안', href: '/p/sleep-now/pages/timeline.html' },
+  { src: '/p/sleep-now/shot-palette.png', caption: '색 — 팔레트 10벌, 라이트·다크 나란히', href: '/p/sleep-now/pages/palette.html' },
 ]} />
 
-그리는 도중에 문제가 드러나기도 했다. 목표 줄들을 상자 하나로 묶으려다, 목표 취침과
-«목표대로면 기상» 사이에 «지금 자면 기상» 이 낀다는 걸 알았다. 목표 줄은 붙어 있지
-않다. 묶는 대신 줄마다 배경을 칠했다.
+그리는 과정에서 드러난 문제도 있다. 목표 항목들을 상자 하나로 묶으려다, 목표 취침과
+«목표대로면 기상» 사이에 «지금 자면 기상» 이 끼어 있어 목표 항목이 인접하지 않는다는 것을
+알았다. 묶는 대신 항목마다 배경색을 줬다.
 
 <Fig src="/p/sleep-now/shot-icon-final.png"
-  caption="런처 아이콘은 열일곱 판을 돌았다. 하루치 눈금 100 에 오늘 줄이 40 을 넘고, 내일 줄은 그 40 을 뺏겨 눈금 앞에서 끝난다 — 이름과 같은 말을 하는 그림." />
+  caption="런처 아이콘 17안. 하루 눈금 100 에 오늘 막대가 40 을 넘고, 내일 막대는 그 40 만큼 짧아져 눈금 앞에서 끝난다 — 이름과 같은 뜻의 그림." />
 
 ## 배운 점
 
-- **시간축이 하나면 인접이 곧 짝이 아니다.** 회사 도착은 자리를 두 번 옮겼다. 제 줄을
-  주면 목표를 넘긴 밤에 «7시 45분 기상 → 5분 뒤 회사 도착» 처럼 읽혀서 옆말로 뺐다가,
-  사이 시간이 안 보인다는 이유로 다시 줄로 돌리며 «어느 기상의 도착인지» 를 달았다.
-- **말 안 되는 값은 계산돼도 안 띄운다.** 도착이 06:40~12:00 밖이면 숨긴다. 새벽 4시
-  도착을 «회사 도착» 이라고 적어 두는 건 정보가 아니라 소음이었다.
-- **순검정은 층을 못 만든다.** `#08090C` 에서는 한 톤 들어 올린 면이 거의 안 떠서 밴드를
-  한참 밝게 잡아야 했다. 회청으로 한 계단 올리니 대비를 낮췄는데도 층이 더 잘 읽혔다.
-- **공휴일 표는 앱에 박지 않는다.** 해마다 고쳐야 하고 대체·임시공휴일을 놓친다. 폰
-  달력에 이미 다 들어 있어서 그걸 읽는다 — 삼성은 «공휴일», 구글은 «대한민국의 휴일».
+- **단일 시간축에서 인접은 짝이 아니다.** 회사 도착의 위치를 두 번 바꿨다. 별도 항목으로
+  두면 목표를 넘긴 밤에 «7시 45분 기상 → 5분 뒤 회사 도착» 으로 읽혀 부가 정보로 뺐다가,
+  간격이 보이지 않아 다시 항목으로 되돌리며 «어느 기상의 도착인지» 를 표시했다.
+- **계산은 되지만 의미 없는 값은 표시하지 않는다.** 도착이 06:40~12:00 밖이면 숨긴다.
+  새벽 4시 «회사 도착» 은 정보가 아니라 노이즈다.
+- **순검정은 층위를 만들지 못한다.** `#08090C` 에서는 한 톤 밝힌 면이 거의 구분되지 않아
+  밴드를 크게 밝혀야 했다. 회청색으로 한 단계 올리니 대비를 낮춰도 층위가 더 잘 읽혔다.
+- **공휴일 표는 앱에 넣지 않는다.** 매년 갱신해야 하고 대체·임시공휴일을 놓친다. 폰
+  캘린더에 이미 있으므로 그것을 읽는다 — 삼성은 «공휴일», 구글은 «대한민국의 휴일».
 
 ## 산출물
 
-- [구간 대조판](/p/sleep-now/pages/phases.html) — 같은 밤을 네 구간으로 나눠, 다섯 자리
-  (나우바 접힘·펼침 · 상단 바 · 알림 펼침 · 앱 화면)가 각각 뭐라고 말하는지 나란히
-- [설명서](/p/sleep-now/manual.html) — 화면 열여섯 장에 설명선을 붙인 것. 스크립트가
-  에뮬레이터를 몰아 찍고, 다른 스크립트가 좌표를 읽어 설명선을 붙인다
-- 여기서 얻은 것(Now Bar 올리는 조합 · adb 로 몰기 · 이음매 없는 알람음 · 밤낮 두 벌 색)은
-  다음 앱에서 바로 쓰려고 따로 정리해 뒀다
+- [구간 대조표](/p/sleep-now/pages/phases.html) — 같은 밤을 네 구간으로 나눠, 다섯 위치
+  (Now Bar 접힘·펼침 · 상태 표시줄 · 알림 펼침 · 앱 화면)의 표시를 나란히 비교
+- [설명서](/p/sleep-now/manual.html) — 화면 16장에 설명선을 붙인 문서. 스크립트가
+  에뮬레이터를 조작해 캡처하고, 다른 스크립트가 좌표를 읽어 설명선을 그린다
+- 재사용 항목(Now Bar 등록 조합 · adb 자동화 · 이음매 없는 알람음 · 라이트·다크 팔레트)은
+  다음 앱에서 쓰도록 별도로 정리했다
