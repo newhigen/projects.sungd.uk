@@ -2,6 +2,7 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Tabs from '../../components/Tabs.astro';
+import Toc from '../../components/Toc.astro';
 
 export async function getStaticPaths() {
   const all = await getCollection('making');
@@ -15,7 +16,8 @@ export async function getStaticPaths() {
 }
 
 const { entry, project } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
+const toc = headings.filter(h => h.depth === 2).map(({ slug, text }) => ({ slug, text }));
 const d = project.data;
 ---
 
@@ -36,6 +38,7 @@ const d = project.data;
         <dt>이 앱은</dt>
         <dd><a href={`/${project.id}`}>소개 보기</a></dd>
       </dl>
+      <Toc items={toc} />
     </aside>
 
     <article class="prose">

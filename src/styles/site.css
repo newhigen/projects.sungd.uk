@@ -211,9 +211,6 @@ a { color: inherit; }
   font-size: 0.8125rem;
   color: var(--ink-3);
   line-height: 1.7;
-  position: sticky;
-  top: 1.75rem;
-  align-self: start;
 }
 .rail dl { margin: 0; }
 .rail dt { color: var(--ink-3); margin-top: 0.9rem; }
@@ -230,6 +227,21 @@ a { color: inherit; }
 }
 .rail li { display: flex; gap: 0.45rem; margin-bottom: 0.3rem; }
 .rail li::before { content: "—"; color: var(--ink-3); flex-shrink: 0; }
+/* 난은 글과 같이 흐르고 차례만 따라 내려온다 */
+.toc {
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  position: sticky;
+  top: 1.75rem;
+}
+.toc .lb { color: var(--ink-3); margin-bottom: 0.15rem; }
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc li { display: block; margin-bottom: 0.2rem; }
+.toc li::before { content: none; }
+.toc a { color: var(--ink-3); }
+.toc a:hover { color: var(--ink-2); text-decoration: none; }
+.prose h2 { scroll-margin-top: 1.75rem; }
 
 .prose > p,
 .prose > ul,
@@ -469,8 +481,9 @@ figcaption {
 @media (max-width: 900px) {
   :root { --gut: 1.5rem; }
   .doc-body { grid-template-columns: 1fr; gap: 0; }
-  .rail { position: static; margin-bottom: 2rem; }
+  .rail { margin-bottom: 2rem; }
   .rail ul { margin-top: 1rem; }
+  .toc { display: none; }
 }
 
 @media (max-width: 640px) {
