@@ -2,6 +2,7 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Tabs from '../components/Tabs.astro';
+import Toc from '../components/Toc.astro';
 
 export async function getStaticPaths() {
   // 아직 안 여는 것은 페이지도 안 만든다 — 목록에 이름만 남는다.
@@ -12,10 +13,13 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 const d = entry.data;
 // 개발기가 따로 있으면 두 화면을 탭으로 잇는다.
 const making = await getEntry('making', entry.id);
+// 차례 — 본문 h2 에 템플릿이 붙이는 「그전 모습」 까지
+const toc = headings.filter(h => h.depth === 2).map(({ slug, text }) => ({ slug, text }));
+if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
 ---
 
 <Base title={d.title} description={d.tagline} image={d.cover}>
@@ -28,19 +32,19 @@ const making = await getEntry('making', entry.id);
   <div class="doc-body">
     <aside class="rail">
       <dl>
-        {d.kind && <><dt>무엇</dt><dd>{d.kind}</dd></>}
-        <dt>언제</dt>
+        {d.kind && <><dt>종류</dt><dd>{d.kind}</dd></>}
+        <dt>기간</dt>
         <dd class="when">{d.period}</dd>
-        {d.tags.length > 0 && <><dt>무엇으로</dt><dd>{d.tags.join(' · ')}</dd></>}
+        {d.tags.length > 0 && <><dt>스택</dt><dd>{d.tags.join(' · ')}</dd></>}
         {(d.github || d.link) && (
           <>
-            <dt>열어보기</dt>
+            <dt>링크</dt>
             {d.github && <dd><a href={d.github}>GitHub ↗</a></dd>}
             {d.link && <dd><a href={d.link}>{d.linkLabel ?? '사이트'} ↗</a></dd>}
           </>
         )}
       </dl>
-      {d.use.length > 0 && <ul>{d.use.map(u => <li>{u}</li>)}</ul>}
+      <Toc items={toc} />
     </aside>
 
     <div>
@@ -57,7 +61,7 @@ const making = await getEntry('making', entry.id);
 
       {d.shots.length > 0 && (
         <section>
-          <h2 class="prose">그전 모습</h2>
+          <h2 class="prose" id="shots">이전 버전</h2>
           <div class="shots">
             {d.shots.map(s => (
               <figure>
