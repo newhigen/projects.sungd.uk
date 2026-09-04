@@ -241,6 +241,7 @@ a { color: inherit; }
 .toc li::before { content: none; }
 .toc a { color: var(--ink-3); }
 .toc a:hover { color: var(--ink-2); text-decoration: none; }
+.toc a.on { color: var(--ink); }
 .prose h2 { scroll-margin-top: 1.75rem; }
 
 .prose > p,
