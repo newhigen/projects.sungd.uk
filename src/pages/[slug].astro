@@ -19,7 +19,7 @@ const d = entry.data;
 const making = await getEntry('making', entry.id);
 // 차례 — 본문 h2 에 템플릿이 붙이는 「그전 모습」 까지
 const toc = headings.filter(h => h.depth === 2).map(({ slug, text }) => ({ slug, text }));
-if (d.shots.length > 0) toc.push({ slug: 'shots', text: '그전 모습' });
+if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
 ---
 
 <Base title={d.title} description={d.tagline} image={d.cover}>
@@ -61,7 +61,7 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '그전 모습' });
 
       {d.shots.length > 0 && (
         <section>
-          <h2 class="prose" id="shots">그전 모습</h2>
+          <h2 class="prose" id="shots">이전 버전</h2>
           <div class="shots">
             {d.shots.map(s => (
               <figure>

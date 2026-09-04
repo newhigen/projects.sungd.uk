@@ -31,7 +31,7 @@ import Matrix from '../../components/Matrix.astro';
 <Fig src="/p/sleep-now/demo.mp4" video phone
   caption="밤에 «목표대로» 를 누르고 아침에 알람을 끄기까지 23초." />
 
-## 밤에 궁금한 건 하나다
+## 핵심 기능
 
 수면 앱은 많은데 대부분 잔 뒤를 말한다 — 어젯밤 몇 시간 잤고 깊은 잠이 얼마였는지.
 정작 판단이 필요한 순간은 눕기 전이고, 그때 알고 싶은 건 하나다. **지금 누우면 몇 시에
@@ -50,7 +50,7 @@ import Matrix from '../../components/Matrix.astro';
 <Fig src="/p/sleep-now/widget.png"
   caption="홈 화면 위젯. 눕기 전에는 «지금부터 · 목표대로», 누운 뒤에는 «취침 해제 · 취침 다시»." />
 
-## 하루가 어떻게 흐르나
+## 하루 타임라인
 
 <Flow caption="밤 시작부터 회사 도착까지. 파란 자리가 내가 누르는 두 번이다." steps={[
   { at: "오후 9시", name: "밤 시작", note: "상단 바가 밤 이야기로" },
@@ -61,7 +61,7 @@ import Matrix from '../../components/Matrix.astro';
   { at: "오전 8:20", name: "회사 도착", note: "준비 30분 + 길 1:20" },
 ]} />
 
-## 화면 하나에 타임라인 하나
+## 앱 화면
 
 앱을 열면 밤 하나가 세로로 서 있다. 지금 · 목표 취침 · 지금 자면 기상 · 목표대로면
 기상 · 회사 도착이 한 축에 놓이고, 줄 사이에는 그 사이가 몇 분인지 적힌다. 시각만
@@ -74,7 +74,7 @@ import Matrix from '../../components/Matrix.astro';
 사라져서 루틴은 그대로 남는다. 토·일과 공휴일 앞 밤에는 회사 도착이 아예 안 뜬다 —
 공휴일은 폰 달력을 읽어 판단한다.
 
-## 밤이 지나가는 동안
+## 상태별 화면
 
 <Strip items={[
   { src: "/p/sleep-now/img/main_asleep.png", label: "누운 뒤",
@@ -87,7 +87,7 @@ import Matrix from '../../components/Matrix.astro';
     note: "밤까지 남은 시간" },
 ]} />
 
-## 구간마다 어디서 뭐라고 하나
+## 표시 위치별 문구
 
 같은 밤인데 자리마다 할 수 있는 말의 길이가 다르다. 상태표시줄 칩은 숫자 하나, 잠금화면
 카드는 두 줄, 앱은 밤 전체. 그래서 **큰 줄에 이름, 작은 줄에 값** 이라는 한 가지 나눔을
@@ -108,7 +108,7 @@ import Matrix from '../../components/Matrix.astro';
   ]}
 />
 
-## 이럴 때 이렇게
+## 상황별 동작
 
 <Cases items={[
   { when: "제때 자는 밤",
@@ -127,7 +127,7 @@ import Matrix from '../../components/Matrix.astro';
     what: "토·일과 공휴일 앞 밤에는 회사 도착이 아예 안 뜬다. 공휴일은 폰 달력을 읽어 판단해서 대체·임시공휴일까지 안다. 달력에 없는 연차는 «내일 쉬어요» 로 끈다." },
 ]} />
 
-## 써 보려면
+## 설치와 요구 사항
 
 One UI 8(안드로이드 16) 이상. 갤럭시 S25+ 에서 만들고 확인했다. 잠금화면 Now Bar 에
 올리려면 개발자 옵션의 «모든 앱의 실시간 정보 보기» 를 켜야 하고, 그 아래 버전에서도
