@@ -1,0 +1,55 @@
+---
+interface Props {
+  /** 변천사 한 장 — 시기, 무엇이 바뀌었나. 그림은 화면이 바뀐 단계에만 */
+  items: {
+    at: string;
+    title: string;
+    /** 셋을 채우면 결정 기록이 된다. note 만 주면 한 문단으로 */
+    problem?: string;
+    did?: string;
+    result?: string;
+    /** 있을 때만 — 없는 후회를 지어내지 않는다 */
+    next?: string;
+    note?: string;
+    img?: string;
+    wide?: boolean;
+    w?: number;
+  }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="evo" data-edge="start">
+  <div class="track">
+    {items.map(it => (
+      <div class="card">
+        <div class="at">{it.at}</div>
+        <b>{it.title}</b>
+        {it.note && <p set:html={it.note} />}
+        {it.problem && <dl class="row"><dt>문제</dt><dd set:html={it.problem} /></dl>}
+        {it.did && <dl class="row"><dt>한 것</dt><dd set:html={it.did} /></dl>}
+        {it.result && <dl class="row"><dt>결과</dt><dd set:html={it.result} /></dl>}
+        {it.next && <dl class="row next"><dt>다음이라면</dt><dd set:html={it.next} /></dl>}
+        {it.img && (
+          <div class:list={['pic', { wide: it.wide, free: !!it.w }]}>
+            <img src={it.img} alt="" loading="lazy" style={it.w ? `width:${it.w}px` : undefined} />
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // 양 끝을 흐려서 잘린 카드가 잘린 것처럼 안 보이게 — 끝에 닿으면 그쪽 흐림은 걷는다
+  document.querySelectorAll<HTMLElement>('.evo').forEach(el => {
+    const mark = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      if (max < 8) return el.setAttribute('data-edge', 'none');
+      el.setAttribute('data-edge', el.scrollLeft < 8 ? 'start' : el.scrollLeft > max - 8 ? 'end' : 'mid');
+    };
+    el.addEventListener('scroll', mark, { passive: true });
+    addEventListener('resize', mark);
+    mark();
+  });
+</script>

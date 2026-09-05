@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** 숫자 몇 개로 근거를 놓는다 — 값과 한 줄 */
+  items: { v: string; note: string }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="nums">
+  {items.map(it => (
+    <div>
+      <b>{it.v}</b>
+      <span>{it.note}</span>
+    </div>
+  ))}
+</div>

@@ -44,6 +44,14 @@ def shot(html: pathlib.Path, dst: pathlib.Path, size="1200,1500"):
 shrink(SRC / "img" / "nowbar.png", OUT / "nowbar.png", 900)
 shutil.copy2(SRC / "img" / "demo.mp4", OUT / "demo.mp4")
 
+# 변천사 — 그때 화면을 그대로 (docs/explore 에 남아 있는 그림)
+for slug, src in {
+    "hero": SRC / "explore/6-홈-화면/히어로-남은-시간.png",
+    "buttons": SRC / "explore/6-홈-화면/버튼-둘.png",
+    "timeline": SRC / "explore/6-홈-화면/사이-시간-목표-전.png",
+}.items():
+    shrink(src, OUT / f"evo-{slug}.png", 320)
+
 # ── 2. 시안 미리보기 ─────────────────────────────────────────────
 # 렌더가 남아 있는 것은 그것을 줄이고, 없는 것은 지금 찍는다.
 have = {
