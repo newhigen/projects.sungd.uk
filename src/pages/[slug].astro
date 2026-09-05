@@ -28,6 +28,8 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
     <p class="tagline">{d.tagline}</p>
   </header>
 
+  {making && <Tabs here="intro" slug={entry.id} />}
+
   <div class="doc-body">
     <aside class="rail">
       <dl>
@@ -47,7 +49,6 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
     </aside>
 
     <div>
-      {making && <Tabs here="intro" slug={entry.id} />}
       {d.headCover && d.cover && (
         <figure>
           <img src={d.cover} alt="" class:list={[{ 'only-dark': d.coverLight }]} />

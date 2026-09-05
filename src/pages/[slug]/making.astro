@@ -27,6 +27,8 @@ const d = project.data;
     <p class="tagline">{entry.data.tagline}</p>
   </header>
 
+  <Tabs here="making" slug={project.id} />
+
   <div class="doc-body">
     <aside class="rail">
       <dl>
@@ -41,7 +43,6 @@ const d = project.data;
     </aside>
 
     <article class="prose">
-      <Tabs here="making" slug={project.id} />
       <Content />
     </article>
   </div>

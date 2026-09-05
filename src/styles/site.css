@@ -235,7 +235,7 @@ a { color: inherit; }
   grid-template-columns: 13rem minmax(0, 1fr);
   /* 칸 안의 그림 원래 크기가 칸을 밀지 않게 — 없으면 폰에서 가로로 넘친다 */
   gap: 0 3.5rem;
-  padding-top: 1.3rem;
+  padding-top: 0.8rem;
 }
 .doc-body > * { min-width: 0; }
 
@@ -383,17 +383,17 @@ a { color: inherit; }
 
 /* ── 탭 — 소개 · 개발기 ───────────────────────────── */
 
-/* 소개·개발기 — 흰 카드 안 오른쪽 위. 글이 이 자리를 비켜 흐르고(float),
-   스크롤하면 카드 안에서 위에 붙어 따라온다(sticky).
-   바닥을 짙게 둔다 — 눌린 칩이 흰색이라 흰 카드 위에서는 바닥이 없으면 사라진다. */
+/* 소개·개발기 — 카드 바깥, 머리와 카드 사이 오른쪽 끝.
+   스크롤하면 그 자리에서 위에 붙어 따라온다(sticky).
+   바닥을 짙게 둔다 — 눌린 칩이 흰색이라 흰 카드 위로 올라가면 바닥이 없으면 사라진다. */
 .tabs {
-  float: right;
   position: sticky;
   top: 0.9rem;
   z-index: 40;
   display: flex;
+  width: max-content;
   gap: 0.25rem;
-  margin: 0 0 0.7rem 2rem;
+  margin: 0 0.9rem 0.5rem auto;
   padding: 0.28rem;
   border-radius: 999px;
   background: var(--chip);
@@ -759,12 +759,7 @@ figcaption {
   .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
   .tl .ds { display: block; font-size: 0.75rem; }
 
-  /* 좁은 화면 — 옆에 두면 첫 줄이 두 낱말씩 접힌다. 한 줄 차지하고 오른쪽에 붙인다 */
-  .tabs {
-    float: none;
-    width: max-content;
-    margin: 0 0 1rem auto;
-  }
+  .tabs { margin: 0 0 0.5rem auto; }
   .tabs a { padding: 0.38rem 0.9rem; font-size: 0.875rem; }
 
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }
