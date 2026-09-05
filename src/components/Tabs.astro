@@ -9,10 +9,21 @@ const { here, slug } = Astro.props;
 // 판이 있는 것만 탭으로 세운다 — 없는 판에 링크를 내지 않는다
 const hasWhy = !!(await getEntry('why', slug));
 const hasMaking = !!(await getEntry('making', slug));
+
+const links = [
+  { to: `/${slug}`, label: '소개', on: here === 'intro', show: true },
+  { to: `/${slug}/why`, label: '왜 만들었나', on: here === 'why', show: hasWhy },
+  { to: `/${slug}/making`, label: '개발기', on: here === 'making', show: hasMaking },
+].filter(l => l.show);
 ---
 
+{/* 카드 바깥, 설명 줄 오른쪽. 눌린 쪽의 흰 알약은 글자와 따로 두어야
+    쪽을 넘길 때 알약만 미끄러진다 — 맥의 세그먼트 컨트롤처럼. */}
 <nav class="tabs">
-  <a href={`/${slug}`} class:list={[{ on: here === 'intro' }]}>소개</a>
-  {hasWhy && <a href={`/${slug}/why`} class:list={[{ on: here === 'why' }]}>왜 만들었나</a>}
-  {hasMaking && <a href={`/${slug}/making`} class:list={[{ on: here === 'making' }]}>개발기</a>}
+  {links.map(l => (
+    <a href={l.to} class:list={[{ on: l.on }]}>
+      {l.on && <span class="thumb" aria-hidden="true" />}
+      {l.label}
+    </a>
+  ))}
 </nav>

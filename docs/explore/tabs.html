@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>소개와 개발기를 어떻게 잇나</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#e6e3f0; --card:#fbfaff; --card-2:#dfe6f2;
+  --shadow:0 2px 24px rgba(40,35,80,.08);
+  --ink:#221f2b; --prose:#3a3646; --ink-2:#57536b; --ink-3:#6f6b85;
+  --accent:#8a6a3c; --rule:rgba(34,31,43,.09); --rule-mid:rgba(34,31,43,.18);
+  --rule-ink:rgba(34,31,43,.82); --link:#4a4b93;
+  --sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif;
+  --serif:"Noto Serif KR",Pretendard,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--prose);font:16.5px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:78rem;margin:0 auto;padding:3rem 2.5rem 8rem}
+.lede h1{font-family:var(--serif);font-size:2.4rem;font-weight:700;letter-spacing:-.02em;margin:0 0 .5rem;color:var(--ink)}
+.lede p{max-width:44rem;margin:0 0 .4rem;color:var(--ink-2)}
+.lede .small{font-size:.95rem;color:var(--ink-3)}
+h2.n{font-family:var(--sans);font-size:1.05rem;font-weight:600;color:var(--accent);margin:3.4rem 0 .3rem;letter-spacing:.01em}
+.q{font-size:.92rem;color:var(--ink-3);margin:0 0 1.1rem;max-width:46rem}
+
+/* 실제 판 — doc-head 와 doc-body 를 그대로 흉내 */
+.demo{background:var(--bg);padding:1.6rem 1.8rem 1.8rem;border-radius:16px;box-shadow:inset 0 0 0 1px var(--rule)}
+.head{margin:.6rem 0 1.4rem}
+.head h3{font-family:var(--serif);font-size:2.6rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin:0 0 .5rem;color:var(--ink)}
+.head .tag{margin:0;max-width:40rem;font-size:1.1rem;color:var(--ink-2)}
+.body{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:0 2.6rem;padding-top:1.6rem}
+.rail dl{margin:0;font-size:.8rem;color:var(--ink-3)}
+.rail dt{color:var(--ink-3);margin-top:.7rem}
+.rail dd{margin:.1rem 0 0;color:var(--ink-2)}
+.paper{background:var(--card);border-radius:14px;padding:1.8rem 2rem 2rem;box-shadow:var(--shadow)}
+.paper .qq{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--ink);margin:0 0 .7rem}
+.paper p{font-family:var(--serif);margin:0;font-size:.98rem;line-height:1.9}
+.dim{opacity:.45}
+
+/* A — 지금 것 */
+.tabs-a{display:flex;gap:1.6rem;margin-top:1.5rem}
+.tabs-a a{margin-bottom:-1px;padding:0 0 .55rem;border-bottom:2px solid transparent;font-size:.875rem;color:var(--ink-3);text-decoration:none}
+.tabs-a a.on{color:var(--ink);font-weight:600;border-bottom-color:var(--rule-ink)}
+
+/* B — 세그먼트 */
+.seg{display:inline-flex;gap:.25rem;margin-top:1.5rem;padding:.28rem;background:rgba(34,31,43,.06);border-radius:999px}
+.seg a{padding:.42rem 1.1rem;border-radius:999px;font-size:.95rem;font-weight:600;color:var(--ink-3);text-decoration:none}
+.seg a.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(40,35,80,.14)}
+
+/* C — 큰 밑줄 */
+.tabs-c{display:flex;gap:2rem;margin-top:1.7rem;border-bottom:1px solid var(--rule)}
+.tabs-c a{margin-bottom:-1px;padding:0 0 .7rem;border-bottom:3px solid transparent;font-size:1.12rem;font-weight:600;color:var(--ink-3);text-decoration:none}
+.tabs-c a.on{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* D — 카드 두 장 */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.6rem;max-width:36rem}
+.pair a{display:block;padding:.85rem 1.1rem;border-radius:12px;text-decoration:none;background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px var(--rule)}
+.pair a.on{background:var(--card);box-shadow:0 2px 14px rgba(40,35,80,.10),inset 0 0 0 1px transparent}
+.pair b{display:block;font-size:1rem;font-weight:600;color:var(--ink-3)}
+.pair a.on b{color:var(--ink)}
+.pair span{display:block;font-size:.8rem;color:var(--ink-3);margin-top:.1rem}
+.pair a.on span{color:var(--ink-2)}
+
+/* E — 세그먼트 + 아이콘 */
+.seg svg{width:1.05em;height:1.05em;vertical-align:-.17em;margin-right:.4rem;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* F — 레일에 */
+.rail .navrail{margin:0 0 1.2rem;display:flex;flex-direction:column;gap:.3rem}
+.rail .navrail a{font-size:.95rem;font-weight:600;color:var(--ink-3);text-decoration:none;padding:.15rem 0 .15rem .7rem;border-left:2px solid transparent}
+.rail .navrail a.on{color:var(--ink);border-left-color:var(--accent)}
+
+/* G — 본문 끝 이어읽기 */
+.next{display:block;margin-top:1.6rem;padding:1.1rem 1.3rem;border-radius:12px;background:var(--card-2);text-decoration:none}
+.next span{display:block;font-size:.8rem;color:var(--ink-3)}
+.next b{display:block;font-size:1.15rem;font-weight:600;color:var(--ink);margin-top:.15rem;font-family:var(--serif)}
+.next em{font-style:normal;color:var(--accent)}
+.note{font-size:.86rem;color:var(--ink-3);margin:.9rem .2rem 0;max-width:46rem;line-height:1.65}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="lede">
+  <h1>소개와 개발기를 어떻게 잇나</h1>
+  <p>지금은 제목 밑에 작은 밑줄 탭 둘이 있다. 있다는 걸 모르고 지나간다.</p>
+  <p class="small">실제 크기 · 실제 색. 아래 여섯은 그 자리에 무엇을 놓을지의 후보다.</p>
+</div>
+
+<h2 class="n">A · 지금 것 — 작은 밑줄 탭</h2>
+<p class="q">14px 글자에 2px 밑줄. 제목·부제와 색이 비슷해 글의 일부로 읽힌다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="tabs-a"><a class="on" href="#">소개</a><a href="#">개발기</a></nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p class="dim">문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">B · 세그먼트 — 고를 수 있다는 게 형태로 보인다</h2>
+<p class="q">눌린 쪽만 흰 칩으로 뜬다. 「지금 이쪽이고 저쪽도 있다」 가 글자를 안 읽어도 읽힌다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="seg"><a class="on" href="#">소개</a><a href="#">개발기</a></nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p class="dim">문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">C · 큰 밑줄 탭 — 지금 것을 키우기만</h2>
+<p class="q">18px·굵게·황토색 밑줄 3px. 구조는 그대로고 대비만 올린다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="tabs-c"><a class="on" href="#">소개</a><a href="#">개발기</a></nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p class="dim">문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">D · 카드 두 장 — 무엇이 다른지까지 적는다</h2>
+<p class="q">이름 밑에 한 줄씩. 「개발기」 가 무슨 글인지 모르는 사람에게 그 자리에서 답한다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="pair">
+      <a class="on" href="#"><b>소개</b><span>무엇이 좋아지는가</span></a>
+      <a href="#"><b>개발기</b><span>어떻게 만들었나</span></a>
+    </nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p class="dim">문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">E · 세그먼트 + 아이콘</h2>
+<p class="q">B 에 선 아이콘을 붙였다. 낱말이 둘뿐이라 아이콘이 뜻을 더 주는지, 장식이 되는지 보는 자리.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="seg">
+      <a class="on" href="#"><svg viewBox="0 0 24 24"><path d="M4 5.5h7a2.5 2.5 0 0 1 2.5 2.5v11a2 2 0 0 0-2-2H4Z"/><path d="M20 5.5h-7A2.5 2.5 0 0 0 10.5 8v11a2 2 0 0 1 2-2H20Z"/></svg>소개</a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5.2 5.2l-8.4 8.4a2.1 2.1 0 0 1-3-3Z"/><path d="M16.5 4.5 19.5 7.5"/></svg>개발기</a>
+    </nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p class="dim">문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">F · 왼쪽 난으로 — 목차 위에</h2>
+<p class="q">탭을 머리에서 떼어 난의 맨 위로. 목차와 같은 줄기에 서서 「이 글의 갈래」 로 읽힌다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+  </div>
+  <div class="body">
+    <aside class="rail">
+      <nav class="navrail"><a class="on" href="#">소개</a><a href="#">개발기</a></nav>
+      <dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl>
+    </aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p class="dim">문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">G · 본문 끝 이어읽기 — 위 후보 하나와 같이 쓴다</h2>
+<p class="q">머리의 탭은 「있다」 를 알리고, 이건 다 읽은 사람을 넘긴다. 실제로 가장 많이 눌리는 자리다.</p>
+<div class="demo">
+  <div class="body" style="grid-template-columns:1fr">
+    <div class="paper">
+      <p class="dim">근처 알림에는 카카오 로컬 REST 키가 필요하다. 설정 화면에 넣으면 그때부터 가게를 찾는다 — 키가 없어도 나머지는 그대로 돌아간다.</p>
+      <a class="next" href="#"><span>이어서</span><b>개발기 — 문자 감지를 걷어내고, 카드에서 글자를 걷어내기까지 <em>→</em></b></a>
+    </div>
+  </div>
+</div>
+
+<p class="note">고르는 기준 — ① 글을 안 읽어도 「갈래 둘」 이 보이나 ② 제목·부제와 안 섞이나
+③ 이 사이트의 다른 판(카드·난·목차)과 같은 어휘인가.</p>
+
+</div>
+</body>
+</html>

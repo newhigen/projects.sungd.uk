@@ -19,6 +19,16 @@
   --rule-mid: rgba(34, 31, 43, 0.18);
   --rule-ink: rgba(34, 31, 43, 0.82);
   --link: #4a4b93;
+  /* 칩 바닥과 떠 있는 띠의 유리 — 밤 판에서 값만 바뀐다.
+     바닥을 짙게 둔다: 눌린 칩이 흰색이라 흰 종이 위로 올라가면 바닥 없이는 사라진다 */
+  --chip: rgba(34, 31, 43, 0.14);
+  --chip-stuck: rgba(34, 31, 43, 0.17);
+  --chip-on: var(--card);
+  --chip-on-ink: var(--ink);
+  --glass: rgba(251, 250, 255, 0.62);
+  --glass-edge: rgba(255, 255, 255, 0.5);
+  --glass-top: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 28px rgba(40, 35, 80, 0.16);
   --sans: "Inter Tight", Pretendard, -apple-system, system-ui, sans-serif;
   --serif: "Noto Serif KR", Pretendard, serif;
   --mono: "Google Sans Code", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -36,6 +46,14 @@
     --card: #1e1c27;
     --card-2: #232733;
     --shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+    --chip: rgba(236, 233, 244, 0.16);
+    --chip-stuck: rgba(236, 233, 244, 0.19);
+    --chip-on: rgba(255, 255, 255, 0.92);
+    --chip-on-ink: #16151d;
+    --glass: rgba(30, 28, 39, 0.62);
+    --glass-edge: rgba(255, 255, 255, 0.08);
+    --glass-top: rgba(255, 255, 255, 0.10);
+    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     --ink: #ece9f4;
     --prose: #c7c2d8;
     --ink-2: #a9a4bd;
@@ -59,6 +77,8 @@ body {
   font-size: var(--base);
   line-height: 1.72;
   font-variant-numeric: tabular-nums;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 a { color: inherit; }
@@ -193,7 +213,7 @@ a { color: inherit; }
 
 /* ── 글 ───────────────────────────────────────────── */
 
-.doc-head { margin: 2.25rem 0 2rem; }
+.doc-head { margin: 2.25rem 0 0.9rem; }
 .doc-head h1 {
   font-family: var(--serif);
   font-size: 3rem;
@@ -204,7 +224,9 @@ a { color: inherit; }
 }
 .doc-head .tagline {
   margin: 0;
-  max-width: var(--measure);
+  /* 읽는 폭(--measure)에 묶여 있어서 넓은 화면에서도 두 줄로 접혔다.
+     오른쪽 끝에는 칩이 서니 그 앞에서 끊는다 */
+  max-width: 46rem;
   font-size: 1.15rem;
   color: var(--ink-2);
 }
@@ -214,11 +236,12 @@ a { color: inherit; }
   grid-template-columns: 13rem minmax(0, 1fr);
   /* 칸 안의 그림 원래 크기가 칸을 밀지 않게 — 없으면 폰에서 가로로 넘친다 */
   gap: 0 3.5rem;
-  padding-top: 2.2rem;
+  padding-top: 0.8rem;
 }
 .doc-body > * { min-width: 0; }
 
 /* 글은 흰 판 위에 — 바탕(연보라)은 난과 그림이 쓴다 */
+.doc-body > .paper,
 .doc-body > div,
 .doc-body > .prose {
   background: var(--card);
@@ -362,24 +385,159 @@ a { color: inherit; }
 
 /* ── 탭 — 소개 · 개발기 ───────────────────────────── */
 
+/* 소개·개발기 — 카드 바깥, 설명과 같은 줄 오른쪽 끝.
+   자리는 문서 흐름에 두되(sticky 가 살아 있으려면 키 큰 칸의 자식이어야 한다)
+   위로 끌어올려 설명 줄에 나란히 세운다.
+   스크롤하면 그 자리에서 위에 붙어 따라온다(sticky).
+   바닥을 짙게 둔다 — 눌린 칩이 흰색이라 흰 카드 위로 올라가면 바닥이 없으면 사라진다. */
 .tabs {
+  position: sticky;
+  top: 0.9rem;
+  z-index: 40;
   display: flex;
-  gap: 1.6rem;
-  margin-top: 1.5rem;
+  width: max-content;
+  gap: 0.25rem;
+  margin: -4.2rem 0.9rem 1.9rem auto;
+  padding: 0.28rem;
+  border-radius: 999px;
+  background: var(--chip);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+  /* 흐림을 가진 채 붙어 다니면 크롬이 늦게 다시 그린다 — 제 층으로 올려 둔다 */
+  will-change: transform;
+  transform: translateZ(0);
+}
+/* 붙은 뒤 — 바닥을 한 단계 짙게 하고 유리 테와 그림자를 얹는다 */
+.tabs.stuck {
+  background: var(--chip-stuck);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
 }
 .tabs a {
-  margin-bottom: -1px;
-  padding: 0 0 0.55rem;
-  border-bottom: 2px solid transparent;
-  font-size: 0.875rem;
-  color: var(--ink-3);
+  position: relative;
+  z-index: 0;
+  /* 두 칸을 같은 너비로 — 알약이 크기까지 바뀌면 옮겨 갈 때 찌그러져 보인다 */
+  min-width: 5.1rem;
+  text-align: center;
+  padding: 0.42rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-2);
   text-decoration: none;
 }
-.tabs a:hover { color: var(--ink-2); }
-.tabs a.on {
-  color: var(--ink);
-  font-weight: 600;
-  border-bottom-color: var(--rule-ink);
+.tabs a:hover { color: var(--ink); }
+.tabs a.on { color: var(--chip-on-ink); }
+
+/* 눌린 쪽의 흰 알약 — 글자와 따로 두어야 쪽을 넘길 때 알약만 미끄러진다.
+   맥의 세그먼트 컨트롤이 그렇게 움직인다: 글자는 제자리, 알약만 옮겨 간다. */
+.tabs .thumb {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 999px;
+  background: var(--chip-on);
+  box-shadow: 0 1px 3px rgba(40, 35, 80, 0.14);
+  view-transition-name: tab-thumb;
+}
+
+/* 쪽을 넘길 때 — 확 바뀌지 않고 미끄러진다.
+   소개와 개발기는 따로 만들어진 쪽인데, 브라우저가 두 쪽의 화면을 겹쳐 놓고 사이를 이어 준다
+   (View Transitions). 자바스크립트는 없다 — 이 선언 하나가 전부다.
+   눌린 칩에만 이름을 붙여서, 그 칩이 한쪽에서 다른 쪽으로 자리를 옮겨 간다. */
+@view-transition { navigation: auto; }
+
+/* 흰 판과 그 안의 글을 따로 뗀다.
+   판은 두 쪽에 똑같이 있으니 흐려질 이유가 없고(그래서 안 건드린다), 갈리는 건 안쪽 글뿐이다.
+   한 덩이로 두면 판까지 같이 흐려져서 바탕이 비쳐 «새로 그렸다» 로 보인다. */
+.doc-body > .paper { view-transition-name: card; }
+.doc-body > .paper > .prose { view-transition-name: card-body; }
+.doc-head .tagline { view-transition-name: tagline; }
+/* 제목·제호·왼쪽 난은 이름을 갖고 제자리를 지킨다 — 바뀌는 건 본문뿐이다 */
+
+/* 바뀌지 않는 것(제호·칩 글자)이 넘어가는 동안 흐려지지 않게.
+   옛 화면을 그대로 둔 채 새 화면을 그 위에 띄운다 — 두 장이 같이 반투명해지는 구간이 없다. */
+::view-transition-old(root) {
+  animation: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: fade-in 0.28s ease both;
+  mix-blend-mode: normal;
+}
+
+/* 알약이 글자 「밑으로」 지나가게 한다.
+   넘어가는 동안 화면은 층으로 나뉘는데, 이름을 붙인 것끼리 층 순서를 정할 수 있다.
+   글자를 알약보다 위층에 두면 알약이 지나가도 글자가 안 가려진다 — 맥이 그렇게 움직인다. */
+.tabs { view-transition-name: tabs; }
+.tabs a:nth-child(1) { view-transition-name: tab-1; }
+.tabs a:nth-child(2) { view-transition-name: tab-2; }
+.tabs a:nth-child(3) { view-transition-name: tab-3; }
+
+::view-transition-group(tab-1),
+::view-transition-group(tab-2),
+::view-transition-group(tab-3) { z-index: 3; }
+::view-transition-group(tab-thumb) { z-index: 2; }
+::view-transition-group(tabs) { z-index: 1; }
+
+/* 캡슐·알약·글자가 따로 놀지 않게 — 넷을 같은 속도로 옮긴다.
+   스크롤을 내린 채 누르면 칩이 화면 위(붙은 자리)에서 제자리로 돌아오는데,
+   속도가 다르면 알약만 먼저 도착한다. */
+::view-transition-group(tabs),
+::view-transition-group(tab-thumb),
+::view-transition-group(tab-1),
+::view-transition-group(tab-2),
+::view-transition-group(tab-3) {
+  animation-duration: 0.32s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* 글자는 자리도 크기도 그대로다 — 옛 것을 둔 채 새 것(색만 다른)을 위에 띄운다 */
+::view-transition-old(tab-1),
+::view-transition-old(tab-2),
+::view-transition-old(tab-3) { animation: none; opacity: 1; }
+::view-transition-new(tab-1),
+::view-transition-new(tab-2),
+::view-transition-new(tab-3) { animation: fade-in 0.28s ease both; }
+
+/* 칸 너비가 다르면(「왜 만들었나」 처럼) 알약이 옮겨 가며 크기도 바뀐다.
+   늘어난 그림이 오래 보이면 찌그러져 보이니 옛 알약을 빨리 걷고 새 알약을 바로 올린다. */
+::view-transition-old(tab-thumb) { animation: fade-out 0.1s ease both; }
+::view-transition-new(tab-thumb) { animation: fade-in 0.12s ease both; }
+
+/* 본문은 움직이지 않고 흐려졌다 밝아진다 — 위아래로 밀면 새로 그린 것처럼 보인다 */
+::view-transition-old(tagline) { animation: fade-out 0.16s ease both; }
+::view-transition-new(tagline) { animation: fade-in 0.26s ease 0.06s both; }
+
+/* 판은 자리와 크기가 부드럽게 맞춰지고, 안쪽 글은 그 안에서 서서히 갈린다 */
+::view-transition-group(card) {
+  animation-duration: 0.34s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+/* 판은 자리와 크기만 맞춘다 — 흰색이 사라지는 구간이 없다 */
+::view-transition-old(card),
+::view-transition-new(card) { animation: none; opacity: 1; }
+
+/* 갈리는 건 판 안의 글 */
+::view-transition-old(card-body) { animation: fade-out 0.16s ease both; }
+::view-transition-new(card-body) { animation: fade-in 0.28s ease 0.08s both; }
+::view-transition-group(card-body) {
+  animation-duration: 0.34s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs { transition: none; }
+  @view-transition { navigation: none; }
 }
 
 
@@ -761,8 +919,8 @@ figcaption {
   .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
   .tl .ds { display: block; font-size: 0.75rem; }
 
-  .tabs { gap: 1.2rem; margin-top: 1.1rem; }
-  .tabs a { font-size: 0.8125rem; }
+  .tabs { margin: 0 0 0.6rem auto; }
+  .tabs a { min-width: 4.6rem; padding: 0.38rem 0.9rem; font-size: 0.875rem; }
 
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }
   .nums b { font-size: 1.25rem; }
@@ -808,8 +966,9 @@ figcaption {
   .flow li::before { top: 0.25rem; left: -4.5px; }
   .flow .nm { font-size: 0.8125rem; }
 
-  .doc-head { margin: 1.5rem 0 1.4rem; }
+  .doc-head { margin: 1.5rem 0 0.7rem; }
   .doc-head h1 { font-size: 2rem; }
+  .doc-body > .paper,
   .doc-body > div,
   .doc-body > .prose { padding: 1.5rem 1.3rem 2rem; border-radius: 12px; }
   .doc-body > div > .prose > figure,

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>떠 있는 띠 — 재질과 자리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#e6e3f0; --card:#fbfaff; --card-2:#dfe6f2;
+  --shadow:0 2px 24px rgba(40,35,80,.08);
+  --ink:#221f2b; --prose:#3a3646; --ink-2:#57536b; --ink-3:#6f6b85;
+  --accent:#8a6a3c; --rule:rgba(34,31,43,.09); --rule-mid:rgba(34,31,43,.18);
+  --sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif;
+  --serif:"Noto Serif KR",Pretendard,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--prose);font:16.5px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:82rem;margin:0 auto;padding:3rem 2.5rem 8rem}
+.lede h1{font-family:var(--serif);font-size:2.4rem;font-weight:700;letter-spacing:-.02em;margin:0 0 .5rem;color:var(--ink)}
+.lede p{max-width:47rem;margin:0 0 .4rem;color:var(--ink-2)}
+.lede .small{font-size:.95rem;color:var(--ink-3)}
+h2.n{font-family:var(--sans);font-size:1.02rem;font-weight:600;color:var(--accent);margin:0 0 .25rem}
+.q{font-size:.88rem;color:var(--ink-3);margin:0 0 .8rem;line-height:1.6;min-height:3.2rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem 1.8rem;margin-top:2.4rem}
+.tagx{display:inline-block;margin-left:.4rem;padding:.05rem .4rem;border-radius:6px;background:rgba(34,31,43,.07);font-size:.7rem;font-weight:600;color:var(--ink-3);vertical-align:.14em}
+
+/* 스크롤되는 판 — 띠 밑으로 글이 지나간다 */
+.pane{position:relative;height:20rem;overflow:auto;border-radius:16px;background:var(--bg);
+      box-shadow:inset 0 0 0 1px var(--rule);padding:0 1rem 1.4rem}
+.pane .paper{background:var(--card);border-radius:12px;padding:1.2rem 1.3rem 1.4rem;box-shadow:var(--shadow);margin-top:1rem}
+.pane .paper h4{font-family:var(--serif);font-size:1.05rem;margin:0 0 .5rem;color:var(--ink)}
+.pane .paper p{font-family:var(--serif);font-size:.86rem;line-height:1.95;margin:0 0 .7rem;color:var(--prose)}
+.pane .shot{margin-top:.8rem;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+.pane .shot img{display:block;width:100%}
+
+/* 공통 — 떠 있는 띠 */
+.bar{position:sticky;top:.7rem;z-index:2;display:flex;align-items:center;gap:.6rem;
+     margin:.7rem 0 0;padding:.34rem .34rem .34rem .9rem;border-radius:999px;width:max-content}
+.bar b{font-size:.85rem;font-weight:600;color:var(--ink)}
+.bar .seg{display:inline-flex;gap:.2rem;padding:.16rem;border-radius:999px;background:rgba(34,31,43,.07)}
+.bar .seg a{padding:.28rem .8rem;border-radius:999px;font-size:.82rem;font-weight:600;color:var(--ink-3);text-decoration:none;white-space:nowrap}
+.bar .seg a.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(40,35,80,.18)}
+
+/* 1 · 지금 판 — 판 색을 옅게 깔고 살짝 흐리기 */
+.b1{background:rgba(230,227,240,.92);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--rule);
+    border-radius:12px;width:auto}
+
+/* 2 · 유리 캡슐 — 애플 재질(흐림 + 채도 올리기 + 흰 테). 추천 */
+.b2{background:rgba(251,250,255,.62);
+    -webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);
+    box-shadow:0 8px 28px rgba(40,35,80,.16), inset 0 1px 0 rgba(255,255,255,.75), 0 0 0 1px rgba(255,255,255,.5)}
+
+/* 3 · 짙은 유리 — 글과 반대색으로 띄운다 */
+.b3{background:rgba(34,31,43,.72);
+    -webkit-backdrop-filter:saturate(160%) blur(20px);backdrop-filter:saturate(160%) blur(20px);
+    box-shadow:0 10px 30px rgba(20,16,40,.28), inset 0 1px 0 rgba(255,255,255,.14)}
+.b3 b{color:#f4f2fa}
+.b3 .seg{background:rgba(255,255,255,.14)}
+.b3 .seg a{color:rgba(244,242,250,.72)}
+.b3 .seg a.on{background:rgba(255,255,255,.94);color:#221f2b}
+
+/* 4 · 칩만 — 이름 없이 갈래만 */
+.b4{background:rgba(251,250,255,.62);padding:.34rem;
+    -webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);
+    box-shadow:0 8px 28px rgba(40,35,80,.16), inset 0 1px 0 rgba(255,255,255,.75), 0 0 0 1px rgba(255,255,255,.5)}
+
+/* 5 · 황토 — 이 사이트의 두 번째 잉크로 지금 쪽을 물들인다 */
+.b5{background:rgba(251,250,255,.62);
+    -webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);
+    box-shadow:0 8px 28px rgba(40,35,80,.16), inset 0 1px 0 rgba(255,255,255,.75), 0 0 0 1px rgba(255,255,255,.5)}
+.b5 .seg a.on{background:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(80,60,20,.3)}
+
+/* 6 · 가운데 아래로 — 폰에서 엄지가 닿는 자리 */
+.pane.bottom{display:flex;flex-direction:column-reverse;justify-content:flex-end}
+.b6{position:sticky;bottom:.9rem;top:auto;margin:0 auto .2rem;padding:.34rem;
+    background:rgba(251,250,255,.62);
+    -webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);
+    box-shadow:0 10px 30px rgba(40,35,80,.20), inset 0 1px 0 rgba(255,255,255,.75), 0 0 0 1px rgba(255,255,255,.5)}
+
+/* 밤 판 */
+.night{--bg:#16151d;--card:#1e1c27;--card-2:#232733;--ink:#ece9f4;--prose:#c7c2d8;--ink-2:#a9a4bd;--ink-3:#8b86a3;
+       --rule:rgba(236,233,244,.10);--accent:#c9a87a;--shadow:0 2px 24px rgba(0,0,0,.35)}
+.night .bar .seg{background:rgba(255,255,255,.10)}
+.night .bar .seg a{color:rgba(236,233,244,.66)}
+.night .bar .seg a.on{background:rgba(255,255,255,.92);color:#16151d}
+.night .b2,.night .b4,.night .b5,.night .b6{background:rgba(30,28,39,.62);
+    box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.10), 0 0 0 1px rgba(255,255,255,.08)}
+.night .b5 .seg a.on{background:var(--accent);color:#16151d}
+.note{font-size:.86rem;color:var(--ink-3);margin:2.6rem .2rem 0;max-width:48rem;line-height:1.7}
+.hr{height:1px;background:var(--rule);margin:3rem 0 2.4rem;border:0}
+h3.sec{font-family:var(--sans);font-size:1.25rem;color:var(--ink);margin:0 0 .3rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="lede">
+  <h1>떠 있는 띠 — 재질과 자리</h1>
+  <p>스크롤하면 위에 남는 띠를 어떤 재질로 할까. 애플이 쓰는 방식은 <b>색을 칠하는 게 아니라 유리로 만드는 것</b>이다 —
+     뒤를 흐리고(blur) 채도를 올려서, 밑으로 지나가는 글과 그림이 비쳐 보이게 한다. 그래서 띠가 화면을 가리는 판이 아니라
+     떠 있는 물건으로 읽힌다.</p>
+  <p class="small">여섯 판 모두 실제로 스크롤된다 — 글과 그림이 띠 밑을 지나가는 걸 보라. 아래쪽에 밤 판도 있다.</p>
+</div>
+
+<div class="grid" id="grid">
+
+  <div>
+    <h2 class="n">1 · 지금 판 — 옅은 색 + 살짝 흐리기</h2>
+    <p class="q">판 색(연보라)을 92% 로 깔았다. 유리라기보다 <b>반투명한 종이</b>다. 뒤가 거의 안 비친다.</p>
+    <div class="pane">
+      <div class="bar b1"><b>쿠폰함</b><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다. 그러다 지나간다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list.png"></div></div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="n">2 · 유리 캡슐 <span class="tagx">추천</span></h2>
+    <p class="q">흐림 22px + 채도 180%, 흰 테 1px, 아래로 그림자. 애플이 쓰는 재질 그대로다. 밑을 지나는 그림 색이 띠에 배어 나온다.</p>
+    <div class="pane">
+      <div class="bar b2"><b>쿠폰함</b><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다. 그러다 지나간다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list.png"></div></div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="n">3 · 짙은 유리 — 반대색으로</h2>
+    <p class="q">글이 밝으니 띠를 어둡게. 제일 세게 띈다. 대신 화면에 검은 덩이가 하나 늘고, 밤 판에서는 반대로 뒤집어야 한다.</p>
+    <div class="pane">
+      <div class="bar b3"><b>쿠폰함</b><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다. 그러다 지나간다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list.png"></div></div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="n">4 · 이름 빼고 칩만</h2>
+    <p class="q">프로젝트 이름은 이미 브라우저 탭과 글머리에 있다. 뺐더니 띠가 작아져서 글을 덜 가린다.</p>
+    <div class="pane">
+      <div class="bar b4"><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다. 그러다 지나간다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list.png"></div></div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="n">5 · 지금 쪽을 황토로</h2>
+    <p class="q">2 와 같은 유리인데 눌린 칩만 이 사이트의 둘째 잉크(황토)로. 절 제목·밑줄과 같은 색이라 어휘가 맞는다.</p>
+    <div class="pane">
+      <div class="bar b5"><b>쿠폰함</b><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다. 그러다 지나간다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list.png"></div></div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="n">6 · 아래에 떠 있기</h2>
+    <p class="q">폰에서 엄지가 닿는 자리. 사파리·음악 앱이 쓰는 방식이다. 데스크톱에서는 화면 아래에 떠 있는 게 어색할 수 있다.</p>
+    <div class="pane bottom">
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다. 그러다 지나간다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list.png"></div></div>
+      <div class="bar b6"><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+    </div>
+  </div>
+
+</div>
+
+<hr class="hr">
+<h3 class="sec">밤 판 — 같은 유리를 뒤집어서</h3>
+<p class="q" style="min-height:0">유리는 색이 아니라 재질이라 밤에도 규칙이 하나다. 판 색만 어두운 쪽으로 바꾸고 흰 테를 약하게 준다.</p>
+<div class="grid night" style="grid-template-columns:repeat(3,1fr)">
+  <div>
+    <div class="pane">
+      <div class="bar b2"><b>쿠폰함</b><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list-dark.png"></div></div>
+    </div>
+  </div>
+  <div>
+    <div class="pane">
+      <div class="bar b4"><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list-dark.png"></div></div>
+    </div>
+  </div>
+  <div>
+    <div class="pane">
+      <div class="bar b5"><b>쿠폰함</b><nav class="seg"><a class="on">소개</a><a>개발기</a></nav></div>
+      <div class="paper"><h4>기프티콘은 받은 날 말고는 안 열어 본다.</h4><p>문자와 카카오톡에 흩어져 있다.</p><div class="shot"><img src="https://projects.sungd.uk/p/coupons/list-dark.png"></div></div>
+    </div>
+  </div>
+</div>
+
+<p class="note">애플 재질에서 가져올 것 넷 — ① <b>색이 아니라 흐림</b>(뒤가 비쳐야 떠 있어 보인다)
+② <b>채도를 올린다</b>(saturate 180%. 안 하면 흐린 회색으로 죽는다) ③ <b>흰 테 1px</b>(유리의 모서리)
+④ <b>그림자는 아래로 넓게</b>(띄우는 건 그림자다). 그리고 스크롤을 올려 머리가 다시 보이면 띠는 사라진다.</p>
+
+</div>
+<script>
+  // 판마다 조금씩 내려 둔다 — 띠 밑으로 글이 지나간 모습이 바로 보이게
+  document.querySelectorAll('.pane').forEach(p => {
+    p.scrollTop = p.classList.contains('bottom') ? 0 : 150;
+  });
+</script>
+</body>
+</html>
