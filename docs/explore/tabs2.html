@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>탭이 셋 넷이 되면</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#e6e3f0; --card:#fbfaff; --card-2:#dfe6f2;
+  --shadow:0 2px 24px rgba(40,35,80,.08);
+  --ink:#221f2b; --prose:#3a3646; --ink-2:#57536b; --ink-3:#6f6b85;
+  --accent:#8a6a3c; --rule:rgba(34,31,43,.09); --rule-mid:rgba(34,31,43,.18);
+  --rule-ink:rgba(34,31,43,.82); --link:#4a4b93;
+  --sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif;
+  --serif:"Noto Serif KR",Pretendard,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--prose);font:16.5px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:78rem;margin:0 auto;padding:3rem 2.5rem 8rem}
+.lede h1{font-family:var(--serif);font-size:2.4rem;font-weight:700;letter-spacing:-.02em;margin:0 0 .5rem;color:var(--ink)}
+.lede p{max-width:46rem;margin:0 0 .4rem;color:var(--ink-2)}
+.lede .small{font-size:.95rem;color:var(--ink-3)}
+h2.n{font-family:var(--sans);font-size:1.05rem;font-weight:600;color:var(--accent);margin:3.4rem 0 .3rem}
+.q{font-size:.92rem;color:var(--ink-3);margin:0 0 1.1rem;max-width:48rem}
+.demo{background:var(--bg);padding:1.6rem 1.8rem 1.8rem;border-radius:16px;box-shadow:inset 0 0 0 1px var(--rule)}
+.head{margin:.6rem 0 1.2rem}
+.head h3{font-family:var(--serif);font-size:2.6rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin:0 0 .5rem;color:var(--ink)}
+.head .tag{margin:0;max-width:40rem;font-size:1.1rem;color:var(--ink-2)}
+.body{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:0 2.6rem;padding-top:1.4rem}
+.rail dl{margin:0;font-size:.8rem;color:var(--ink-3)}
+.rail dt{margin-top:.7rem}.rail dd{margin:.1rem 0 0;color:var(--ink-2)}
+.paper{background:var(--card);border-radius:14px;padding:1.6rem 2rem 1.8rem;box-shadow:var(--shadow)}
+.paper .qq{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--ink);margin:0 0 .6rem}
+.paper p{font-family:var(--serif);margin:0;font-size:.96rem;line-height:1.9;opacity:.45}
+
+.seg{display:inline-flex;gap:.25rem;margin-top:1.4rem;padding:.28rem;background:rgba(34,31,43,.06);border-radius:999px;max-width:100%}
+.seg a{padding:.42rem 1.1rem;border-radius:999px;font-size:.95rem;font-weight:600;color:var(--ink-3);text-decoration:none;white-space:nowrap}
+.seg a.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(40,35,80,.14)}
+
+.split{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.4rem;flex-wrap:wrap}
+.split .seg{margin-top:0}
+.aside-links{display:flex;gap:1.1rem;font-size:.9rem}
+.aside-links a{color:var(--ink-3);text-decoration:none;border-bottom:1px solid var(--rule-mid);padding-bottom:1px}
+
+.tabs-c{display:flex;gap:1.8rem;margin-top:1.5rem;border-bottom:1px solid var(--rule);overflow-x:auto}
+.tabs-c a{margin-bottom:-1px;padding:0 0 .7rem;border-bottom:3px solid transparent;font-size:1.08rem;font-weight:600;color:var(--ink-3);text-decoration:none;white-space:nowrap}
+.tabs-c a.on{color:var(--ink);border-bottom-color:var(--accent)}
+
+.stick{position:sticky;top:0;background:rgba(230,227,240,.92);backdrop-filter:blur(8px);
+  display:flex;align-items:center;gap:1rem;padding:.55rem .9rem;border-radius:12px;box-shadow:0 1px 0 var(--rule)}
+.stick b{font-size:.95rem;color:var(--ink);font-weight:600}
+.stick .seg{margin-top:0;padding:.2rem}
+.stick .seg a{padding:.3rem .85rem;font-size:.88rem}
+
+.list{margin-top:1.4rem;display:grid;gap:.35rem;max-width:34rem}
+.list a{display:flex;align-items:baseline;gap:.7rem;padding:.5rem .8rem;border-radius:10px;text-decoration:none;color:var(--ink-3)}
+.list a.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(40,35,80,.10)}
+.list b{font-size:.98rem;font-weight:600}
+.list span{font-size:.82rem;color:var(--ink-3)}
+.note{font-size:.86rem;color:var(--ink-3);margin:.9rem .2rem 0;max-width:48rem;line-height:1.65}
+.tagx{display:inline-block;margin-left:.5rem;padding:.05rem .4rem;border-radius:6px;background:rgba(34,31,43,.07);font-size:.72rem;font-weight:600;color:var(--ink-3);vertical-align:.12em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="lede">
+  <h1>탭이 셋 넷이 되면</h1>
+  <p>지금은 소개·개발기 둘이지만, 이 사이트엔 이미 갈래가 더 있다 — 약수첩엔 설명서가, 한달엔 일정 도감이,
+     쿠폰함엔 시안 페이지 셋이 있고 지금은 왼쪽 난에 링크로 흩어져 있다.</p>
+  <p class="small">아래는 셋·넷이 됐을 때 각 방식이 어떻게 버티는지. 실제 크기 · 실제 색.</p>
+</div>
+
+<h2 class="n">B3 · 세그먼트 셋</h2>
+<p class="q">칩이 하나 늘어도 그대로 버틴다. 폰에서는 폭이 꽉 차기 시작한다(넷부터 줄바꿈).</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="seg"><a class="on" href="#">소개</a><a href="#">개발기</a><a href="#">설명서</a></nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">B4 · 세그먼트 넷 — 여기가 한계</h2>
+<p class="q">넷째부터 「고를 수 있다」 보다 「메뉴」 로 읽힌다. 칩 하나하나도 좁아진다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="seg"><a class="on" href="#">소개</a><a href="#">개발기</a><a href="#">설명서</a><a href="#">시안</a></nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">H · 세그먼트 둘 + 곁가지 링크 <span class="tagx">추천</span></h2>
+<p class="q">층을 나눈다. <b>읽는 글</b>(소개·개발기)만 칩으로 서고, 설명서·시안 같은 <b>딸린 것</b>은 오른쪽에
+   글자 링크로. 갈래가 늘어도 칩은 둘·셋에서 안 늘어난다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <div class="split">
+      <nav class="seg"><a class="on" href="#">소개</a><a href="#">개발기</a></nav>
+      <div class="aside-links"><a href="#">설명서 ↗</a><a href="#">시안 3쪽 ↗</a><a href="#">GitHub ↗</a></div>
+    </div>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">C3 · 큰 밑줄 탭 셋 — 늘어나는 데는 제일 강하다</h2>
+<p class="q">다섯 여섯이 되어도 줄만 길어진다(넘치면 옆으로 밀린다). 대신 색 덩이가 없어 B 보다 덜 띈다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="tabs-c"><a class="on" href="#">소개</a><a href="#">개발기</a><a href="#">설명서</a><a href="#">시안</a></nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르다.</p></div>
+  </div>
+</div>
+
+<h2 class="n">J · 스크롤하면 위에 붙는 띠</h2>
+<p class="q">긴 글에서 쓰는 방법. 머리에서 지나가도 위에 얇게 남아서 <b>글을 읽는 내내</b> 갈래가 보인다.
+   아래 띠가 그 모습이다(이 판을 스크롤해 보면 붙는다).</p>
+<div class="demo" style="max-height:22rem;overflow:auto">
+  <div class="stick">
+    <b>쿠폰함</b>
+    <nav class="seg"><a class="on" href="#">소개</a><a href="#">개발기</a><a href="#">설명서</a></nav>
+  </div>
+  <div class="head" style="margin-top:1.2rem">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper">
+      <p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p>
+      <p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르고, 계산대 앞에서야 어느 대화방에 있었는지를 더듬는다. 그러다 지나간다. 쿠폰함은 받은 쿠폰을 한 곳에 세우고 기한이 가까운 것부터 보여 준다. 문자든 기프티콘 그림이든 공유로 보내면 가게·상품·기한·번호를 알아서 채우고, 계산대에서는 번호를 바코드로 다시 그려 화면을 제일 밝게 한다.</p>
+    </div>
+  </div>
+</div>
+
+<h2 class="n">K · 「이 프로젝트의 글」 목록</h2>
+<p class="q">탭을 접고 글 목록으로. 갈래가 다섯 넘어가면 이게 제일 정직하다. 대신 머리가 무거워진다.</p>
+<div class="demo">
+  <div class="head">
+    <h3>쿠폰함</h3>
+    <p class="tag">받아 놓고 잊는 기프티콘을 기한 순으로 세우고, 쓸 수 있는 가게 앞에서 알려 주는 안드로이드 앱</p>
+    <nav class="list">
+      <a class="on" href="#"><b>소개</b><span>무엇이 좋아지는가</span></a>
+      <a href="#"><b>개발기</b><span>어떻게 만들었나</span></a>
+      <a href="#"><b>설명서</b><span>넣기·계산대·알림 쓰는 법</span></a>
+      <a href="#"><b>시안</b><span>고르려고 그린 페이지 3쪽</span></a>
+    </nav>
+  </div>
+  <div class="body">
+    <aside class="rail"><dl><dt>종류</dt><dd>안드로이드 앱</dd><dt>기간</dt><dd>2026.09</dd></dl></aside>
+    <div class="paper"><p class="qq">기프티콘은 받은 날 말고는 안 열어 본다.</p><p>문자와 카카오톡에 흩어져 있고, 기한은 저마다 다르다.</p></div>
+  </div>
+</div>
+
+<p class="note">고르는 기준 — ① 지금(둘)에서 잘 보이나 ② 셋·넷이 돼도 같은 규칙으로 버티나
+③ 「읽는 글」 과 「딸린 것」 을 섞지 않나.</p>
+
+</div>
+</body>
+</html>
