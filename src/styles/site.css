@@ -387,7 +387,7 @@ a { color: inherit; }
   z-index: 40;
   display: flex;
   gap: 0.25rem;
-  margin: 0.9rem 0 0.8rem 2rem;
+  margin: 0.9rem 0.9rem 0.8rem 2rem;
   padding: 0.28rem;
   border-radius: 999px;
   background: var(--chip);
