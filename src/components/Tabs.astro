@@ -11,21 +11,24 @@ const links = [
 ];
 ---
 
-{/* 붙었는지 재는 자리 — 이게 화면 위로 빠져나가면 칩이 유리로 바뀐다 */}
-<div class="tabmark" data-tabmark aria-hidden="true"></div>
-
+{/* 제목·설명 오른쪽에 뜬다. 글이 이 자리를 비켜 흐르고(float), 스크롤하면 그대로 위에 붙는다(sticky). */}
 <nav class="tabs" data-tabs>
   {links.map(l => <a href={l.to} class:list={[{ on: l.on }]}>{l.label}</a>)}
 </nav>
 
 <script>
-  const mark = document.querySelector('[data-tabmark]');
-  const tabs = document.querySelector('[data-tabs]');
-  if (mark && tabs) {
-    // 자리는 sticky 가 잡는다 — 스크립트는 「붙었다」 는 것만 알려 준다
-    new IntersectionObserver(
-      ([e]) => tabs.classList.toggle('stuck', !e.isIntersecting),
-      { rootMargin: '-14px 0px 0px 0px', threshold: 0 },
-    ).observe(mark);
+  const tabs = document.querySelector('[data-tabs]') as HTMLElement | null;
+  if (tabs) {
+    // 붙었는지는 자리로 안다 — 붙은 뒤에 바탕과 그림자만 유리로 바뀐다
+    const line = parseFloat(getComputedStyle(tabs).top) + 1;
+    let queued = false;
+    const check = () => {
+      queued = false;
+      tabs.classList.toggle('stuck', tabs.getBoundingClientRect().top <= line);
+    };
+    addEventListener('scroll', () => {
+      if (!queued) { queued = true; requestAnimationFrame(check); }
+    }, { passive: true });
+    check();
   }
 </script>

@@ -224,6 +224,7 @@ a { color: inherit; }
 }
 
 .doc-body {
+  clear: both;
   display: grid;
   grid-template-columns: 13rem minmax(0, 1fr);
   /* 칸 안의 그림 원래 크기가 칸을 밀지 않게 — 없으면 폰에서 가로로 넘친다 */
@@ -376,19 +377,17 @@ a { color: inherit; }
 
 /* ── 탭 — 소개 · 개발기 ───────────────────────────── */
 
-/* 소개·개발기 — 칩 하나가 글과 같이 내려오다 화면 맨 위에 붙는다.
-   붙는 자리는 sticky 가 잡고, 붙은 뒤에는 재질만 유리로 바뀐다(뒤가 비쳐야 떠 있어 보인다).
-   밑줄 탭이었을 때는 제목·부제와 같은 층으로 읽혀서 있는 줄도 몰랐다. */
-.tabmark { height: 1px; margin-top: 1.4rem; }
-
+/* 소개·개발기 — 제목 오른쪽에 서고, 스크롤하면 그 자리에서 위에 붙는다.
+   float 라서 제목·설명이 이 자리를 비켜 흐르고, sticky 라서 자리는 그대로 잡아 둔 채 떠오른다.
+   붙은 뒤에는 바탕과 그림자만 유리로 바뀐다 — 뒤가 비쳐야 떠 있어 보인다. */
 .tabs {
+  float: right;
   position: sticky;
   top: 0.8rem;
   z-index: 40;
   display: flex;
   gap: 0.25rem;
-  width: max-content;
-  margin: 0 auto;
+  margin: 0.9rem 0 0.8rem 2rem;
   padding: 0.28rem;
   border-radius: 999px;
   background: var(--chip);
@@ -396,12 +395,10 @@ a { color: inherit; }
   backdrop-filter: saturate(180%) blur(22px);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   transition: background 0.22s ease, box-shadow 0.22s ease;
-  /* 흐림을 가진 채 붙어 다니면 크롬이 늦게 다시 그려서 스크롤 중에 한 박자 밀린다.
-     제 층으로 올려 두면 안 밀린다 */
+  /* 흐림을 가진 채 붙어 다니면 크롬이 늦게 다시 그린다 — 제 층으로 올려 둔다 */
   will-change: transform;
   transform: translateZ(0);
 }
-/* 붙었을 때 — 흐림 + 채도는 늘 켜 두고, 바탕과 그림자만 바꾼다. 그래야 매끄럽다 */
 .tabs.stuck {
   background: var(--glass);
   box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
@@ -755,7 +752,11 @@ figcaption {
   .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
   .tl .ds { display: block; font-size: 0.75rem; }
 
-  .tabmark { margin-top: 1.1rem; }
+  .tabs {
+    float: none;
+    width: max-content;
+    margin: 0 0 0.9rem;
+  }
   .tabs a { padding: 0.38rem 0.9rem; font-size: 0.875rem; }
 
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }

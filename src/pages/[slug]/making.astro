@@ -22,12 +22,11 @@ const d = project.data;
 ---
 
 <Base title={`${d.title} 개발기`} description={entry.data.tagline} image={d.cover}>
+  <Tabs here="making" slug={project.id} />
   <header class="doc-head">
     <h1>{d.title}</h1>
     <p class="tagline">{entry.data.tagline}</p>
   </header>
-
-  <Tabs here="making" slug={project.id} />
 
   <div class="doc-body">
     <aside class="rail">

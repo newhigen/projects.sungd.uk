@@ -23,12 +23,11 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
 ---
 
 <Base title={d.title} description={d.tagline} image={d.cover}>
+  {making && <Tabs here="intro" slug={entry.id} />}
   <header class="doc-head">
     <h1>{d.title}</h1>
     <p class="tagline">{d.tagline}</p>
   </header>
-
-  {making && <Tabs here="intro" slug={entry.id} />}
 
   <div class="doc-body">
     <aside class="rail">
