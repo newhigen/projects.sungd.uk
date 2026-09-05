@@ -22,7 +22,6 @@ const d = project.data;
 ---
 
 <Base title={`${d.title} 개발기`} description={entry.data.tagline} image={d.cover}>
-  <Tabs here="making" slug={project.id} />
   <header class="doc-head">
     <h1>{d.title}</h1>
     <p class="tagline">{entry.data.tagline}</p>
@@ -42,6 +41,7 @@ const d = project.data;
     </aside>
 
     <article class="prose">
+      <Tabs here="making" slug={project.id} />
       <Content />
     </article>
   </div>

@@ -11,7 +11,24 @@ const links = [
 ];
 ---
 
-{/* 본문 카드 위, 오른쪽 아래에 늘 떠 있다 */}
-<nav class="tabs">
+{/* 흰 카드 안 오른쪽 위 — 글이 비켜 흐르고, 스크롤하면 카드 안에서 따라 올라붙는다 */}
+<nav class="tabs" data-tabs>
   {links.map(l => <a href={l.to} class:list={[{ on: l.on }]}>{l.label}</a>)}
 </nav>
+
+<script>
+  const tabs = document.querySelector('[data-tabs]') as HTMLElement | null;
+  if (tabs) {
+    // 붙었는지는 자리로 안다 — 붙은 뒤에 바닥과 그림자만 바뀐다
+    const line = parseFloat(getComputedStyle(tabs).top) + 1;
+    let queued = false;
+    const check = () => {
+      queued = false;
+      tabs.classList.toggle('stuck', tabs.getBoundingClientRect().top <= line);
+    };
+    addEventListener('scroll', () => {
+      if (!queued) { queued = true; requestAnimationFrame(check); }
+    }, { passive: true });
+    check();
+  }
+</script>

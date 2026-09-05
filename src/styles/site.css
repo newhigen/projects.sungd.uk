@@ -383,26 +383,32 @@ a { color: inherit; }
 
 /* ── 탭 — 소개 · 개발기 ───────────────────────────── */
 
-/* 소개·개발기 — 본문 카드 위, 오른쪽 아래에 떠 있다.
-   늘 같은 자리라 글을 어디까지 읽었든 갈래가 손 닿는 데 있다.
-   유리로 만든다 — 뒤를 흐리고 채도를 올려서 밑을 지나는 글이 비쳐야 떠 있어 보인다. */
+/* 소개·개발기 — 흰 카드 안 오른쪽 위. 글이 이 자리를 비켜 흐르고(float),
+   스크롤하면 카드 안에서 위에 붙어 따라온다(sticky).
+   바닥을 짙게 둔다 — 눌린 칩이 흰색이라 흰 카드 위에서는 바닥이 없으면 사라진다. */
 .tabs {
-  position: fixed;
+  float: right;
+  position: sticky;
+  top: 0.9rem;
   z-index: 40;
-  bottom: 1.3rem;
-  /* 화면 오른쪽이 아니라 «본문 판의 오른쪽» 에 맞춘다 — 넓은 화면에서 멀리 떨어지지 않게 */
-  right: calc(max(0px, (100vw - var(--page)) / 2) + var(--gut) + 0.9rem);
   display: flex;
   gap: 0.25rem;
+  margin: 0 0 0.7rem 2rem;
   padding: 0.28rem;
   border-radius: 999px;
-  background: var(--chip-stuck);
+  background: var(--chip);
   -webkit-backdrop-filter: saturate(180%) blur(22px);
   backdrop-filter: saturate(180%) blur(22px);
-  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
-  /* 흐림을 가진 채 떠 있으면 크롬이 늦게 다시 그린다 — 제 층으로 올려 둔다 */
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+  /* 흐림을 가진 채 붙어 다니면 크롬이 늦게 다시 그린다 — 제 층으로 올려 둔다 */
   will-change: transform;
   transform: translateZ(0);
+}
+/* 붙은 뒤 — 바닥을 한 단계 짙게 하고 유리 테와 그림자를 얹는다 */
+.tabs.stuck {
+  background: var(--chip-stuck);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
 }
 .tabs a {
   padding: 0.42rem 1.1rem;
@@ -417,6 +423,10 @@ a { color: inherit; }
   background: var(--chip-on);
   color: var(--chip-on-ink);
   box-shadow: 0 1px 3px rgba(40, 35, 80, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs { transition: none; }
 }
 
 
@@ -749,7 +759,12 @@ figcaption {
   .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
   .tl .ds { display: block; font-size: 0.75rem; }
 
-  .tabs { bottom: 1rem; right: 1rem; }
+  /* 좁은 화면 — 옆에 두면 첫 줄이 두 낱말씩 접힌다. 한 줄 차지하고 오른쪽에 붙인다 */
+  .tabs {
+    float: none;
+    width: max-content;
+    margin: 0 0 1rem auto;
+  }
   .tabs a { padding: 0.38rem 0.9rem; font-size: 0.875rem; }
 
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }
