@@ -428,8 +428,33 @@ a { color: inherit; }
   box-shadow: 0 1px 3px rgba(40, 35, 80, 0.14);
 }
 
+/* 쪽을 넘길 때 — 확 바뀌지 않고 미끄러진다.
+   소개와 개발기는 따로 만들어진 쪽인데, 브라우저가 두 쪽의 화면을 겹쳐 놓고 사이를 이어 준다
+   (View Transitions). 자바스크립트는 없다 — 이 선언 하나가 전부다.
+   눌린 칩에만 이름을 붙여서, 그 칩이 한쪽에서 다른 쪽으로 자리를 옮겨 간다. */
+@view-transition { navigation: auto; }
+
+.tabs a.on { view-transition-name: tab-on; }
+.doc-body { view-transition-name: page; }
+.doc-head .tagline { view-transition-name: tagline; }
+
+::view-transition-group(tab-on) { animation-duration: 0.34s; }
+
+::view-transition-old(page),
+::view-transition-old(tagline) { animation: page-out 0.16s ease both; }
+::view-transition-new(page),
+::view-transition-new(tagline) { animation: page-in 0.28s ease both; }
+
+@keyframes page-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tabs { transition: none; }
+  @view-transition { navigation: none; }
 }
 
 
