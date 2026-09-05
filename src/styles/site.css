@@ -448,18 +448,26 @@ a { color: inherit; }
 .doc-head .tagline { view-transition-name: tagline; }
 /* 제목·제호·왼쪽 난은 이름을 갖고 제자리를 지킨다 — 바뀌는 건 본문뿐이다 */
 
+/* 알약은 옮겨 가는 동안 반쯤 비친다 — 지나가는 자리의 글자가 가려지지 않게 */
 ::view-transition-group(tab-thumb) { animation-duration: 0.3s; }
+::view-transition-old(tab-thumb),
+::view-transition-new(tab-thumb) { animation: thumb-slide 0.3s ease both; }
 
+/* 본문은 움직이지 않고 흐려졌다 밝아진다 — 위아래로 밀면 새로 그린 것처럼 보인다 */
 ::view-transition-old(page),
-::view-transition-old(tagline) { animation: page-out 0.16s ease both; }
+::view-transition-old(tagline) { animation: fade-out 0.16s ease both; }
 ::view-transition-new(page),
-::view-transition-new(tagline) { animation: page-in 0.28s ease both; }
+::view-transition-new(tagline) { animation: fade-in 0.26s ease 0.06s both; }
 
-@keyframes page-out {
-  to { opacity: 0; transform: translateY(-6px); }
+@keyframes thumb-slide {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
 }
-@keyframes page-in {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
