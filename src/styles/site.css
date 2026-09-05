@@ -394,7 +394,11 @@ a { color: inherit; }
   position: sticky;
   top: 0.9rem;
   z-index: 40;
-  display: flex;
+  /* 칸 너비를 가장 긴 이름에 맞춰 모두 같게 — 알약이 옮겨 갈 때 크기가 안 바뀐다.
+     flex 로는 이름 길이만큼 칸이 달라져서 「왜 만들었나」 쪽 알약만 넓었다. */
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   width: max-content;
   gap: 0.25rem;
   margin: -4.2rem 0.9rem 1.9rem auto;
@@ -417,7 +421,7 @@ a { color: inherit; }
 .tabs a {
   position: relative;
   z-index: 0;
-  /* 두 칸을 같은 너비로 — 알약이 크기까지 바뀌면 옮겨 갈 때 찌그러져 보인다 */
+  /* 이름이 다 짧을 때의 바닥값 — 너비 맞추기는 위 격자가 한다 */
   min-width: 5.1rem;
   text-align: center;
   padding: 0.42rem 1.1rem;
@@ -502,10 +506,11 @@ a { color: inherit; }
 ::view-transition-new(tab-2),
 ::view-transition-new(tab-3) { animation: fade-in 0.28s ease both; }
 
-/* 칸 너비가 다르면(「왜 만들었나」 처럼) 알약이 옮겨 가며 크기도 바뀐다.
-   늘어난 그림이 오래 보이면 찌그러져 보이니 옛 알약을 빨리 걷고 새 알약을 바로 올린다. */
-::view-transition-old(tab-thumb) { animation: fade-out 0.1s ease both; }
-::view-transition-new(tab-thumb) { animation: fade-in 0.12s ease both; }
+/* 알약은 흐려지지 않는다 — 새 알약 하나만 그리고 자리만 옮긴다.
+   두 장을 겹쳐 흐리면 가운데서 둘 다 반투명해지는 구간이 생겨 한 번 작아진 것처럼 보였다.
+   칸 너비를 위에서 맞춰 놓았으니 옛 알약을 서둘러 걷을 이유도 없다. */
+::view-transition-old(tab-thumb) { animation: none; opacity: 0; }
+::view-transition-new(tab-thumb) { animation: none; opacity: 1; }
 
 /* 본문은 움직이지 않고 흐려졌다 밝아진다 — 위아래로 밀면 새로 그린 것처럼 보인다 */
 ::view-transition-old(tagline) { animation: fade-out 0.16s ease both; }
