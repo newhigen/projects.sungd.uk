@@ -224,8 +224,9 @@ a { color: inherit; }
 }
 .doc-head .tagline {
   margin: 0;
-  /* 읽는 폭(--measure)에 묶여 있어서 넓은 화면에서도 두 줄로 접혔다 */
-  max-width: 56rem;
+  /* 읽는 폭(--measure)에 묶여 있어서 넓은 화면에서도 두 줄로 접혔다.
+     오른쪽 끝에는 칩이 서니 그 앞에서 끊는다 */
+  max-width: 46rem;
   font-size: 1.15rem;
   color: var(--ink-2);
 }
@@ -383,7 +384,9 @@ a { color: inherit; }
 
 /* ── 탭 — 소개 · 개발기 ───────────────────────────── */
 
-/* 소개·개발기 — 카드 바깥, 머리와 카드 사이 오른쪽 끝.
+/* 소개·개발기 — 카드 바깥, 설명과 같은 줄 오른쪽 끝.
+   자리는 문서 흐름에 두되(sticky 가 살아 있으려면 키 큰 칸의 자식이어야 한다)
+   위로 끌어올려 설명 줄에 나란히 세운다.
    스크롤하면 그 자리에서 위에 붙어 따라온다(sticky).
    바닥을 짙게 둔다 — 눌린 칩이 흰색이라 흰 카드 위로 올라가면 바닥이 없으면 사라진다. */
 .tabs {
@@ -393,7 +396,7 @@ a { color: inherit; }
   display: flex;
   width: max-content;
   gap: 0.25rem;
-  margin: 0 0.9rem 0.5rem auto;
+  margin: -3.6rem 0.9rem 1.3rem auto;
   padding: 0.28rem;
   border-radius: 999px;
   background: var(--chip);
@@ -759,7 +762,7 @@ figcaption {
   .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
   .tl .ds { display: block; font-size: 0.75rem; }
 
-  .tabs { margin: 0 0 0.5rem auto; }
+  .tabs { margin: 0 0 0.6rem auto; }
   .tabs a { padding: 0.38rem 0.9rem; font-size: 0.875rem; }
 
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }
