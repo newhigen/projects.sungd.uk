@@ -11,24 +11,7 @@ const links = [
 ];
 ---
 
-{/* 제목·설명 오른쪽에 뜬다. 글이 이 자리를 비켜 흐르고(float), 스크롤하면 그대로 위에 붙는다(sticky). */}
-<nav class="tabs" data-tabs>
+{/* 본문 카드 위, 오른쪽 아래에 늘 떠 있다 */}
+<nav class="tabs">
   {links.map(l => <a href={l.to} class:list={[{ on: l.on }]}>{l.label}</a>)}
 </nav>
-
-<script>
-  const tabs = document.querySelector('[data-tabs]') as HTMLElement | null;
-  if (tabs) {
-    // 붙었는지는 자리로 안다 — 붙은 뒤에 바탕과 그림자만 유리로 바뀐다
-    const line = parseFloat(getComputedStyle(tabs).top) + 1;
-    let queued = false;
-    const check = () => {
-      queued = false;
-      tabs.classList.toggle('stuck', tabs.getBoundingClientRect().top <= line);
-    };
-    addEventListener('scroll', () => {
-      if (!queued) { queued = true; requestAnimationFrame(check); }
-    }, { passive: true });
-    check();
-  }
-</script>
