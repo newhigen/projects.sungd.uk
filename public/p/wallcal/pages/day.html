@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오른쪽 그날 칸 고르기</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --ink:#1b1d22; --dim:#4a5160; --faint:#767d8c;
+  --hair:#e2e5ea; --accent:#2563eb; --pick:#e8f0ff;
+  --line:#00000014; --strip:#00000010; --wend:#00000008;
+  --sun:#7d6a68; --sat:#6b7480;
+  --c1:#e5487d; --c2:#2e8b57; --c3:#2f8fe0;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e1013; --card:#181b20; --ink:#eceff3; --dim:#c3cad6; --faint:#8a93a1;
+    --hair:#282c33; --accent:#4c8dff; --pick:#16243c;
+    --line:#ffffff22; --strip:#ffffff1c; --wend:#ffffff0b;
+    --sun:#a79390; --sat:#98a0ac;
+    --c1:#f2648f; --c2:#3cbb84; --c3:#4ca6f0;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:26px 20px 90px}
+h1{font-size:23px;margin:0 0 6px}
+.lede{color:var(--dim);margin:0 0 4px}
+.note{color:var(--faint);font-size:13.5px;margin:0 0 18px}
+h2{font-size:17px;margin:34px 0 2px;display:flex;align-items:center;gap:9px}
+h2 input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+h2 .id{color:var(--faint);font-size:11px;font-weight:400}
+.q{color:var(--dim);font-size:13.5px;margin:5px 0 0}
+.q b{color:var(--ink)}
+.stage{margin-top:12px;padding:14px;background:var(--bg);border:1px solid var(--hair);
+  border-radius:14px;overflow-x:auto}
+.opt{background:var(--card);border:1px solid var(--hair);border-radius:16px;
+  padding:14px 16px 16px;margin-top:14px}
+.opt.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--pick)}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:10px 0 12px;display:flex;gap:10px;align-items:center}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--hair);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+#msg{color:var(--faint);font-size:13px}
+
+/* ── 위젯 흉내 — 폰에 올라간 크기(487×446dp)를 660px 로 줄인 비율 ── */
+.w{width:660px;height:604px;background:var(--card);border-radius:22px;padding:13px;
+  display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.hd{height:60px;display:flex;align-items:center;gap:6px;flex:none}
+.hd .ti{font-weight:700;font-size:21px;white-space:nowrap;padding-left:6px}
+.hd .sp{flex:1}
+.hd .b{color:var(--faint);font-size:17px;padding:0 9px}
+.body{flex:1;display:flex;min-height:0}
+.cal{flex:1;display:flex;flex-direction:column;min-width:0}
+.dows{height:26px;display:grid;grid-template-columns:repeat(7,1fr);
+  font-size:13px;color:var(--faint);align-items:center}
+.dows div{padding-left:5px}
+.dows .sat{color:var(--sat)} .dows .sun{color:var(--sun)}
+.g{display:grid;grid-template-columns:repeat(7,1fr);
+  grid-template-rows:24px repeat(3,17px);position:relative}
+.g.today{grid-template-rows:24px repeat(6,17px)}
+.wend{grid-row:1/-1;background:var(--wend)}
+.d{grid-row:1;font-size:15px;line-height:24px;text-align:center}
+.d.sat{color:var(--sat)} .d.sun{color:var(--sun)}
+.d.off{color:var(--faint);opacity:.6}
+.ev{border-radius:4px;font-size:11.5px;line-height:15px;padding:0 5px;margin:1px 0;
+  overflow:hidden;white-space:nowrap}
+.ev.pink{background:#e5487d2e;color:#a02a52}
+.ev.green{background:#2e8b572e;color:#1d6b40}
+.ev.dash{border:1px dashed #e5487d88;color:#a02a52;background:none;line-height:13px}
+@media (prefers-color-scheme:dark){
+  .ev.pink{color:#f7a8c2} .ev.green{color:#7fd6a8} .ev.dash{color:#f7a8c2}
+}
+.ring{outline:2px solid var(--accent);border-radius:9px;grid-row:1/-1}
+.mv{grid-row:1/-1;width:1px;background:var(--line);justify-self:start}
+.mh{height:1px;background:var(--line);align-self:end}
+.pills{height:55px;display:flex;align-items:center;gap:12px;flex:none}
+.pill{display:flex;align-items:center;gap:8px;background:var(--strip);
+  border-radius:99px;padding:6px 14px}
+.pill i{width:7px;height:7px;border-radius:99px;flex:none}
+.pill b{font-size:17px}
+.pill span{font-size:15px;color:var(--dim)}
+
+/* ── 오른쪽 그날 칸 ── */
+.panel{width:135px;flex:none;border-left:1px solid var(--line);
+  margin-left:8px;padding-left:10px;display:flex;flex-direction:column}
+.panel .ph{font-size:13px;color:var(--accent);font-weight:700;height:26px;
+  display:flex;align-items:center}
+.panel .row{display:flex;gap:7px;padding:4px 0;align-items:baseline}
+.panel .at{font-size:12px;color:var(--faint);width:38px;flex:none}
+.panel .tt{font-size:13.5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.panel .none{font-size:12.5px;color:var(--faint);padding-top:6px}
+
+/* 시간 축 */
+.axis{flex:1;position:relative;margin-top:4px}
+.axis .hr{position:absolute;left:0;right:0;border-top:1px solid var(--line)}
+.axis .hl{position:absolute;left:0;font-size:10px;color:var(--faint);transform:translateY(-6px)}
+.axis .blk{position:absolute;left:26px;right:0;border-radius:4px;font-size:11px;
+  padding:1px 5px;overflow:hidden;white-space:nowrap}
+.axis .allday{position:absolute;left:26px;right:0;top:0;border-radius:4px;font-size:11px;
+  padding:1px 5px}
+
+/* 접은 시간 축 */
+.fold .gap{height:12px;border-left:1px dotted var(--line);margin-left:12px}
+
+/* 아래 가로 타임라인 */
+.strip2{height:52px;flex:none;display:flex;flex-direction:column;justify-content:center;
+  border-top:1px solid var(--line);margin-top:6px;padding-top:4px}
+.strip2 .ticks{position:relative;height:14px}
+.strip2 .ticks span{position:absolute;font-size:10px;color:var(--faint)}
+.strip2 .track{position:relative;height:20px}
+.strip2 .blk{position:absolute;top:0;height:20px;border-radius:4px;font-size:11px;
+  padding:1px 6px;overflow:hidden;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>오른쪽 그날 칸 고르기</h1>
+<p class="lede">날짜를 누르면 앱을 열지 말고 오른쪽에 그날을 펼치자는 안. 폰에 올라간 크기(487×446dp) 그대로 그렸어요.</p>
+<p class="note">고른 날은 <b>9월 2일 (수)</b> — 종일 휴가와 13:00 월간 보고 두 건.
+칸을 떼면 하루 폭이 <b>90px → 71px</b> 로 줄어서 막대 제목이 한 글자쯤 덜 들어갑니다(그림에 반영했어요).</p>
+
+<div class="bar">
+  <button id="copy">고른 것 복사</button>
+  <span id="msg"></span>
+</div>
+
+<div id="app"></div>
+</div>
+
+<script>
+// ── 격자 ──────────────────────────────────────
+// 8/31~9/27, 오늘은 9/2. 일정은 실제 달력에 있는 것만 올린다.
+var ROWS = [
+  [31,1,2,3,4,5,6],
+  [7,8,9,10,11,12,13],
+  [14,15,16,17,18,19,20],
+  [21,22,23,24,25,26,27]
+];
+
+function grid(ri){
+  var days = ROWS[ri], h = '', today = (ri === 0);
+  h += '<div class="wend" style="grid-column:6/8"></div>';
+  if (ri === 0){
+    h += '<div class="mv" style="grid-column:2"></div>';
+    h += '<div class="mh" style="grid-column:1;grid-row:' + (today ? 7 : 4) + '"></div>';
+  }
+  days.forEach(function(n,i){
+    var c = 'd' + (i===5?' sat':i===6?' sun':'') + (ri===0 && i===0 ? ' off' : '');
+    var t = (ri===0 && i===1) ? '9/1' : n;
+    h += '<div class="' + c + '" style="grid-column:' + (i+1) + '">' + t + '</div>';
+  });
+  if (ri === 0){
+    h += '<div class="ring" style="grid-column:3"></div>';
+    h += '<div class="ev dash" style="grid-column:1;grid-row:2">팀 회…</div>';
+    h += '<div class="ev pink" style="grid-column:2/5;grid-row:2">휴가</div>';
+    h += '<div class="ev pink" style="grid-column:3;grid-row:3">월간…</div>';
+    h += '<div class="ev green" style="grid-column:6;grid-row:2">대체…</div>';
+  }
+  if (ri === 3){
+    h += '<div class="ev green" style="grid-column:4/7;grid-row:2">추석</div>';
+  }
+  return '<div class="g' + (today ? ' today' : '') + '">' + h + '</div>';
+}
+
+function head(){
+  return '<div class="hd"><span class="ti">8/31 – 9/27</span><span class="sp"></span>'
+    + '<span class="b">+</span><span class="b">↻</span><span class="b">오늘</span>'
+    + '<span class="b">‹</span><span class="b">›</span></div>';
+}
+function pills(){
+  return '<div class="pills">'
+    + '<span class="pill"><i style="background:#e5487d"></i><b>1일</b><span>월간 보고</span></span>'
+    + '<span class="pill"><i style="background:#2e8b57"></i><b>22일</b><span>추석</span></span>'
+    + '</div>';
+}
+function cal(){
+  var h = '<div class="dows"><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div>'
+    + '<div class="sat">토</div><div class="sun">일</div></div>';
+  for (var i = 0; i < 4; i++) h += grid(i);
+  return '<div class="cal">' + h + '</div>';
+}
+function card(panel, bottom){
+  return '<div class="w">' + head()
+    + '<div class="body">' + cal() + (panel || '') + '</div>'
+    + (bottom || '') + pills() + '</div>';
+}
+
+// ── 오른쪽 칸 네 가지 ──────────────────────────
+var PANEL = {
+  none: function(){ return card(); },
+
+  list: function(){
+    return card('<div class="panel"><div class="ph">9/2 (수)</div>'
+      + '<div class="row"><span class="at">종일</span><span class="tt">휴가</span></div>'
+      + '<div class="row"><span class="at">13:00</span><span class="tt">월간 보고</span></div>'
+      + '</div>');
+  },
+
+  axis: function(){
+    // 6시~22시를 세로로 편다. 하루 두 건이면 눈금만 남는다 — 그게 이 안의 약점이다.
+    var h = '<div class="panel"><div class="ph">9/2 (수)</div><div class="axis">';
+    [6,10,14,18,22].forEach(function(hh,i){
+      var top = (i / 4) * 100;
+      h += '<div class="hr" style="top:' + top + '%"></div>';
+      h += '<div class="hl" style="top:' + top + '%">' + hh + '</div>';
+    });
+    h += '<div class="allday ev pink">휴가</div>';
+    h += '<div class="blk ev pink" style="top:' + ((13-6)/16*100) + '%;height:20px">월간 보고</div>';
+    return card(h + '</div></div>');
+  },
+
+  fold: function(){
+    // 빈 시간대는 점선으로 접는다. 축은 살리고 빈 자리는 안 잡아먹는다.
+    return card('<div class="panel fold"><div class="ph">9/2 (수)</div>'
+      + '<div class="row"><span class="at">종일</span><span class="tt">휴가</span></div>'
+      + '<div class="gap"></div>'
+      + '<div class="row"><span class="at">13:00</span><span class="tt">월간 보고</span></div>'
+      + '<div class="gap"></div>'
+      + '<div class="none">그 뒤는 비어 있어요</div>'
+      + '</div>');
+  },
+
+  under: function(){
+    // 칸을 안 떼고 아래에 가로로. 격자 폭이 안 줄어든다.
+    var h = '<div class="strip2"><div class="ticks">';
+    [[0,'6시'],[25,'11시'],[50,'16시'],[75,'21시']].forEach(function(t){
+      h += '<span style="left:' + t[0] + '%">' + t[1] + '</span>';
+    });
+    h += '</div><div class="track">';
+    h += '<div class="blk ev pink" style="left:0;right:0;opacity:.5">휴가 · 종일</div>';
+    h += '<div class="blk ev pink" style="left:' + ((13-6)/16*100) + '%;width:110px">13:00 월간 보고</div>';
+    return card(null, h + '</div></div>');
+  }
+};
+
+var SECTIONS = [
+  {id:'없음', t:'그대로 — 칸 없음 (기준)', m:'none',
+   q:'날짜를 누르면 지금처럼 앱이 열립니다. 하루 폭 <b>90px</b>.'},
+  {id:'목록', t:'그날 목록', m:'list',
+   q:'시각 순으로 줄만 세웁니다. <b>좁은 칸에서 제일 잘 읽혀요</b> — 추천.'},
+  {id:'시간축', t:'시간 축', m:'axis',
+   q:'6시~22시를 세로로 폅니다. 하루 두 건인 날은 <b>눈금만 남아요</b>. 30분짜리 일정은 8px 높이라 글씨가 안 들어갑니다.'},
+  {id:'접은축', t:'접은 시간 축', m:'fold',
+   q:'차례는 지키되 빈 시간대는 점선으로 접습니다. 축의 뜻은 남고 빈 자리는 안 먹어요.'},
+  {id:'아래', t:'칸 대신 아래 가로줄', m:'under',
+   q:'격자 폭을 <b>안 뺏습니다</b>(90px 그대로). 대신 남은 날 알약과 아래를 나눠 써야 해요.'}
+];
+
+var picked = null;
+function draw(){
+  var h = '';
+  SECTIONS.forEach(function(s){
+    var on = picked === s.id;
+    h += '<div class="opt' + (on ? ' picked' : '') + '">'
+      + '<h2><input type="radio" name="p" data-id="' + s.id + '"' + (on ? ' checked' : '') + '>'
+      + s.t + ' <span class="id">' + s.id + '</span></h2>'
+      + '<p class="q">' + s.q + '</p>'
+      + '<div class="stage">' + PANEL[s.m]() + '</div></div>';
+  });
+  document.getElementById('app').innerHTML = h;
+  document.querySelectorAll('#app input').forEach(function(el){
+    el.onchange = function(){ picked = el.dataset.id; draw(); };
+  });
+}
+document.getElementById('copy').onclick = function(){
+  var txt = picked || '(아직 안 골랐어요)';
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+  document.getElementById('msg').textContent = txt + ' — 복사했어요';
+};
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공휴일 그리는 법 고르기</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --ink:#1b1d22; --dim:#4a5160; --faint:#767d8c;
+  --hair:#e2e5ea; --accent:#2563eb; --pick:#e8f0ff;
+  --line:#00000014; --wend:#00000008;
+  --sun:#7d6a68; --sat:#6b7480;
+  --hol:#2e8b57; --holbg:#2e8b572e; --holink:#1d6b40;
+  --work:#e5487d; --workbg:#e5487d2e; --workink:#a02a52;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e1013; --card:#181b20; --ink:#eceff3; --dim:#c3cad6; --faint:#8a93a1;
+    --hair:#282c33; --accent:#4c8dff; --pick:#16243c;
+    --line:#ffffff22; --wend:#ffffff0b;
+    --sun:#a79390; --sat:#98a0ac;
+    --hol:#3cbb84; --holink:#7fd6a8;
+    --work:#f2648f; --workink:#f7a8c2;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:26px 20px 90px}
+h1{font-size:23px;margin:0 0 6px}
+.lede{color:var(--dim);margin:0 0 4px}
+.note{color:var(--faint);font-size:13.5px;margin:0 0 18px}
+h2{font-size:17px;margin:0;display:flex;align-items:center;gap:9px;font-weight:600}
+h2 input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+h2 .id{color:var(--faint);font-size:11px;font-weight:400}
+.q{color:var(--dim);font-size:13.5px;margin:6px 0 0}
+.q b{color:var(--ink)}
+.opt{background:var(--card);border:1px solid var(--hair);border-radius:16px;
+  padding:14px 16px 16px;margin-top:14px}
+.opt.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--pick)}
+.stage{margin-top:11px;padding:12px;background:var(--bg);border-radius:12px;
+  display:flex;justify-content:center;overflow-x:auto}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:10px 0 12px;display:flex;gap:10px;align-items:center}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--hair);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+#msg{color:var(--faint);font-size:13px}
+
+/* ── 격자 한 줄 흉내 ─────────────────────── */
+.g{width:602px;display:grid;grid-template-columns:repeat(7,1fr);
+  grid-template-rows:8px 26px repeat(3,20px);background:var(--card);
+  border-radius:10px;padding-bottom:6px;position:relative}
+.wend{grid-row:1/-1;background:var(--wend)}
+.d{grid-row:2;font-size:16px;text-align:center;line-height:26px}
+.d.sat{color:var(--sat)} .d.sun{color:var(--sun)}
+.d.hol{color:var(--sun)}
+.ev{border-radius:4px;font-size:12px;line-height:18px;padding:0 6px;margin:1px 3px;
+  overflow:hidden;white-space:nowrap}
+.ev.work{background:var(--workbg);color:var(--workink)}
+.ev.hol{background:var(--holbg);color:var(--holink)}
+.ev.plain{background:none;color:var(--dim);padding-left:6px}
+.ev.faint{background:none;color:var(--faint)}
+
+/* 이어지는 선 */
+.rule{align-self:center;height:2px;background:var(--hol);opacity:.55;margin:0 3px}
+.rule.dash{height:0;border-top:2px dashed var(--hol);opacity:.55}
+.rule.grey{background:var(--line);opacity:1}
+.label{font-size:12px;line-height:18px;color:var(--dim);padding-left:6px;white-space:nowrap}
+.label.gr{color:var(--holink)}
+
+/* 칸 위 띠 */
+.tape{grid-row:1;height:4px;background:var(--hol);opacity:.65;margin:2px 3px 0;border-radius:2px}
+.tape.grey{background:var(--dim);opacity:.35}
+
+/* 칸 바탕 */
+.tint{grid-row:1/-1;background:var(--holbg);opacity:.45}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>공휴일 그리는 법 고르기</h1>
+<p class="lede">추석도 하는 일이 아니라 아는 일이라, 회의·약속과 같은 무게로 칠할 이유가 없어요.
+다만 <b>연휴는 여러 날에 걸쳐서</b> 글자만 남기면 어디까지인지가 사라집니다.</p>
+<p class="note">그림은 9월 마지막 줄 — 22일에 업무 일정(분홍) 하나, 24~26일이 추석 연휴.
+26일은 토요일이라 지금도 한 단 더 흐립니다.</p>
+
+<div class="bar">
+  <button id="copy">고른 것 복사</button>
+  <span id="msg"></span>
+</div>
+
+<div id="app"></div>
+</div>
+
+<script>
+var DAYS = [21,22,23,24,25,26,27];
+
+// 한 줄을 그린다. hol 은 24~26(칸 4~6) 을 어떻게 그릴지 정한다.
+function row(hol){
+  var h = '';
+  h += '<div class="wend" style="grid-column:6/8"></div>';
+  if (hol.tint) h += '<div class="tint" style="grid-column:4/7"></div>';
+  DAYS.forEach(function(n,i){
+    var c = 'd' + (i===5?' sat':i===6?' sun':'');
+    if (hol.redday && i>=3 && i<=5) c = 'd hol';
+    h += '<div class="' + c + '" style="grid-column:' + (i+1) + '">' + n + '</div>';
+  });
+  if (hol.tape) h += '<div class="tape' + (hol.grey?' grey':'') + '" style="grid-column:4/7"></div>';
+  // 업무 일정은 늘 같게 — 견주는 기준이다
+  h += '<div class="ev work" style="grid-column:2;grid-row:3">스프린트</div>';
+  h += hol.draw();
+  return '<div class="g">' + h + '</div>';
+}
+
+var HOL = {
+  now: {draw:function(){
+    return '<div class="ev hol" style="grid-column:4/7;grid-row:3">추석</div>'; }},
+
+  text: {draw:function(){
+    return '<div class="ev plain" style="grid-column:4/7;grid-row:3">추석</div>'; }},
+
+  rule: {draw:function(){
+    return '<div style="grid-column:4/7;grid-row:3;display:flex;align-items:center">'
+      + '<span class="label gr">추석</span>'
+      + '<span class="rule" style="flex:1"></span></div>'; }},
+
+  dash: {draw:function(){
+    return '<div style="grid-column:4/7;grid-row:3;display:flex;align-items:center">'
+      + '<span class="label">추석</span>'
+      + '<span class="rule dash grey" style="flex:1"></span></div>'; }},
+
+  tape: {tape:true, draw:function(){
+    return '<div class="ev plain" style="grid-column:4/7;grid-row:3">추석</div>'; }},
+
+  redday: {redday:true, draw:function(){
+    return '<div class="ev faint" style="grid-column:4/7;grid-row:3">추석</div>'; }},
+
+  tint: {tint:true, draw:function(){
+    return '<div class="ev plain" style="grid-column:4/7;grid-row:3">추석</div>'; }}
+};
+
+var SECTIONS = [
+  {id:'지금', t:'지금 — 옅은 초록 막대 (기준)', m:'now',
+   q:'업무 일정과 <b>같은 모양</b>이라 무게가 같아 보입니다. 연휴 길이는 제일 잘 보여요.'},
+  {id:'글자만', t:'글자만 (기억 일정과 같게)', m:'text',
+   q:'가장 조용하지만 <b>어디까지가 연휴인지</b>가 사라집니다. 25·26일이 쉬는 날인 줄 모르게 돼요.'},
+  {id:'이어진선', t:'이름 + 이어지는 선', m:'rule',
+   q:'첫날에 이름, 나머지 날은 <b>선이 이어</b> 길이를 말합니다. 색은 남기되 면이 아니라 선이라 가벼워요.'},
+  {id:'점선', t:'이름 + 이어지는 점선 (무채색)', m:'dash',
+   q:'선을 점선·회색으로. 시간 축 눈금과 같은 어법이라 <b>«재는 선»</b> 으로 읽혀요.'},
+  {id:'윗띠', t:'칸 맨 위에 얇은 띠', m:'tape',
+   q:'날짜 줄 위를 가로지릅니다. <b>일정 줄을 안 먹어서</b> 그날 약속이 한 줄 더 들어가요.'},
+  {id:'빨간날', t:'날짜 숫자를 빨갛게 (막대 없음)', m:'redday',
+   q:'종이 달력이 하는 방식. <b>가장 조용하고</b> 자리도 안 먹지만 이름은 눌러야 압니다.'},
+  {id:'칸바탕', t:'연휴 칸에 옅은 바탕', m:'tint',
+   q:'주말 바탕과 같은 어법. 길이가 면으로 보이는데, <b>주말 바탕과 겹치면</b> 26일에서 두 겹이 됩니다.'}
+];
+
+var picked = null;
+function draw(){
+  var h = '';
+  SECTIONS.forEach(function(s){
+    var on = picked === s.id;
+    h += '<div class="opt' + (on?' picked':'') + '">'
+      + '<h2><input type="radio" name="p" data-id="' + s.id + '"' + (on?' checked':'') + '>'
+      + s.t + ' <span class="id">' + s.id + '</span></h2>'
+      + '<p class="q">' + s.q + '</p>'
+      + '<div class="stage">' + row(HOL[s.m]) + '</div></div>';
+  });
+  document.getElementById('app').innerHTML = h;
+  document.querySelectorAll('#app input').forEach(function(el){
+    el.onchange = function(){ picked = el.dataset.id; draw(); };
+  });
+}
+document.getElementById('copy').onclick = function(){
+  var txt = picked || '(아직 안 골랐어요)';
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+  document.getElementById('msg').textContent = txt + ' — 복사했어요';
+};
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>위젯 색·글꼴 고르기</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#ffffff; --ink:#1b1d22; --dim:#4a5160; --faint:#767d8c;
+  --hair:#e2e5ea; --accent:#2563eb; --pick:#e8f0ff;
+  --sun:#b4544f; --sat:#4a6ea8;
+  --c1:#2f8fe0; --c2:#e5487d; --c3:#2e8b57; --c4:#e08b2f;
+  --wall:linear-gradient(140deg,#a8c8e8,#dfe7f0 60%,#f2ded0);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0e1013; --card:#181b20; --ink:#eceff3; --dim:#c3cad6; --faint:#8a93a1;
+    --hair:#282c33; --accent:#4c8dff; --pick:#16243c;
+    --sun:#d98c88; --sat:#8faad6;
+    --c1:#4ca6f0; --c2:#f2648f; --c3:#3cbb84; --c4:#f0a447;
+    --wall:linear-gradient(140deg,#1b2a3d,#20252c 60%,#332a24);
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+h1{font-size:24px;margin:0 0 6px}
+.lede{color:var(--dim);margin:0 0 20px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:10px 0 12px;margin-bottom:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--hair);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+#out{width:100%;min-height:110px;margin-top:10px;font:13px/1.5 ui-monospace,Menlo,monospace;
+  background:var(--card);color:var(--ink);border:1px solid var(--hair);border-radius:10px;
+  padding:10px;display:none}
+h2{font-size:17px;margin:32px 0 2px}
+h2 span{color:var(--faint);font-weight:400;font-size:13px;margin-left:8px}
+.q{color:var(--dim);font-size:13.5px;margin:6px 0 0}
+.row{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px;margin-top:14px}
+.opt{background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:12px;
+  display:flex;flex-direction:column;gap:8px}
+.opt.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--pick)}
+.opt h3{font-size:14px;margin:0;display:flex;align-items:center;gap:8px}
+.opt h3 input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+.opt h3 .id{color:var(--faint);font-size:11px;font-weight:400}
+.opt .n{color:var(--dim);font-size:12.5px;margin:0}
+.opt .now{align-self:flex-start;font-size:11px;color:var(--accent);border:1px solid var(--accent);
+  border-radius:99px;padding:1px 8px}
+.stage{background:var(--bg);border-radius:10px;padding:10px;display:flex;justify-content:center}
+
+/* ── 위젯 흉내 ─────────────────────────── */
+.w{width:238px;background:var(--card);border-radius:14px;padding:8px 9px;font-size:11px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.w.wall{background:var(--wall)}
+.w.tintbg{background:color-mix(in srgb,var(--ink) 4%,var(--card))}
+.w.narrow{font-stretch:condensed;letter-spacing:-.3px}
+.w.serif{font-family:"Apple SD Gothic Neo",serif}
+.w.round{border-radius:26px}
+.hd{display:flex;align-items:center;gap:3px;height:20px}
+.hd .ti{flex:1;font-weight:700;font-size:12.5px;white-space:nowrap}
+.hd .b{color:var(--faint);padding:0 4px;font-size:12px}
+.w.tibold .hd .ti{font-weight:800}
+.w.tithin .hd .ti{font-weight:600}
+.dows{display:grid;grid-template-columns:repeat(7,1fr);font-size:9.5px;color:var(--faint);padding-top:3px}
+.dows div{padding-left:3px}
+.dows .sat{color:var(--sat)}
+.dows .sun{color:var(--sun)}
+.g{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:15px repeat(2,13px);
+  row-gap:1px;padding-top:3px}
+.g+.g{margin-top:2px}
+.d{grid-row:1;font-size:10.5px;padding-left:3px;line-height:15px}
+.d.sat{color:var(--sat)}
+.d.sun{color:var(--sun)}
+.d.past{opacity:.35}
+.w.dbold .d{font-weight:700}
+.today{outline:1.5px solid var(--accent);border-radius:7px;color:var(--accent);font-weight:700}
+.today.ink{outline-color:var(--ink);color:var(--ink)}
+.today.fill{outline:none;background:var(--accent);color:#fff;border-radius:99px;
+  width:19px;text-align:center;padding:0}
+.wend{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+
+.e{border-radius:3px;font-size:9.5px;line-height:13px;padding:0 3px;overflow:hidden;
+  white-space:nowrap;margin:0 2px;color:#fff}
+.w.ebold .e{font-weight:600}
+.e.ml{margin-left:0;border-top-left-radius:0;border-bottom-left-radius:0}
+.e.mr{margin-right:0;border-top-right-radius:0;border-bottom-right-radius:0}
+/* 막대 모양 다섯 가지 */
+.solid.c1{background:var(--c1)}.solid.c2{background:var(--c2)}
+.solid.c3{background:var(--c3)}.solid.c4{background:var(--c4)}
+.soft.c1{background:color-mix(in srgb,var(--c1) 26%,transparent);color:color-mix(in srgb,var(--c1) 62%,var(--ink))}
+.soft.c2{background:color-mix(in srgb,var(--c2) 26%,transparent);color:color-mix(in srgb,var(--c2) 62%,var(--ink))}
+.soft.c3{background:color-mix(in srgb,var(--c3) 26%,transparent);color:color-mix(in srgb,var(--c3) 62%,var(--ink))}
+.soft.c4{background:color-mix(in srgb,var(--c4) 26%,transparent);color:color-mix(in srgb,var(--c4) 62%,var(--ink))}
+.edge{background:none;color:var(--ink);padding-left:5px;border-radius:0}
+.edge.c1{box-shadow:inset 3px 0 var(--c1)}.edge.c2{box-shadow:inset 3px 0 var(--c2)}
+.edge.c3{box-shadow:inset 3px 0 var(--c3)}.edge.c4{box-shadow:inset 3px 0 var(--c4)}
+.wire{background:none}
+.wire.c1{box-shadow:inset 0 0 0 1px var(--c1);color:var(--c1)}
+.wire.c2{box-shadow:inset 0 0 0 1px var(--c2);color:var(--c2)}
+.wire.c3{box-shadow:inset 0 0 0 1px var(--c3);color:var(--c3)}
+.wire.c4{box-shadow:inset 0 0 0 1px var(--c4);color:var(--c4)}
+.dotty{background:none;color:var(--ink);padding-left:0}
+.dotty i{font-style:normal;display:inline-block;width:5px;height:5px;border-radius:99px;
+  margin-right:4px;vertical-align:1px}
+.dotty.c1 i{background:var(--c1)}.dotty.c2 i{background:var(--c2)}
+.dotty.c3 i{background:var(--c3)}.dotty.c4 i{background:var(--c4)}
+.spent{opacity:.42}
+
+/* 팔레트 갈아 끼우기 */
+.p-cal{}
+.p-hi{--c1:#0057d8;--c2:#c8004b;--c3:#00713f;--c4:#b35c00}
+.p-mono{--c1:#6b7280;--c2:#3f4652;--c3:#8b93a1;--c4:#565d6b}
+.p-one{--c1:#2563eb;--c2:#2563eb;--c3:#2563eb;--c4:#2563eb}
+.p-earth{--c1:#4f7a8c;--c2:#a8595c;--c3:#5c7a52;--c4:#b08147}
+/* 주말·공휴일 빨강 세기 */
+.r-vivid{--sun:#e5484d;--sat:#2563eb}
+.r-brick{--sun:#b4544f;--sat:#4a6ea8}
+.r-calm{--sun:#9c6360;--sat:#5f7592}
+.r-quiet{--sun:#7d6a68;--sat:#6b7480}
+.foot{margin-top:44px;border-top:1px solid var(--hair);padding-top:18px;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>위젯 색·글꼴 고르기</h1>
+  <p class="lede">한 줄씩 골라 주세요. 파란 표가 붙은 건 지금 쓰고 있는 것이에요.
+    고르고 <b>고른 것 복사</b> 를 눌러 붙여 넣으면 그대로 맞춥니다.</p>
+
+  <div class="bar">
+    <b id="cnt">0개 고름</b>
+    <button id="copy">고른 것 복사</button>
+    <button id="clear">비우기</button>
+    <span style="color:var(--faint);font-size:12.5px">체크는 이 브라우저에 저장돼요</span>
+  </div>
+  <textarea id="out" readonly></textarea>
+
+  <div id="body"></div>
+
+  <div class="foot">
+    <p>대비는 눈대중이 아니라 재서 정합니다 — 막대에 실제로 깔릴 색을 합성해 보고, 흰색·먹색·그 색을
+      진하게 쓴 것 중 대비가 가장 큰 것을 고르고, 4.5:1(WCAG 본문 기준)에 못 미치면 판 반대쪽으로
+      계속 섞어 넘겨요. 그래서 어떤 막대 모양을 고르든 글자는 읽힙니다.</p>
+  </div>
+</div>
+
+<script>
+const DOW = ['월','화','수','목','금','토','일'];
+
+/* 한 판. o 로 모양을 바꾼다. */
+function w(o){
+  o = o || {};
+  const cls = ['w'];
+  ['narrow','serif','round','wall','tintbg','dbold','ebold','tibold','tithin'].forEach(k=>{ if(o[k]) cls.push(k); });
+  if(o.pal) cls.push(o.pal);
+  if(o.red) cls.push(o.red);
+  const bar = o.bar || 'solid';
+  const today = o.today || '';
+
+  let h = '<div class="'+cls.join(' ')+'">';
+  h += '<div class="hd"><div class="ti">2026년 8–9월</div>'
+     + '<div class="b">⟳</div><div class="b">‹</div><div class="b">›</div></div>';
+
+  h += '<div class="dows">';
+  DOW.forEach((n,i)=> h += '<div class="'+(i===5?'sat':i===6?'sun':'')+'">'+n+'</div>');
+  h += '</div>';
+
+  // 1주: 24~30, 오늘 30(일)
+  h += '<div class="g">';
+  [24,25,26,27,28,29,30].forEach((d,i)=>{
+    const c = ['d']; if(i===5) c.push('sat'); if(i===6) c.push('sun');
+    if(i<6) c.push('past');
+    const mark = i===6 ? ' today '+today : '';
+    const wend = o.wend && i>4 ? ' wend' : '';
+    h += '<div class="'+c.join(' ')+mark+wend+'" style="grid-column:'+(i+1)+';grid-row:1">'+d+'</div>';
+  });
+  h += ev(bar,'c1','엄마 생신',2,2,2,'spent')
+     + ev(bar,'c2','스프린트',5,5,2,'spent')
+     + ev(bar,'c1','치과',7,7,2)
+     + '</div>';
+
+  // 2주: 31~9/6, 휴가 이어짐 + 주말에만 걸린 공휴일
+  h += '<div class="g">';
+  [31,'9/1',2,3,4,5,6].forEach((d,i)=>{
+    const c = ['d']; if(i===5) c.push('sat'); if(i===6) c.push('sun');
+    const wend = o.wend && i>4 ? ' wend' : '';
+    h += '<div class="'+c.join(' ')+wend+'" style="grid-column:'+(i+1)+';grid-row:1">'+d+'</div>';
+  });
+  h += ev(bar,'c2','휴가',2,4,2)
+     + ev(bar,'c3','대체공휴일',6,6,2, o.dimHol===false ? '' : 'spent')
+     + '</div>';
+
+  // 3주: 21~27, 추석 연휴 한 줄
+  h += '<div class="g">';
+  [21,22,23,24,25,26,27].forEach((d,i)=>{
+    const c = ['d']; if(i===5) c.push('sat'); if(i===6) c.push('sun');
+    const wend = o.wend && i>4 ? ' wend' : '';
+    h += '<div class="'+c.join(' ')+wend+'" style="grid-column:'+(i+1)+';grid-row:1">'+d+'</div>';
+  });
+  h += ev(bar,'c3','추석',4,6,2) + '</div>';
+
+  return h + '</div>';
+}
+
+/* 막대 한 줄. from/to 는 1부터 세는 칸. */
+function ev(kind, color, text, from, to, lane, extra){
+  const c = ['e', kind, color];
+  if(extra) c.push(extra);
+  const body = kind === 'dotty' ? '<i></i>'+text : text;
+  return '<div class="'+c.join(' ')+'" style="grid-column:'+from+'/'+(to+1)+';grid-row:'+lane+'">'
+    + body + '</div>';
+}
+
+const SECTIONS = [
+  {
+    id:'막대', t:'일정 막대 모양', q:'제목이 먼저 읽히는 쪽이 좋은가, 색이 먼저 보이는 쪽이 좋은가?',
+    opts:[
+      {id:'막대-꽉참', t:'꽉 찬 색 + 흰 글씨', n:'색이 먼저 보인다. 지금 이것', now:1, o:{bar:'solid'}},
+      {id:'막대-옅게', t:'옅은 바탕 + 진한 글씨', n:'차분하다. 여러 줄이 겹쳐도 덜 시끄럽다', o:{bar:'soft'}},
+      {id:'막대-왼쪽띠', t:'왼쪽에 색 띠 + 글자만', n:'제목이 가장 잘 읽힌다. 색은 힌트만', o:{bar:'edge'}},
+      {id:'막대-테두리', t:'테두리만', n:'가볍다. 바탕이 비쳐 벽지가 살아난다', o:{bar:'wire'}},
+      {id:'막대-점', t:'점 + 글자', n:'가장 조용하다. 칸이 좁아도 안 뭉갠다', o:{bar:'dotty'}},
+    ],
+  },
+  {
+    id:'빨강', t:'주말·공휴일 빨강 세기', q:'지금 빨강이 너무 세다고 했으니 네 단계를 놓아 봤어요.',
+    opts:[
+      {id:'빨강-선명', t:'선명', n:'원래 쓰던 것', o:{red:'r-vivid'}},
+      {id:'빨강-벽돌', t:'벽돌', n:'한 톤 낮춤. 지금 이것', now:1, o:{red:'r-brick'}},
+      {id:'빨강-차분', t:'차분', n:'두 톤 낮춤. 숫자가 안 튄다', o:{red:'r-calm'}},
+      {id:'빨강-조용', t:'조용', n:'거의 회색. 주말은 표시만 남는다', o:{red:'r-quiet'}},
+    ],
+  },
+  {
+    id:'팔레트', t:'일정 색', q:'달력이 준 색을 그대로 쓸지, 우리가 다시 칠할지.',
+    opts:[
+      {id:'팔레트-달력색', t:'달력 색 그대로', n:'구글에서 정한 색. 지금 이것', now:1, o:{pal:'p-cal'}},
+      {id:'팔레트-고대비', t:'고대비', n:'채도를 올려 또렷하게', o:{pal:'p-hi'}},
+      {id:'팔레트-모노', t:'모노', n:'회색만. 글자에 집중된다', o:{pal:'p-mono'}},
+      {id:'팔레트-한색', t:'한 가지 색', n:'달력 구분을 버리고 강조색 하나로', o:{pal:'p-one'}},
+      {id:'팔레트-흙빛', t:'흙빛', n:'채도를 낮춘 한 벌. 벽지와 안 싸운다', o:{pal:'p-earth'}},
+    ],
+  },
+  {
+    id:'글꼴', t:'글꼴', q:'폰에 이미 있는 것만 씁니다 — 따로 받지 않아요.',
+    opts:[
+      {id:'글꼴-기본', t:'기본', n:'시스템 고딕. 지금 이것', now:1, o:{}},
+      {id:'글꼴-좁은', t:'좁은', n:'같은 칸에 글자가 더 들어간다', o:{narrow:1}},
+      {id:'글꼴-명조', t:'명조', n:'차분하고 종이 같다', o:{serif:1}},
+    ],
+  },
+  {
+    id:'굵기', t:'굵기', q:'날짜와 제목 중 어느 쪽을 앞세울지.',
+    opts:[
+      {id:'굵기-보통', t:'둘 다 보통', n:'지금 이것', now:1, o:{}},
+      {id:'굵기-날짜', t:'날짜를 굵게', n:'며칠인지가 먼저 들어온다', o:{dbold:1}},
+      {id:'굵기-제목', t:'제목을 굵게', n:'무슨 일인지가 먼저 들어온다', o:{ebold:1}},
+      {id:'굵기-둘다', t:'둘 다 굵게', n:'또렷하지만 빽빽하다', o:{dbold:1, ebold:1}},
+    ],
+  },
+  {
+    id:'오늘', t:'오늘 표시 색', q:'모양(테두리·채움·밑줄·점)은 이미 설정에 있어요. 여기서는 색만.',
+    opts:[
+      {id:'오늘-파랑', t:'파란 테두리', n:'지금 이것', now:1, o:{}},
+      {id:'오늘-먹색', t:'먹색 테두리', n:'색을 안 더한다. 일정 색이 유일한 색이 된다', o:{today:'ink'}},
+      {id:'오늘-채움', t:'파랗게 채움', n:'가장 눈에 띈다', o:{today:'fill'}},
+    ],
+  },
+  {
+    id:'바탕', t:'바탕', q:'벽지 위에 어떻게 얹힐지.',
+    opts:[
+      {id:'바탕-흰색', t:'흰색', n:'지금 이것 (밝은 판 기준)', now:1, o:{}},
+      {id:'바탕-살짝회색', t:'살짝 회색', n:'흰 벽지 위에서 카드가 뜬다', o:{tintbg:1}},
+      {id:'바탕-주말칸', t:'주말 열에 바탕', n:'주 경계가 잡힌다. 설정에 이미 있음', o:{wend:1}},
+      {id:'바탕-벽지', t:'벽지 비치게', n:'투명하게 깔고 글자만 얹는다', o:{wall:1, bar:'edge'}},
+    ],
+  },
+];
+
+const KEY='wallcal-style';
+let picked = new Set(JSON.parse(localStorage.getItem(KEY)||'[]'));
+const body = document.getElementById('body');
+
+SECTIONS.forEach(s=>{
+  let h = '<h2>'+s.t+'</h2><p class="q">'+s.q+'</p><div class="row">';
+  s.opts.forEach(o=>{
+    h += '<div class="opt" data-id="'+o.id+'">'
+      + '<h3><input type="checkbox" data-id="'+o.id+'">'+o.t
+      + (o.now?'':'')+'</h3>'
+      + '<p class="n">'+o.n+'</p>'
+      + (o.now?'<span class="now">지금 이것</span>':'')
+      + '<div class="stage">'+w(o.o)+'</div></div>';
+  });
+  body.insertAdjacentHTML('beforeend', h+'</div>');
+});
+
+function paint(){
+  document.querySelectorAll('.opt').forEach(c=>{
+    const on = picked.has(c.dataset.id);
+    c.classList.toggle('picked', on);
+    c.querySelector('input').checked = on;
+  });
+  document.getElementById('cnt').textContent = picked.size+'개 고름';
+  localStorage.setItem(KEY, JSON.stringify([...picked]));
+}
+body.addEventListener('change', e=>{
+  if(e.target.type !== 'checkbox') return;
+  const id = e.target.dataset.id;
+  e.target.checked ? picked.add(id) : picked.delete(id);
+  paint();
+});
+document.getElementById('clear').onclick = ()=>{ picked = new Set(); paint(); };
+document.getElementById('copy').onclick = ()=>{
+  const all = SECTIONS.flatMap(s=>s.opts);
+  const txt = all.filter(o=>picked.has(o.id)).map(o=>o.id+' — '+o.t).join('\n') || '(고른 것 없음)';
+  const out = document.getElementById('out');
+  out.style.display='block'; out.value = txt; out.select();
+  if(navigator.clipboard) navigator.clipboard.writeText(txt);
+};
+paint();
+</script>
+</body>
+</html>

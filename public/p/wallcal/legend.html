@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>일정 도감</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --ink:#1b1d22; --dim:#4a5160; --faint:#767d8c;
+  --hair:#e2e5ea; --accent:#2563eb;
+  --line:#00000014; --wend:#00000008;
+  --sat:#6b7480; --sun:#7d6a68;
+  --paper:#ffffff; --toward:#000000; --fill:20%; --blend:48%;
+}
+html[data-t="dark"]{
+  --bg:#0e1013; --card:#181b20; --ink:#eceff3; --dim:#c3cad6; --faint:#8a93a1;
+  --hair:#282c33; --accent:#4c8dff;
+  --line:#ffffff22; --wend:#ffffff0b;
+  --sat:#98a0ac; --sun:#a79390;
+  --paper:#14161a; --toward:#ffffff; --fill:28%; --blend:48%;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:26px 20px 90px}
+h1{font-size:23px;margin:0 0 6px}
+.lede{color:var(--dim);margin:0 0 16px}
+h2{font-size:15px;margin:30px 0 0;color:var(--faint);font-weight:600;letter-spacing:.03em}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:10px 0 12px;display:flex;gap:10px;align-items:center}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--hair);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+
+.board{margin-top:12px;padding:14px 12px;background:var(--bg);border:1px solid var(--hair);
+  border-radius:14px;display:flex;justify-content:center;overflow-x:auto}
+
+/* ── 항목 한 줄 ─────────────────────── */
+.row{display:flex;gap:16px;align-items:flex-start;background:var(--card);
+  border:1px solid var(--hair);border-radius:14px;padding:12px 14px;margin-top:10px}
+.sample{flex:none;width:210px;background:var(--paper);border-radius:8px;padding:6px 4px;
+  display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:19px;align-content:center;
+  min-height:56px}
+.sample.one{grid-template-columns:1fr}
+.txt{min-width:0}
+.txt > b{display:block;font-size:15px;line-height:1.4}
+.txt p b{color:var(--ink)}
+.txt p{margin:2px 0 0;color:var(--dim);font-size:13.5px}
+.txt .how{margin-top:4px;color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums}
+
+/* ── 막대 ──────────────────────────── */
+.ev{font-size:12px;line-height:16px;height:16px;margin:1px 3px;padding:0 5px;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;border-radius:3px;
+  background:color-mix(in srgb, var(--c) var(--fill), transparent);
+  color:color-mix(in srgb, var(--c) var(--blend), var(--toward))}
+.ev.timed{background:none;padding-left:0;display:flex;align-items:center;gap:5px}
+.ev.timed::before{content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--c);flex:none}
+.ev.quiet{background:none;color:var(--dim);padding-left:3px}
+.ev.tent{background:none;border:1px dashed color-mix(in srgb, var(--c) 85%, transparent)}
+.ev.mid{border-radius:0;margin-left:0;margin-right:0}
+.ev.l{border-radius:3px 0 0 3px;margin-right:0}
+.ev.r{border-radius:0 3px 3px 0;margin-left:0}
+.ev.over{opacity:.46}
+.ev.past{opacity:.32}
+.ev.spent{opacity:.20}
+.ev.more{background:none;color:var(--faint)}
+.rule{display:flex;align-items:center;gap:4px;margin:1px 3px;height:16px}
+.rule span{font-size:12px;line-height:16px;color:color-mix(in srgb,var(--c) var(--blend),var(--toward))}
+.rule i{flex:1;height:2px;background:color-mix(in srgb, var(--c) 55%, transparent)}
+.rule.tail{margin-left:0} .rule.tail span{display:none}
+.dots{display:flex;gap:4px;margin:4px 5px;align-items:center;height:16px}
+.dots u{width:6px;height:6px;border-radius:50%;background:var(--c);display:inline-block}
+.pillrow{display:flex;gap:5px;margin:2px 3px}
+.pill{flex:1;background:var(--line);border-radius:9px;padding:1px 7px;
+  display:flex;align-items:center;gap:5px;font-size:11px;color:var(--faint)}
+.pill u{width:5px;height:5px;border-radius:50%;background:var(--c);flex:none}
+.pill b{color:var(--ink);font-size:12px}
+
+/* ── 칸·판 ─────────────────────────── */
+.cellbox{display:flex;gap:6px;padding:2px}
+.cell{flex:1;border-radius:6px;padding:5px 0;text-align:center;font-size:14px}
+.cell.today{box-shadow:inset 0 0 0 2px var(--accent);color:var(--accent);font-weight:700}
+.cell.open{background:color-mix(in srgb, var(--ink) 7%, transparent)}
+.cell.wend{background:var(--wend);color:var(--sat)}
+.cell.other{color:color-mix(in srgb, var(--ink) 30%, transparent)}
+.cell.first{color:var(--ink)}
+
+/* ── 맨 위 한 판 ───────────────────── */
+.g{width:660px;background:var(--paper);border-radius:12px;padding:7px 5px 9px;
+  display:grid;grid-template-columns:repeat(7,1fr);
+  grid-template-rows:18px 24px repeat(3,18px) 24px}
+.dow{grid-row:1;font-size:11px;color:var(--faint);text-align:center;line-height:18px}
+.dow.s6{color:var(--sat)} .dow.s7{color:var(--sun)}
+.wcol{grid-row:1/6;grid-column:6/8;background:var(--wend);border-radius:6px}
+.num{grid-row:2;font-size:14px;text-align:center;line-height:24px;color:var(--ink)}
+.num.s6{color:var(--sat)} .num.s7{color:var(--sun)}
+.num.now{color:var(--accent);font-weight:700}
+.g .ev, .g .rule{margin-left:2px;margin-right:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>일정 도감</h1>
+<p class="lede">위젯이 일정을 그리는 법 한 장. <b>무게가 넷</b>이고, 그 위에 시간이 지난 만큼 걷힙니다.</p>
+
+<div class="bar">
+  <button id="theme">어둡게 보기</button>
+</div>
+
+<div class="board" id="board"></div>
+
+<div id="app"></div>
+</div>
+
+<script>
+var PINK = '#d50000', PURPLE = '#7986cb', GREEN = '#0b8043',
+    BLUE = '#3f51b5', ORANGE = '#e8710a';
+var DOW = ['월','화','수','목','금','토','일'];
+
+/* ── 맨 위 한 판 ─────────────────────────────────── */
+function board(){
+  var h = '<div class="wcol"></div>';
+  DOW.forEach(function(d,i){
+    h += '<div class="dow' + (i===5?' s6':i===6?' s7':'') + '" style="grid-column:'
+       + (i+1) + '">' + d + '</div>';
+  });
+  for (var i = 0; i < 7; i++){
+    var c = 'num' + (i===5?' s6':i===6?' s7':'') + (i===2?' now':'');
+    h += '<div class="' + c + '" style="grid-column:' + (i+1) + '">' + (22+i) + '</div>';
+  }
+  function ev(col,row,c,name,k){
+    return '<div class="ev ' + (k||'') + '" style="--c:' + c + ';grid-column:' + col
+      + ';grid-row:' + row + '">' + name + '</div>';
+  }
+  h += ev('1/3', 3, GREEN, '워크샵', '');                   // 종일 · 여러 날
+  h += ev('1', 4, PURPLE, '치과', 'timed over');            // 지난 시각
+  h += ev('3', 3, PINK, '안과', 'timed');                   // 시각
+  h += ev('3', 4, BLUE, '팀 회의', 'timed tent');           // 미정
+  h += ev('4', 3, PURPLE, '어머님 생신', 'quiet');           // 기억
+  h += '<div class="rule" style="--c:' + ORANGE
+     + ';grid-column:5;grid-row:3"><span>원티드 마감</span><i></i></div>';
+  h += '<div class="rule" style="--c:' + GREEN
+     + ';grid-column:6/8;grid-row:4"><span>추석</span><i></i></div>';
+  h += ev('4', 4, PINK, '독서모임', 'timed');
+  h += '<div class="ev more" style="grid-column:4;grid-row:5">+2</div>';
+  h += '<div class="pillrow" style="grid-column:1/8;grid-row:6">'
+     + '<div class="pill" style="--c:' + ORANGE + '"><u></u><b>3일</b> 원티드 마감</div>'
+     + '<div class="pill" style="--c:' + GREEN + '"><u></u><b>7일</b> 추석</div></div>';
+  return '<div class="g">' + h + '</div>';
+}
+
+/* ── 도감 항목 ───────────────────────────────────── */
+function bar(c, name, k){
+  return '<div class="ev ' + (k||'') + '" style="--c:' + c + '">' + name + '</div>';
+}
+function rule(c, name, k){
+  return '<div class="rule ' + (k||'') + '" style="--c:' + c + '">'
+       + '<span>' + name + '</span><i></i></div>';
+}
+
+var GROUPS = [
+ {g:'무게 넷 — 무엇을 뜻하나', list:[
+  {s:bar(GREEN,'휴가') + bar(PURPLE,'워크샵'),
+   t:'색 면 — 그날을 채우는 일',
+   p:'종일 일정. 그날 전체가 이 일로 덮입니다.',
+   how:'달력 색 20% 바탕(어두운 판에서는 28%) · 글씨는 그 색을 진하게'},
+  {s:bar(PINK,'안과','timed') + bar(BLUE,'독서모임','timed'),
+   t:'색 점 — 그날의 한 점',
+   p:'시각이 있는 일정. 면을 안 쓰고 앞에 점 하나로 어느 달력인지만 말해요.',
+   how:'점 6dp · 바탕 없음 · 글씨는 그 색을 진하게'},
+  {s:rule(GREEN,'추석') + rule(ORANGE,'원티드 마감'),
+   t:'색 가로선 — 그 날짜 자체가 뜻을 가지는 것',
+   p:'공휴일과, 앱에서 <b>별을 달아 둔 것</b>(마감·기한). 그날 뭘 하는 게 아니라 그 날짜가 뜻입니다.',
+   how:'첫날에 이름 · 그 뒤로 선 2dp(색 55%) · 여러 날이면 칸을 넘어 이어짐'},
+  {s:bar(PURPLE,'어머님 생신','quiet') + bar(PINK,'아빠 기일','quiet'),
+   t:'회색 글자 — 알고만 있으면 되는 것',
+   p:'이름에 「기억」 이 든 달력에서 온 일정. 생신·기일·기념일이 여기 듭니다.',
+   how:'바탕도 색도 없음 · 곁글씨색(밝은 판 #4A5160)'}
+ ]},
+
+ {g:'시간이 지난 만큼 걷힌다', list:[
+  {s:bar(PINK,'팀 회의','timed') + bar(PINK,'팀 회의','timed over'),
+   t:'오늘 안에서 이미 끝난 일정',
+   p:'왼쪽이 앞으로 올 것, 오른쪽이 끝난 것. <b>종일 일정은 안 걷어요</b> — 「오늘 휴가」 는 오후에도 오늘 휴가라서요.',
+   how:'46% 로 · 위젯이 30분마다 다시 그려서 걷히는 데 길면 30분'},
+  {s:bar(GREEN,'워크샵') + bar(GREEN,'워크샵','past'),
+   t:'지난 날의 일정',
+   p:'날짜가 지나간 칸. 오늘 안에서 끝난 것보다 한 단 더 걷습니다.',
+   how:'32% 로'},
+  {s:rule(GREEN,'추석') + rule(GREEN,'추석','spent'),
+   t:'주말에 걸친 공휴일 토막',
+   p:'연휴가 토·일에 걸친 몫. 어차피 쉬는 날이라 두 번 말할 이유가 없어요. 설정에서 끌 수 있습니다.',
+   how:'20% 로 · 칸마다 따로 걷어서 목·금은 그대로'}
+ ]},
+
+ {g:'답을 안 했거나, 자리가 모자랄 때', list:[
+  {s:bar(BLUE,'팀 회의','timed tent') + bar(BLUE,'워크샵','tent'),
+   t:'미정 일정 — 아직 답 안 한 초대',
+   p:'속을 비우고 테두리를 점선으로. 시각이 있어도 <b>점 대신 점선 테두리</b>를 씁니다 — 점을 쓰면 미정인지가 사라져요.',
+   how:'점선 1dp · 확정된 것과 눈에 다르게'},
+  {s:bar(PINK,'면접','timed') + '<div class="ev more">+2</div>',
+   t:'줄이 넘칠 때',
+   p:'칸에 들어갈 줄보다 일정이 많으면 마지막 자리를 개수에 내줍니다. 칸 밖으로 밀려 잘리지 않게.',
+   how:'「+2」 · 한 줄만 들어가는 칸에서는 안 씁니다'},
+  {one:1, s:'<div class="dots"><u style="--c:' + PINK + ';background:' + PINK + '"></u>'
+     + '<u style="background:' + BLUE + '"></u><u style="background:' + GREEN + '"></u></div>',
+   t:'칸이 아주 좁을 때',
+   p:'하루 폭이 30dp 아래로 내려가면 제목을 버리고 점만 찍어요. 설정에서 늘 점으로 둘 수도 있습니다.',
+   how:'일정마다 점 하나 · 색은 그 달력 색'}
+ ]},
+
+ {g:'칸과 판', list:[
+  {one:1, s:'<div class="cellbox"><div class="cell today">4</div>'
+     + '<div class="cell open">11</div><div class="cell">18</div></div>',
+   t:'오늘 · 펼쳐 둔 날',
+   p:'오늘은 <b>테두리</b>, 오른쪽 칸에 펼쳐 둔 날은 <b>옅게 채움</b>. 둘이 겹쳐도 갈립니다.',
+   how:'오늘 표시는 설정에서 테두리·채움·밑줄·점 중에'},
+  {one:1, s:'<div class="cellbox"><div class="cell">25</div>'
+     + '<div class="cell wend">26</div><div class="cell wend">27</div></div>',
+   t:'주말 열',
+   p:'토·일 열에 아주 옅은 바탕. 요일 이름 줄에서 서서히 들어와 격자 끝까지 한 줄기로 이어집니다.',
+   how:'먹색 3% 안팎 · 설정에서 끌 수 있음'},
+  {one:1, s:'<div class="cellbox"><div class="cell other">30</div>'
+     + '<div class="cell first">10/1</div><div class="cell">2</div></div>',
+   t:'달이 바뀌는 자리',
+   p:'<b>지나간 달만</b> 흐리게. 다음 달은 안 걷고, 새 달 첫날은 「10/1」 이라고 달까지 적어요.',
+   how:'다음 달을 걷지 않는 건 월말에 이번 주가 흐려지기 때문'}
+ ]},
+
+ {g:'맨 아랫줄', list:[
+  {one:1, s:'<div class="pillrow"><div class="pill" style="--c:' + ORANGE
+     + '"><u></u><b>3일</b> 마감</div><div class="pill" style="--c:' + GREEN
+     + '"><u></u><b>7일</b> 추석</div></div>',
+   t:'디데이 알약 — 별을 단 것',
+   p:'앱에서 별을 누른 일정이 여기 올라옵니다. 셋까지. 격자에서 <b>가로선</b>으로 그려지는 것과 같은 것이에요.',
+   how:'바탕은 무채색 · 며칠 남았는지를 판에서 제일 진한 먹색으로 · 오늘 것은 날수 대신 시각'}
+ ]}
+];
+
+function draw(){
+  document.getElementById('board').innerHTML = board();
+  var h = '';
+  GROUPS.forEach(function(grp){
+    h += '<h2>' + grp.g + '</h2>';
+    grp.list.forEach(function(r){
+      h += '<div class="row"><div class="sample' + (r.one ? ' one' : '') + '">'
+        + r.s + '</div><div class="txt"><b>' + r.t + '</b><p>' + r.p + '</p>'
+        + '<p class="how">' + r.how + '</p></div></div>';
+    });
+  });
+  document.getElementById('app').innerHTML = h;
+}
+document.getElementById('theme').onclick = function(){
+  var dark = document.documentElement.getAttribute('data-t') === 'dark';
+  document.documentElement.setAttribute('data-t', dark ? 'light' : 'dark');
+  this.textContent = dark ? '어둡게 보기' : '밝게 보기';
+};
+document.documentElement.setAttribute('data-t', 'light');
+draw();
+</script>
+</body>
+</html>

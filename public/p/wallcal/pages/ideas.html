@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달력 위젯 아이디어 고르기</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#ffffff; --ink:#1b1d22; --dim:#5b6170; --faint:#9aa1af;
+  --hair:#e2e5ea; --accent:#2563eb; --pick:#e8f0ff;
+  --b:#2f8fe0; --p:#e5487d; --g:#27a06a; --o:#e08b2f;
+  --wall:linear-gradient(140deg,#a8c8e8,#dfe7f0 60%,#f2ded0);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0e1013; --card:#181b20; --ink:#eceff3; --dim:#a8b0bc; --faint:#6b7280;
+    --hair:#282c33; --accent:#4c8dff; --pick:#16243c;
+    --b:#4ca6f0; --p:#f2648f; --g:#3cbb84; --o:#f0a447;
+    --wall:linear-gradient(140deg,#1b2a3d,#20252c 60%,#332a24);
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+
+h1{font-size:24px;margin:0 0 6px}
+.lede{color:var(--dim);margin:0 0 20px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:10px 0 12px;margin-bottom:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar b{font-size:15px}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--hair);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.jump{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.jump a{text-decoration:none;font-size:13px;border:1px solid var(--hair);border-radius:99px;
+  padding:4px 11px;color:var(--dim);background:var(--card)}
+
+h2{font-size:17px;margin:34px 0 4px;scroll-margin-top:70px}
+h2 span{color:var(--faint);font-weight:400;font-size:13px;margin-left:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;margin-top:14px}
+
+.card{background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:14px;
+  display:flex;flex-direction:column;gap:9px}
+.card.wide{grid-column:span 2}
+.strip{display:flex;gap:10px}
+.card.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--pick)}
+.card h3{font-size:14.5px;margin:0;display:flex;align-items:center;gap:8px}
+.card h3 input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+.card h3 .id{color:var(--faint);font-size:11px;font-weight:400;font-variant-numeric:tabular-nums}
+.card .why{color:var(--dim);font-size:12.5px;margin:0}
+.card .big{align-self:flex-start;font-size:11px;color:var(--o);border:1px solid var(--o);
+  border-radius:99px;padding:1px 8px}
+.stage{background:var(--bg);border-radius:10px;padding:10px;display:flex;justify-content:center}
+
+/* ── 위젯 흉내 ─────────────────────────────── */
+.w{width:268px;background:var(--card);border-radius:14px;padding:8px 9px;
+  font-size:11px;box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.w.wall{background:var(--wall)}
+.w.mono{--b:#6b7280;--p:#3f4652;--g:#8b93a1}
+.w.contrast{--b:#0057d8;--p:#c8004b;--g:#00713f}
+.w.calm{--b:#3c6f96;--p:#96506a;--g:#3d7a5f}
+.w.round{border-radius:26px}
+.w.tightpad{padding:4px 5px}
+.w.serif{font-family:"Apple SD Gothic Neo",serif}
+.w.narrow{font-stretch:condensed;letter-spacing:-.3px}
+
+.hd{display:flex;align-items:center;gap:2px;height:22px}
+.hd .ti{flex:1;font-weight:700;font-size:12.5px;white-space:nowrap;overflow:hidden}
+.hd .btn{color:var(--faint);padding:0 5px;font-size:13px;user-select:none}
+.hd .btn.wide{padding:0 9px;background:var(--bg);border-radius:6px;line-height:18px}
+.next{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--ink);
+  background:var(--bg);border-radius:6px;padding:3px 7px;margin:4px 0 2px}
+.next i{font-style:normal;width:6px;height:6px;border-radius:99px;background:var(--p);flex:none}
+.next em{font-style:normal;color:var(--faint);margin-left:auto}
+
+.dows{display:grid;grid-template-columns:repeat(7,1fr);font-size:9.5px;color:var(--faint);
+  padding-top:3px}
+.dows div{padding-left:3px}
+.dows .sat{color:#4c8dff}
+.dows .sun{color:#e5484d}
+.wk .dows,.wk .row{grid-template-columns:26px repeat(7,1fr)}
+.wk .no{color:var(--faint);font-size:8.5px;padding-left:0}
+
+.row{display:grid;grid-template-columns:repeat(7,1fr);
+  grid-template-rows:15px repeat(3,12px);row-gap:1px;padding-top:3px}
+.row.tall{grid-template-rows:16px repeat(4,14px)}
+.row.two{grid-template-rows:15px repeat(3,22px)}
+.row+.row{margin-top:1px}
+.row.mline{border-top:1px solid var(--hair)}
+.d{grid-row:1;font-size:10.5px;padding-left:3px;color:var(--ink);line-height:15px}
+.d.c{text-align:center;padding:0}
+.d.sat{color:#4c8dff}.d.sun{color:#e5484d}
+.d.past{opacity:.28}.d.empty{opacity:.45}
+.d small{font-size:8px;color:var(--faint);margin-left:2px}
+.today .d,.d.today{color:var(--accent);font-weight:700}
+.ring{outline:1.5px solid var(--accent);outline-offset:0;border-radius:7px}
+.fill{background:var(--accent);color:#fff!important;border-radius:99px;width:19px;text-align:center;
+  padding:0!important;margin-left:2px}
+.uline{box-shadow:inset 0 -2px 0 var(--accent);width:17px}
+.dotmark::after{content:"";display:block;width:4px;height:4px;border-radius:99px;
+  background:var(--accent);margin:-1px auto 0}
+.wend{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+
+.bar2{border-radius:3px;font-size:9.5px;line-height:12px;padding:0 3px;overflow:hidden;
+  white-space:nowrap;margin:0 2px;color:#fff}
+.row.two .bar2{line-height:11px;white-space:normal;height:22px}
+.bar2.b{background:color-mix(in srgb,var(--b) 70%,transparent);color:color-mix(in srgb,var(--b) 60%,var(--ink))}
+.bar2.p{background:color-mix(in srgb,var(--p) 70%,transparent);color:color-mix(in srgb,var(--p) 60%,var(--ink))}
+.bar2.g{background:color-mix(in srgb,var(--g) 70%,transparent);color:color-mix(in srgb,var(--g) 60%,var(--ink))}
+.bar2.o{background:color-mix(in srgb,var(--o) 70%,transparent);color:color-mix(in srgb,var(--o) 60%,var(--ink))}
+.bar2.past{opacity:.32}
+.bar2.ml{margin-left:0;border-top-left-radius:0;border-bottom-left-radius:0}
+.bar2.mr{margin-right:0;border-top-right-radius:0;border-bottom-right-radius:0}
+.bar2.live{font-weight:800;box-shadow:0 0 0 1.5px currentColor inset}
+.bar2.hollow{background:none;box-shadow:0 0 0 1px currentColor inset;border-style:dashed}
+.bar2.dash{background:none;border:1px dashed currentColor}
+.bar2.plain{background:none;padding-left:0}
+.bar2.plain i{font-style:normal;display:inline-block;width:5px;height:5px;border-radius:99px;
+  background:currentColor;margin-right:3px;vertical-align:1px}
+.bar2.key{box-shadow:0 0 0 1.5px var(--p)}
+.bar2.faint{opacity:.45}
+.bar2.task{background:none;box-shadow:0 0 0 1px currentColor inset}
+.bar2.task::before{content:"☐ "}
+.habit{display:flex;gap:2px;padding-left:3px;height:12px;align-items:center}
+.habit i{width:5px;height:5px;border-radius:1px;display:block}
+.more{grid-row:auto;font-size:9px;color:var(--faint);padding-left:4px;line-height:12px}
+.dots{display:flex;gap:2px;padding-left:3px;align-items:center;height:12px}
+.dots i{width:4px;height:4px;border-radius:99px;display:block}
+
+/* 다른 모양들 */
+.tile{width:120px;height:120px;background:var(--card);border-radius:16px;padding:11px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.tile .big{font-size:30px;font-weight:700;line-height:1}
+.tile .sub{font-size:10px;color:var(--faint)}
+.tile .li{font-size:10px;margin-top:7px;display:flex;gap:4px;align-items:center}
+.tile .li i{width:5px;height:5px;border-radius:99px;flex:none}
+.line{width:268px;background:var(--card);border-radius:14px;padding:10px 12px;display:flex;
+  gap:9px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.line i{width:7px;height:26px;border-radius:3px;flex:none}
+.line .t{font-weight:700;font-size:13px}
+.line .s{font-size:11px;color:var(--faint)}
+.list{width:268px;background:var(--card);border-radius:14px;padding:9px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10);font-size:11px}
+.list .h{font-size:10px;color:var(--faint);margin:6px 0 3px}
+.list .it{display:flex;gap:6px;align-items:center;padding:3px 0}
+.list .it i{width:4px;height:14px;border-radius:2px;flex:none}
+.list .it em{font-style:normal;color:var(--faint);margin-left:auto;font-size:10px}
+.tt{width:268px;background:var(--card);border-radius:14px;padding:8px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.tt .g{display:grid;grid-template-columns:18px repeat(7,1fr);grid-auto-rows:11px;gap:1px;
+  font-size:8px;color:var(--faint)}
+.tt .g b{grid-column:1;font-weight:400;text-align:right;padding-right:2px}
+.tt .g s{text-decoration:none;border-radius:2px;font-size:8px;color:#fff;padding-left:2px;overflow:hidden}
+.lock{width:200px;background:#12151a;border-radius:18px;padding:14px;color:#e9edf3}
+.lock .clk{font-size:34px;font-weight:300;line-height:1}
+.lock .dt{font-size:11px;opacity:.7;margin-bottom:9px}
+.lock .li{font-size:10.5px;display:flex;gap:5px;align-items:center;margin-top:4px}
+.lock .li i{width:4px;height:11px;border-radius:2px;flex:none}
+
+.sheet{width:250px;background:var(--card);border-radius:14px;padding:14px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.sheet .t{font-size:16px;font-weight:700;display:flex;gap:8px;align-items:flex-start}
+.sheet .t i{width:5px;height:20px;border-radius:3px;flex:none;margin-top:2px}
+.sheet .lb{font-size:10px;color:var(--faint);margin-top:11px}
+.sheet .vl{font-size:12px}
+.sheet .act{display:flex;gap:6px;margin-top:13px;flex-wrap:wrap}
+.sheet .act span{font-size:11px;border:1px solid var(--hair);border-radius:7px;padding:4px 9px}
+.sheet .act span.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.set{width:250px;background:var(--card);border-radius:14px;padding:12px;font-size:12px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.set .r{display:flex;align-items:center;gap:8px;padding:6px 0}
+.set .r+.r{border-top:1px solid var(--hair)}
+.set .r i{width:14px;height:14px;border-radius:4px;flex:none}
+.set .r em{font-style:normal;margin-left:auto;color:var(--faint);font-size:11px}
+.set .hd2{font-size:10px;color:var(--faint);margin-bottom:3px}
+
+.flow{display:flex;gap:8px;align-items:center;font-size:11px;color:var(--dim);flex-wrap:wrap;
+  justify-content:center;max-width:250px}
+.flow b{background:var(--card);border:1px solid var(--hair);border-radius:8px;padding:6px 9px;
+  font-weight:400;color:var(--ink)}
+.flow b.bad{border-color:var(--o);color:var(--o)}
+.flow b.good{border-color:var(--g);color:var(--g)}
+
+.trio{display:flex;gap:8px}
+.mini{width:80px;background:var(--card);border-radius:9px;padding:6px;
+  box-shadow:0 1px 3px rgba(0,0,0,.10)}
+.mini .cap{font-size:9px;color:var(--faint);text-align:center;margin-top:4px}
+.mini .row{grid-template-rows:14px repeat(2,10px)}
+
+.foot{margin-top:44px;border-top:1px solid var(--hair);padding-top:20px;color:var(--dim);font-size:14px}
+.foot ol{padding-left:20px}
+.foot b{color:var(--ink)}
+#out{width:100%;min-height:120px;margin-top:10px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+  background:var(--card);color:var(--ink);border:1px solid var(--hair);border-radius:10px;padding:10px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>달력 위젯 아이디어 고르기</h1>
+  <p class="lede">54개를 실제로 그려 놨어요. 마음에 드는 것에 체크하고 <b>고른 것 복사</b> 를 눌러 붙여 넣으면 그대로 만듭니다.</p>
+
+  <div class="bar">
+    <b id="cnt">0개 고름</b>
+    <button id="copy">고른 것 복사</button>
+    <button id="clear">비우기</button>
+    <button id="only">고른 것만 보기</button>
+    <span style="color:var(--faint);font-size:12.5px">체크는 이 브라우저에 저장돼요</span>
+  </div>
+  <textarea id="out" readonly></textarea>
+
+  <div class="jump" id="jump"></div>
+  <div id="body"></div>
+
+  <div class="foot">
+    <p><b>먼저 하고 싶은 셋</b></p>
+    <ol>
+      <li><b>H1 일정 바뀌면 바로 갱신</b> — 기능이라기보다 빠진 것. 방금 넣은 일정이 한참 안 보이면 위젯을 믿지 못하게 돼요.</li>
+      <li><b>A1 머리글에 다음 일정 한 줄</b> — 흘긋 볼 때 제일 자주 궁금한 건 격자가 아니라 "다음 뭐냐" 예요.</li>
+      <li><b>D1·D2 음력과 한국 공휴일</b> — 삼성 달력이 주던 걸 안 주면 아쉬운 자리.</li>
+    </ol>
+    <p style="font-size:13px">주황 표는 하루 넘게 걸릴 것들이에요. 나머지는 대개 하루 안쪽.</p>
+  </div>
+</div>
+<script>
+const DOW = ['월','화','수','목','금','토','일'];
+const LUNAR = {17:'6.5',18:'6.6',19:'6.7',20:'6.8',21:'6.9',22:'6.10',23:'6.11',24:'6.12',
+  25:'6.13',26:'6.14',27:'6.15',28:'6.16',29:'6.17',30:'6.18',31:'6.19'};
+
+const SETS = {
+  base: [
+    {d:[17,18,19,20,21,22,23], past:1, e:[]},
+    {d:[24,25,26,27,28,29,30], today:6, pastTo:5, e:[
+      {t:'엄마 생신', c:'b', a:1, b:1, past:1, all:1},
+      {t:'수영', c:'b', a:2, b:2, past:1, tm:'07:00', rep:1},
+      {t:'스프린트 회고', c:'p', a:4, b:4, past:1, tm:'15:00', more:3},
+      {t:'치과', c:'b', a:6, b:6, tm:'14:00'},
+      {t:'장보기', c:'b', a:6, b:6, tm:'17:00'},
+    ]},
+    {d:[31,'9/1',2,3,4,5,6], month:1, e:[
+      {t:'팀 회의', c:'p', a:0, b:0, tm:'10:00', rep:1},
+      {t:'휴가', c:'p', a:1, b:3, all:1},
+      {t:'월간 보고', c:'p', a:2, b:2, tm:'13:00'},
+    ]},
+    {d:[7,8,9,10,11,12,13], e:[
+      {t:'헬스', c:'g', a:0, b:0, tm:'07:00', rep:1},
+      {t:'출장', c:'o', a:2, b:3, all:1},
+      {t:'저녁 약속', c:'b', a:4, b:4, tm:'19:30', tent:1},
+    ]},
+    {d:[14,15,16,17,18,19,20], e:[
+      {t:'보고서 마감', c:'p', a:3, b:3, tm:'18:00', key:1},
+    ]},
+  ],
+  today: [
+    {d:[30,31,'9/1',2,3,4,5], today:0, month:2, e:[
+      {t:'치과', c:'b', a:0, b:0, tm:'14:00'},
+      {t:'장보기', c:'b', a:0, b:0, tm:'17:00'},
+      {t:'팀 회의', c:'p', a:1, b:1, tm:'10:00'},
+      {t:'휴가', c:'p', a:2, b:4, all:1},
+      {t:'월간 보고', c:'p', a:3, b:3, tm:'13:00'},
+    ]},
+    {d:[6,7,8,9,10,11,12], e:[
+      {t:'헬스', c:'g', a:1, b:1, tm:'07:00'},
+      {t:'출장', c:'o', a:3, b:4, all:1},
+    ]},
+    {d:[13,14,15,16,17,18,19], e:[]},
+  ],
+  chuseok: [
+    {d:[21,22,23,24,25,26,27], hol:[3,4,5], e:[
+      {t:'추석 연휴', c:'g', a:3, b:5, all:1},
+      {t:'본가 출발', c:'b', a:2, b:2, tm:'18:00'},
+    ]},
+    {d:[28,29,30,'10/1',2,3,4], month:3, hol:[6], e:[
+      {t:'개천절', c:'g', a:6, b:6, all:1},
+      {t:'팀 회의', c:'p', a:0, b:0, tm:'10:00'},
+    ]},
+  ],
+};
+
+function lanes(row){
+  const es = row.e.map((x,i)=>({...x, _i:i})).sort((x,y)=>
+    (y.b-y.a)-(x.b-x.a) || (y.all?1:0)-(x.all?1:0) || x._i-y._i);
+  const taken = [[],[],[],[],[],[],[]];
+  es.forEach(e=>{
+    let L=0;
+    while(true){ let ok=true; for(let i=e.a;i<=e.b;i++) if(taken[i][L]) ok=false;
+      if(ok) break; L++; }
+    for(let i=e.a;i<=e.b;i++) taken[i][L]=1;
+    e.lane=L;
+  });
+  return es;
+}
+
+function head(o){
+  const t = o.set==='chuseok' ? '2026년 9–10월' : (o.set==='today' ? '2026년 8–9월' : '2026년 8–9월');
+  let h = '<div class="hd"><div class="ti">'+t+'</div>';
+  if(o.filter) h += '<div class="btn wide" style="font-size:10px">업무</div>';
+  if(o.add) h += '<div class="btn wide">+</div>';
+  h += '<div class="btn">⟳</div>';
+  if(o.dayNav) h += '<div class="btn">‹‹</div>';
+  h += '<div class="btn">‹</div><div class="btn">›</div>';
+  if(o.dayNav) h += '<div class="btn">››</div>';
+  h += '</div>';
+  if(o.next) h += '<div class="next"><i></i><b>14:00 치과</b><em>2시간 뒤</em></div>';
+  if(o.remain) h += '<div class="next"><i style="background:var(--b)"></i>오늘 남은 일정<em>2건</em></div>';
+  if(o.holidayIn) h += '<div class="next"><i style="background:var(--g)"></i>다음 연휴 추석<em>26일 뒤</em></div>';
+  if(o.sum) h += '<div class="next"><i style="background:var(--p)"></i>이번 주 일정<em>6시간 20분</em></div>';
+  if(o.dday) h += '<div class="next"><i style="background:var(--o)"></i>보고서 마감<em>D-15</em></div>';
+  if(o.weather) h += '<div class="next"><i style="background:var(--o)"></i>맑음 26° · 미세 좋음<em>서울</em></div>';
+  return h;
+}
+
+function grid(o){
+  o = o||{};
+  const rows = SETS[o.set||'base'].slice(0, o.rows||3);
+  const cls = ['w'];
+  ['mono','contrast','calm','wall','round','tightpad','serif','narrow'].forEach(k=>{ if(o[k]) cls.push(k); });
+  if(o.palette) cls.push(o.palette);
+  if(o.weekNum) cls.push('wk');
+  let h = '<div class="'+cls.join(' ')+'">' + head(o);
+
+  h += '<div class="dows">';
+  if(o.weekNum) h += '<div class="no"></div>';
+  DOW.forEach((n,i)=> h += '<div class="'+(i===5?'sat':i===6?'sun':'')+(o.weekendBg&&i>4?' wend':'')+'">'+n+'</div>');
+  h += '</div>';
+
+  rows.forEach((r,ri)=>{
+    const rc = ['row'];
+    if(o.monthLine && r.month) rc.push('mline');
+    if(o.focus && r.today!==undefined) rc.push('tall');
+    if(o.twoLine) rc.push('two');
+    h += '<div class="'+rc.join(' ')+'">';
+    if(o.weekNum) h += '<div class="no" style="grid-column:1;grid-row:1;line-height:15px">W'+(34+ri)+'</div>';
+    const off = o.weekNum ? 2 : 1;
+
+    r.d.forEach((day,i)=>{
+      const dc = ['d'];
+      if(i===5) dc.push('sat');
+      if(i===6 || (o.holiday && r.hol && r.hol.includes(i))) dc.push('sun');
+      const isPast = r.past || (r.pastTo!==undefined && i<=r.pastTo);
+      if(isPast) dc.push('past');
+      if(o.dimEmpty && !r.e.some(e=>i>=e.a&&i<=e.b) && !isPast) dc.push('empty');
+      if(o.dayCenter) dc.push('c');
+      let mark = '';
+      if(r.today===i){
+        dc.push('today');
+        const st = o.todayStyle||'ring';
+        if(st==='ring') mark=' ring'; else if(st==='fill') mark=' fill';
+        else if(st==='uline') mark=' uline'; else if(st==='dot') mark=' dotmark';
+      }
+      if(o.weekendBg && i>4) dc.push('wend');
+      let lab = day;
+      if(o.lunar && LUNAR[day]) lab += ' <small>'+LUNAR[day]+'</small>';
+      if(o.sesi && day===23) lab += ' <small>처서</small>';
+      if(o.sesi && day===7) lab += ' <small>백로</small>';
+      h += '<div class="'+dc.join(' ')+mark+'" style="grid-column:'+(i+off)+';grid-row:1">'+lab+'</div>';
+    });
+
+    lanes(r).forEach(e=>{
+      const bc = ['bar2', e.c];
+      const isPast = e.past || r.past;
+      if(isPast) bc.push('past');
+      if(o.split && !e.all) bc.push('plain');
+      if(o.repeatFaint && e.rep) bc.push('faint');
+      if(o.tentative && e.tent) bc.push('dash');
+      if(o.keyword && e.key) bc.push('key');
+      if(o.live && e.t==='치과') bc.push('live');
+      if(o.offHours && e.tm && (parseInt(e.tm)<9 || parseInt(e.tm)>=18)) bc.push('hollow');
+      if(e.a>0 && e.b>e.a) {}
+      let txt = e.t;
+      if(o.times && e.tm) txt = '<b style="font-weight:400;opacity:.75">'+e.tm.slice(0,2)+'</b> '+e.t;
+      if(o.split && !e.all) txt = '<i></i>'+txt;
+      const lane = (o.pin && e.c==='p') ? 0 : e.lane;
+      h += '<div class="'+bc.join(' ')+'" style="grid-column:'+(e.a+off)+'/span '+(e.b-e.a+1)
+        +';grid-row:'+(lane+2)+'">'+txt+'</div>';
+    });
+
+    if(o.tasks){
+      h += '<div class="bar2 g task" style="grid-column:'+(2+off-1)+'/span 1;grid-row:3">약 주문</div>';
+      h += '<div class="bar2 g task" style="grid-column:'+(5+off-1)+'/span 1;grid-row:3">세금 신고</div>';
+    }
+    if(o.bday && r.today!==undefined){
+      h += '<div class="bar2 o" style="grid-column:'+(1+off)+'/span 1;grid-row:3">지훈 생일</div>';
+    }
+    if(o.habit){
+      r.d.forEach((day,i)=>{
+        if(r.past) return;
+        const n = (i*7+3)%4;
+        let dd='<div class="habit" style="grid-column:'+(i+off)+';grid-row:4">';
+        for(let k=0;k<3;k++) dd += '<i style="background:'+(k<=n?'var(--g)':'var(--hair)')+'"></i>';
+        h += dd+'</div>';
+      });
+    }
+    r.e.filter(e=>e.more).forEach(e=>{
+      h += '<div class="more" style="grid-column:'+(e.a+off)+';grid-row:4">+'+e.more+'</div>';
+    });
+    h += '</div>';
+  });
+  return h + '</div>';
+}
+
+function tile(){
+  return '<div class="tile"><div class="sub">8월 30일 일요일</div><div class="big">30</div>'
+    +'<div class="li"><i style="background:var(--b)"></i>14:00 치과</div>'
+    +'<div class="li"><i style="background:var(--b)"></i>17:00 장보기</div>'
+    +'<div class="li" style="color:var(--faint)">그 밖에 1건</div></div>';
+}
+function line(){
+  return '<div class="line"><i style="background:var(--b)"></i><div>'
+    +'<div class="t">치과</div><div class="s">오늘 14:00 – 15:00 · 2시간 뒤</div></div></div>';
+}
+function list(app){
+  return '<div class="list">'
+    +(app?'<div style="font-weight:700;font-size:13px;padding:2px 2px 6px">오늘</div>':'')
+    +'<div class="h">8월 30일 (일)</div>'
+    +'<div class="it"><i style="background:var(--b)"></i>치과<em>14:00</em></div>'
+    +'<div class="it"><i style="background:var(--b)"></i>장보기<em>17:00</em></div>'
+    +'<div class="h">8월 31일 (월)</div>'
+    +'<div class="it"><i style="background:var(--p)"></i>팀 회의<em>10:00</em></div>'
+    +'<div class="h">9월 1일 (화) – 3일 (목)</div>'
+    +'<div class="it"><i style="background:var(--p)"></i>휴가<em>종일</em></div>'
+    +'<div class="it"><i style="background:var(--p)"></i>월간 보고<em>9/2 13:00</em></div>'
+    +'<div class="h">9월 7일 (월)</div>'
+    +'<div class="it"><i style="background:var(--g)"></i>헬스<em>07:00</em></div></div>';
+}
+function table(){
+  let h='<div class="tt"><div class="g"><b></b>';
+  DOW.forEach(d=>h+='<s style="color:var(--faint);background:none;text-align:center">'+d+'</s>');
+  const blocks=[['09',1,'팀 회의','var(--p)',2],['13',2,'월간 보고','var(--p)',2],
+    ['07',0,'헬스','var(--g)',1],['14',6,'치과','var(--b)',2],['17',6,'장보기','var(--b)',1],
+    ['19',4,'저녁 약속','var(--b)',2]];
+  const hours=['07','09','11','13','15','17','19','21'];
+  hours.forEach((hh,ri)=>{
+    h+='<b style="grid-row:'+(ri+2)+'">'+hh+'</b>';
+    blocks.filter(b=>b[0]===hh).forEach(b=>{
+      h+='<s style="grid-column:'+(b[1]+2)+';grid-row:'+(ri+2)+'/span '+b[4]
+        +';background:'+b[3]+'">'+b[2]+'</s>';
+    });
+  });
+  return h+'</div></div>';
+}
+function lock(){
+  return '<div class="lock"><div class="clk">3:42</div><div class="dt">8월 30일 일요일</div>'
+    +'<div class="li"><i style="background:#4ca6f0"></i>14:00 치과</div>'
+    +'<div class="li"><i style="background:#4ca6f0"></i>17:00 장보기</div>'
+    +'<div class="li"><i style="background:#f2648f"></i>내일 10:00 팀 회의</div></div>';
+}
+function sheet(o){
+  o=o||{};
+  let h='<div class="sheet"><div class="t"><i style="background:var(--p)"></i><div>휴가</div></div>'
+    +'<div class="lb">언제</div><div class="vl">9월 1일 (화) – 9월 3일 (목) · 종일</div>';
+  if(o.map) h+='<div class="lb">장소</div><div class="vl">제주도 서귀포 <span style="color:var(--accent)">지도 ↗</span></div>';
+  else h+='<div class="lb">장소</div><div class="vl">제주도 서귀포</div>';
+  h+='<div class="lb">달력</div><div class="vl">업무</div>';
+  if(o.meet) h+='<div class="lb">회의</div><div class="vl"><span style="color:var(--accent)">화상회의 참여 ↗</span></div>';
+  h+='<div class="lb">메모</div><div class="vl">비행기 아침 김포 출발. 렌터카 예약 확인할 것.</div>';
+  h+='<div class="act">';
+  if(o.rsvp) h+='<span class="pri">참석</span><span>미정</span><span>불참</span>';
+  if(o.edit) h+='<span class="pri">고치기</span><span>지우기</span>';
+  h+='<span>달력 앱에서 열기</span></div></div>';
+  return h;
+}
+function set(o){
+  o=o||{};
+  if(o.colors) return '<div class="set"><div class="hd2">달력별 색 (내가 정하기)</div>'
+    +'<div class="r"><i style="background:var(--p)"></i>업무<em>기본 빨강 → 자홍</em></div>'
+    +'<div class="r"><i style="background:var(--b)"></i>개인<em>기본 파랑</em></div>'
+    +'<div class="r"><i style="background:var(--g)"></i>공휴일<em>기본 초록</em></div>'
+    +'<div class="r"><i style="background:var(--o)"></i>가족<em>기본 회색 → 주황</em></div></div>';
+  if(o.backup) return '<div class="set"><div class="hd2">설정</div>'
+    +'<div class="r">설정 내보내기<em>wallcal-2026-08-30.json</em></div>'
+    +'<div class="r">설정 불러오기<em></em></div>'
+    +'<div class="r">기본값으로<em></em></div></div>';
+  if(o.ics) return '<div class="set"><div class="hd2">구독한 달력 (ICS 주소)</div>'
+    +'<div class="r"><i style="background:var(--g)"></i>대한민국 공휴일<em>매일</em></div>'
+    +'<div class="r"><i style="background:var(--o)"></i>K리그 경기<em>매일</em></div>'
+    +'<div class="r" style="color:var(--accent)">+ 주소로 달력 더하기<em></em></div></div>';
+  if(o.tasks) return '<div class="set"><div class="hd2">같이 볼 것</div>'
+    +'<div class="r"><i style="background:var(--b)"></i>구글 달력<em>켜짐</em></div>'
+    +'<div class="r"><i style="background:var(--g)"></i>구글 Tasks<em>켜짐</em></div>'
+    +'<div class="r"><i style="background:var(--o)"></i>Todoist<em>꺼짐</em></div>'
+    +'<div class="r"><i style="background:var(--p)"></i>옵시디언 Tasks 볼트<em>꺼짐</em></div></div>';
+  return '';
+}
+function flow(bad){
+  if(bad) return '<div class="flow"><b>구글 달력에 일정 추가</b><span>→</span>'
+    +'<b class="bad">최대 30분 기다림</b><span>→</span><b>위젯에 뜸</b></div>';
+  return '<div class="flow"><b>구글 달력에 일정 추가</b><span>→</span>'
+    +'<b class="good">달력이 바뀌면 바로 깨움</b><span>→</span><b>위젯에 뜸</b></div>';
+}
+function trio(items){
+  let h='<div class="trio">';
+  items.forEach(x=>{
+    h+='<div class="mini">'+x.body+'<div class="cap">'+x.cap+'</div></div>';
+  });
+  return h+'</div>';
+}
+function miniGrid(o,style){
+  const r=SETS.base[1];
+  let h='<div class="row"'+(style||'')+'>';
+  r.d.slice(0,4).forEach((day,i)=>{
+    const on = i===3;
+    h+='<div class="d'+(on?' today '+(o||'ring'):'')+'" style="grid-column:'+(i+1)+';grid-row:1">'+day+'</div>';
+  });
+  h+='<div class="bar2 b" style="grid-column:3/span 2;grid-row:2">치과</div></div>';
+  return h;
+}
+
+const GROUPS = {
+  A:['흘긋 봐도 알게','지금 뭐가 급한지 위젯이 먼저 말해 준다'],
+  B:['더 잘 읽히게','격자 자체를 손본다'],
+  C:['위젯에서 바로 하게','앱을 안 열고 끝낸다'],
+  D:['내 사정에 맞추게','한국이고, 내 리듬이다'],
+  E:['여러 모양으로','위젯 종류를 늘린다'],
+  F:['다른 데이터도 얹기','달력만 보지 않는다'],
+  G:['꾸미기','같은 정보를 다른 얼굴로'],
+  H:['손이 덜 가게','신경 안 써도 맞아 있게'],
+};
+
+const IDEAS = [
+  {id:'A1',t:'머리글에 다음 일정 한 줄',n:'격자보다 이게 더 자주 궁금하다',m:()=>grid({next:1})},
+  {id:'A2',t:'지금 진행 중인 일정 굵게',n:'테두리를 둘러 지금 이 시간대임을 보인다',m:()=>grid({live:1})},
+  {id:'A3',t:'오늘 남은 일정 개수',n:'몇 개 더 남았는지만',m:()=>grid({remain:1})},
+  {id:'A4',t:'다음 연휴까지 며칠',n:'버틸 힘',m:()=>grid({holidayIn:1})},
+  {id:'A5',t:'이번 주 일정 시간 합계',n:'이번 주가 빡센지 아닌지',m:()=>grid({sum:1})},
+  {id:'A6',t:'특정 일정 고정해 D-day',n:'마감·시험처럼 계속 세는 것',m:()=>grid({dday:1})},
+
+  {id:'B1',t:'종일과 시각 일정을 다르게',n:'종일은 채운 막대, 시각 있는 건 점 + 제목',m:()=>grid({split:1})},
+  {id:'B2',t:'막대 앞에 시각',n:'제목만으로는 언제인지 모른다',m:()=>grid({times:1})},
+  {id:'B3',t:'주말 열 배경 옅게',n:'주 경계가 눈에 잡힌다',m:()=>grid({weekendBg:1})},
+  {id:'B4',t:'달 바뀌는 자리에 실선',n:'창이 두 달에 걸쳐 있으니까',m:()=>grid({monthLine:1})},
+  {id:'B5',t:'주차 번호',n:'W35 처럼 왼쪽에',m:()=>grid({weekNum:1})},
+  {id:'B6',t:'일정 없는 날은 숫자도 연하게',n:'있는 날이 도드라진다',m:()=>grid({dimEmpty:1})},
+  {id:'B7',t:'이번 주 줄만 높게',n:'이번 주에 더 많이 보이게',m:()=>grid({focus:1})},
+  {id:'B8',t:'지난 날 숨기고 오늘부터 35일',n:'창이 늘 오늘에서 시작한다',m:()=>grid({set:'today'})},
+  {id:'B9',t:'제목 두 줄 허용',n:'칸이 높을 때만',m:()=>grid({twoLine:1,rows:3})},
+  {id:'B10',t:'날짜 숫자 가운데로',n:'지금은 왼쪽 — 취향 문제라 고르게',m:()=>grid({dayCenter:1})},
+  {id:'B11',t:'오늘 표시 모양 고르기',n:'테두리 · 채움 · 밑줄 · 점',m:()=>trio([
+      {body:miniGrid('ring'),cap:'테두리'},{body:miniGrid('fill'),cap:'채움'},
+      {body:miniGrid('uline'),cap:'밑줄'},{body:miniGrid('dotmark'),cap:'점'}])},
+
+  {id:'C1',t:'+ 로 그 자리에서 일정 추가',n:'머리글에 단추 하나',m:()=>grid({add:1})},
+  {id:'C2',t:'하루씩 움직이는 단추',n:'지금은 주 단위만',m:()=>grid({dayNav:1})},
+  {id:'C3',t:'자세히 보기에서 고치기·지우기',n:'지금은 달력 앱으로 넘긴다',big:1,m:()=>sheet({edit:1})},
+  {id:'C4',t:'참석 응답',n:'초대에 바로 답하기',m:()=>sheet({rsvp:1})},
+  {id:'C5',t:'장소 누르면 지도',n:'주소를 옮겨 적지 않게',m:()=>sheet({map:1})},
+  {id:'C6',t:'메모에서 회의 링크 뽑기',n:'Meet·Zoom 주소를 찾아 단추로',m:()=>sheet({meet:1})},
+  {id:'C7',t:'달력 묶음 빠른 전환',n:'업무만 / 개인만 토글',m:()=>grid({filter:1})},
+
+  {id:'D1',t:'음력 날짜',n:'숫자 옆에 작게',m:()=>grid({lunar:1,rows:2})},
+  {id:'D2',t:'한국 공휴일 자동 색',n:'달력에 안 들어 있어도 빨갛게',m:()=>grid({set:'chuseok',holiday:1,rows:2})},
+  {id:'D3',t:'절기·기념일',n:'처서 · 백로 같은 것',m:()=>grid({sesi:1,rows:2})},
+  {id:'D4',t:'근무시간 밖 일정은 다르게',n:'9시 전, 6시 후는 속을 비운다',m:()=>grid({offHours:1})},
+  {id:'D5',t:'반복 일정은 옅게',n:'매주 같은 건 덜 튀게',m:()=>grid({repeatFaint:1,rows:4})},
+  {id:'D6',t:'특정 달력을 늘 맨 위 자리에',n:'업무는 항상 첫 줄',m:()=>grid({pin:1})},
+  {id:'D7',t:'제목 낱말로 강조',n:'"마감" 들어가면 테두리',m:()=>grid({keyword:1,rows:5})},
+  {id:'D8',t:'미정 일정은 점선',n:'응답 안 한 초대',m:()=>grid({tentative:1,rows:4})},
+
+  {id:'E1',t:'오늘 하루만 보는 작은 위젯',n:'2×2 자리',m:()=>tile()},
+  {id:'E2',t:'다음 일정 하나만 보는 줄 위젯',n:'4×1 자리',m:()=>line()},
+  {id:'E3',t:'시간축 있는 주간 시간표',n:'하루가 어떻게 채워졌는지',big:1,m:()=>table()},
+  {id:'E4',t:'스크롤 되는 목록 위젯',n:'격자 말고 쭉 읽는 쪽',big:1,m:()=>list()},
+  {id:'E5',t:'잠금화면 위젯',n:'풀지 않고 보기',m:()=>lock()},
+  {id:'E6',t:'위젯마다 다른 설정',n:'지금은 앱 하나에 설정이 공용',big:1,wide:1,
+    m:()=>'<div class="strip">'+grid({rows:2})+grid({rows:2,mono:1,times:1})+'</div>'},
+
+  {id:'F1',t:'할 일도 같이',n:'구글 Tasks · Todoist — 속 빈 막대로 구분',m:()=>grid({tasks:1})},
+  {id:'F2',t:'무엇을 같이 볼지 고르기',n:'옵시디언 Tasks 볼트까지',m:()=>set({tasks:1})},
+  {id:'F3',t:'날씨 한 줄',n:'pack-up 이 이미 받아 온다',m:()=>grid({weather:1})},
+  {id:'F4',t:'연락처 생일',n:'달력에 안 넣어도 뜨게',m:()=>grid({bday:1,rows:2})},
+  {id:'F5',t:'습관 기록 점',n:'habit-coach 의 그날 성적을 칸 밑에',m:()=>grid({habit:1,rows:3})},
+  {id:'F6',t:'ICS 주소 직접 구독',n:'달력 앱을 안 거치고',m:()=>set({ics:1})},
+
+  {id:'G1',t:'색 팔레트 프리셋',n:'파스텔 · 고대비 · 모노',wide:1,m:()=>
+    '<div class="strip" style="zoom:.88">'
+    +grid({rows:2})+grid({rows:2,contrast:1})+grid({rows:2,mono:1})+'</div>'},
+  {id:'G2',t:'달력별 색 내가 정하기',n:'구글이 준 색을 덮어쓴다',m:()=>set({colors:1})},
+  {id:'G3',t:'글꼴 고르기',n:'기본 · 좁은 · 명조',wide:1,m:()=>
+    '<div class="strip" style="zoom:.88">'
+    +grid({rows:2})+grid({rows:2,narrow:1})+grid({rows:2,serif:1})+'</div>'},
+  {id:'G4',t:'모서리 둥글기·여백 조절',n:'벽지에 맞춰 붙이거나 띄우거나',wide:1,m:()=>
+    '<div class="strip">'+grid({rows:2,round:1})+grid({rows:2,tightpad:1})+'</div>'},
+  {id:'G5',t:'어두울 때 채도 낮추기',n:'밤에 색이 튀지 않게',m:()=>grid({calm:1})},
+  {id:'G6',t:'벽지 흐리게 깔기',n:'바탕을 투명 대신 흐린 벽지로',m:()=>grid({wall:1})},
+
+  {id:'H1',t:'일정 바뀌면 바로 갱신',n:'지금은 30분 주기와 ⟳ 뿐이다',m:()=>
+    '<div style="display:flex;flex-direction:column;gap:10px">'+flow(1)+flow(0)+'</div>'},
+  {id:'H2',t:'화면 켤 때 갱신',n:'주머니에서 꺼내면 이미 맞아 있게',m:()=>
+    '<div class="flow"><b>화면 켜짐</b><span>→</span><b class="good">다시 그림</b></div>'},
+  {id:'H3',t:'설정 백업·복구',n:'폰 바꿔도 그대로',m:()=>set({backup:1})},
+  {id:'H4',t:'앱을 열면 설정 말고 오늘 목록',n:'설정은 톱니로 밀어 넣고',m:()=>list(1)},
+];
+
+const KEY='wallcal-ideas';
+let picked = new Set(JSON.parse(localStorage.getItem(KEY)||'[]'));
+
+const body=document.getElementById('body'), jump=document.getElementById('jump');
+Object.keys(GROUPS).forEach(g=>{
+  jump.insertAdjacentHTML('beforeend','<a href="#g'+g+'">'+g+'. '+GROUPS[g][0]+'</a>');
+  const mine=IDEAS.filter(i=>i.id[0]===g);
+  let h='<h2 id="g'+g+'">'+g+'. '+GROUPS[g][0]+'<span>'+GROUPS[g][1]+'</span></h2><div class="grid">';
+  mine.forEach(i=>{
+    h+='<div class="card'+(i.wide?' wide':'')+'" data-id="'+i.id+'">'
+      +'<h3><input type="checkbox" data-id="'+i.id+'"><span class="id">'+i.id+'</span> '+i.t+'</h3>'
+      +'<p class="why">'+i.n+'</p>'
+      +(i.big?'<span class="big">공사 큼</span>':'')
+      +'<div class="stage">'+i.m()+'</div></div>';
+  });
+  body.insertAdjacentHTML('beforeend',h+'</div>');
+});
+
+function paint(){
+  document.querySelectorAll('.card').forEach(c=>{
+    const on=picked.has(c.dataset.id);
+    c.classList.toggle('picked',on);
+    c.querySelector('input').checked=on;
+  });
+  document.getElementById('cnt').textContent=picked.size+'개 고름';
+  localStorage.setItem(KEY,JSON.stringify([...picked]));
+}
+body.addEventListener('change',e=>{
+  if(e.target.type!=='checkbox') return;
+  const id=e.target.dataset.id;
+  e.target.checked?picked.add(id):picked.delete(id);
+  paint();
+});
+document.getElementById('clear').onclick=()=>{picked=new Set();paint();document.getElementById('only').classList.remove('on');document.querySelectorAll('.card').forEach(c=>c.style.display='');};
+document.getElementById('only').onclick=e=>{
+  const on=e.target.classList.toggle('on');
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display=(!on||picked.has(c.dataset.id))?'':'none';
+  });
+};
+document.getElementById('copy').onclick=()=>{
+  const txt=IDEAS.filter(i=>picked.has(i.id)).map(i=>i.id+' '+i.t).join('\n')||'(고른 것 없음)';
+  const out=document.getElementById('out');
+  out.style.display='block'; out.value=txt; out.select();
+  navigator.clipboard&&navigator.clipboard.writeText(txt);
+};
+paint();
+</script>
+</body>
+</html>
