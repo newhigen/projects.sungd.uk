@@ -55,6 +55,9 @@ for n in ("main_top", "main_tail", "history", "settings_top", "meds", "edit"):
 # 변천사 — 옛 치수 그대로 다시 그린 위젯. 실제 크기감이 살게 배율은 그대로 둔다
 for evo in sorted((DOCS / "img").glob("evo-*.png")):
     shutil.copy2(evo, OUT / evo.name)
+# 인공눈물 띠 세 상태 — 「왜 만들었나」
+for st in sorted((DOCS / "img").glob("tears-*.png")):
+    shutil.copy2(st, OUT / st.name)
 
 # ── 4. 시안 미리보기와 열어볼 페이지
 pages = {

@@ -17,6 +17,7 @@ const { Content, headings } = await render(entry);
 const d = entry.data;
 // 개발기가 따로 있으면 두 화면을 탭으로 잇는다.
 const making = await getEntry('making', entry.id);
+const why = await getEntry('why', entry.id);
 // 차례 — 본문 h2 에 템플릿이 붙이는 「그전 모습」 까지
 const toc = headings.filter(h => h.depth <= 3).map(({ slug, text, depth }) => ({ slug, text, depth }));
 if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
@@ -26,7 +27,7 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
   <header class="doc-head">
     <h1>{d.title}</h1>
     <p class="tagline">{d.tagline}</p>
-    {making && <Tabs here="intro" slug={entry.id} />}
+    {(making || why) && <Tabs here="intro" slug={entry.id} />}
   </header>
 
   <div class="doc-body">

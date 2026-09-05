@@ -2,11 +2,13 @@
 interface Props {
   /** 폰 화면 몇 장을 나란히 — 각각 무슨 자리인지 아래에 적는다 */
   items: { src: string; label: string; note?: string }[];
+  /** 위젯처럼 바탕이 투명한 그림 — 테두리 없이, 칸을 넓게 */
+  plain?: boolean;
 }
-const { items } = Astro.props;
+const { items, plain } = Astro.props;
 ---
 
-<div class="strip">
+<div class:list={["strip", { plain }]}>
   {items.map(it => (
     <figure>
       <img src={it.src} alt={it.label} loading="lazy" />
