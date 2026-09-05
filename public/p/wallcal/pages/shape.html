@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>위젯 바탕 모양 고르기</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --ink:#1b1d22; --dim:#4a5160; --faint:#767d8c;
+  --hair:#e2e5ea; --accent:#2563eb; --pick:#e8f0ff;
+  --line:#00000014; --wend:#00000008;
+  --sat:#6b7480; --sun:#7d6a68;
+  --work:#c94f6d; --workbg:#c94f6d24;
+  --hol:#2e8b57;
+  --paper:#ffffff; --paperA:.88; --paper88:#ffffffe0;
+  --wall1:#8f94b8; --wall2:#b3a6b0; --wall3:#6f7796;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e1013; --card:#181b20; --ink:#eceff3; --dim:#c3cad6; --faint:#8a93a1;
+    --hair:#282c33; --accent:#4c8dff; --pick:#16243c;
+    --line:#ffffff22; --wend:#ffffff0b;
+    --sat:#98a0ac; --sun:#a79390;
+    --work:#f2648f; --workbg:#f2648f2e;
+    --hol:#3cbb84;
+    --paper:#14161a; --paperA:.88; --paper88:#14161ae0;
+    --wall1:#2a2f45; --wall2:#3d3340; --wall3:#1c2033;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:26px 20px 90px}
+h1{font-size:23px;margin:0 0 6px}
+.lede{color:var(--dim);margin:0 0 4px}
+.note{color:var(--faint);font-size:13.5px;margin:0 0 18px}
+h2{font-size:17px;margin:0;display:flex;align-items:center;gap:9px;font-weight:600}
+h2 input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+h2 .id{color:var(--faint);font-size:11px;font-weight:400}
+.q{color:var(--dim);font-size:13.5px;margin:6px 0 0}
+.q b{color:var(--ink)}
+.opt{background:var(--card);border:1px solid var(--hair);border-radius:16px;
+  padding:14px 16px 16px;margin-top:14px}
+.opt.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--pick)}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:10px 0 12px;display:flex;gap:10px;align-items:center}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--hair);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+#msg{color:var(--faint);font-size:13px}
+
+/* ── 벽지 ─────────────────────────────── */
+.stage{margin-top:11px;border-radius:12px;overflow:hidden;
+  background:
+    radial-gradient(90% 70% at 72% 24%, var(--wall2) 0%, transparent 62%),
+    radial-gradient(80% 90% at 18% 88%, var(--wall3) 0%, transparent 66%),
+    linear-gradient(160deg, var(--wall1), var(--wall3));
+  padding:18px 16px;display:flex;justify-content:center}
+
+/* ── 위젯 ─────────────────────────────── */
+.w{width:520px;display:flex;gap:0;padding:9px;border-radius:20px;position:relative}
+.w .paper{position:absolute;inset:0;border-radius:20px;background:var(--paper);
+  opacity:var(--paperA);z-index:0}
+.w > .main, .w > .panel{position:relative;z-index:1}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.panel{width:96px;flex:none;margin-left:6px;border-radius:8px;background:var(--line);
+  padding:6px 7px;font-size:10px;color:var(--faint)}
+.panel b{display:block;color:var(--accent);font-size:10.5px;margin-bottom:4px}
+
+.head{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--faint);
+  padding:2px 4px 7px}
+.head .t{color:var(--ink);font-size:14px;font-weight:600;margin-left:4px}
+.head .sp{flex:1}
+.head .today{background:var(--line);border-radius:9px;padding:1px 8px;color:var(--dim);font-size:11px}
+
+.grid{display:grid;grid-template-columns:repeat(7,1fr);
+  grid-template-rows:14px repeat(4,36px);position:relative}
+.dow{font-size:10px;color:var(--faint);text-align:center;line-height:14px}
+.dow.s6{color:var(--sat)} .dow.s7{color:var(--sun)}
+.cell{padding-top:1px}
+.num{font-size:11.5px;text-align:center;line-height:14px;color:var(--ink)}
+.num.s6{color:var(--sat)} .num.s7{color:var(--sun)}
+.num.off{color:var(--faint);opacity:.6}
+.ev{border-radius:3px;font-size:9px;line-height:13px;padding:0 4px;margin:1px 2px 0;
+  background:var(--workbg);color:var(--work);overflow:hidden;white-space:nowrap}
+.wcol{position:absolute;top:0;bottom:0;background:var(--wend);z-index:-1}
+.hol{display:flex;align-items:center;gap:3px;margin:2px 2px 0}
+.hol span{font-size:9px;color:var(--hol);line-height:11px}
+.hol i{flex:1;height:2px;background:var(--hol);opacity:.55}
+
+.dday{display:flex;gap:6px;padding:7px 2px 1px}
+.pill{flex:1;background:var(--line);border-radius:11px;padding:2px 8px;
+  display:flex;align-items:center;gap:5px;font-size:10px;color:var(--faint)}
+.pill i{width:5px;height:5px;border-radius:50%;background:var(--work);flex:none}
+.pill b{color:var(--ink);font-size:11px}
+
+/* ── 안마다 다른 바탕 ─────────────────── */
+/* 배경 없이 */
+.v-none .paper{display:none}
+/* 두 장 */
+.v-two{background:none;padding:0;gap:6px}
+.v-two .paper{display:none}
+.v-two .main{background:var(--paper88);border-radius:18px;padding:9px}
+.v-two .panel{margin-left:0;border-radius:18px;padding:9px 8px;background:var(--paper88)}
+/* 아래로 옅어짐 */
+.v-fade .paper{
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 46%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 46%,transparent 100%)}
+/* 테두리만 */
+.v-edge .paper{opacity:.26;border:1.5px solid color-mix(in srgb, var(--ink) 22%, transparent)}
+/* 벽걸이 */
+.v-hang{padding-top:26px}
+.v-hang .paper{top:20px;border-radius:16px}
+.v-hang .ring{position:absolute;top:1px;width:24px;height:30px;border:3px solid #c8ccd4;
+  border-radius:12px;z-index:2;background:none;box-shadow:0 1px 2px #0003}
+@media (prefers-color-scheme:dark){.v-hang .ring{border-color:#565d69}}
+.v-hang .ring.a{left:30%} .v-hang .ring.b{left:62%}
+/* 머리·발만 띠 */
+.v-band{background:none;padding:0}
+.v-band .paper{display:none}
+.v-band .main{padding:0}
+.v-band .head{background:var(--paper88);
+  border-radius:14px 14px 0 0;padding:6px 10px 8px;margin:0}
+.v-band .dday{background:var(--paper88);
+  border-radius:0 0 14px 14px;padding:8px 10px;margin:0}
+.v-band .grid{padding:4px 6px}
+.v-band .panel{background:none;border:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>위젯 바탕 모양 고르기</h1>
+<p class="lede">지금은 <b>둥근 직사각형 한 장</b> 위에 전부 얹혀 있어요. 그 한 장을 다르게 두는 안 일곱 가지입니다.</p>
+<p class="note">뒤에 깔린 것은 벽지예요 — 바탕을 걷을수록 벽지가 비칩니다.
+위젯은 안드로이드가 정해 준 사각형 자리를 벗어날 수 없어서, 모양은 <b>그 안에서 무엇을 안 칠하느냐</b>로만 만들어져요.</p>
+
+<div class="bar">
+  <button id="copy">고른 것 복사</button>
+  <span id="msg"></span>
+</div>
+
+<div id="app"></div>
+</div>
+
+<script>
+var DOW = ['월','화','수','목','금','토','일'];
+var WEEKS = [
+  [[31,'off'],[1],[2],[3],[4],[5],[6]],
+  [[7],[8],[9],[10],[11],[12],[13]],
+  [[14],[15],[16],[17],[18],[19],[20]],
+  [[21],[22],[23],[24],[25],[26],[27]]
+];
+// 어느 칸에 무엇을 그릴지 — 실제 화면과 같은 자리
+var EV = {'0-0':'면접','0-4':'안과','0-6':'처가','1-0':'잔금일','1-1':'동기','1-3':'경덕',
+          '2-1':'W&B','2-2':'당근','2-5':'원티드','3-6':'처가 여행'};
+
+function widget(cls){
+  var h = '<div class="paper"></div><div class="main">';
+  h += '<div class="head">‹ › <span class="t">8/31 – 9/27</span>'
+     + '<span class="sp"></span>+ ⟳ <span class="today">오늘</span></div>';
+  h += '<div class="grid">';
+  h += '<div class="wcol" style="left:71.4%;right:0"></div>';
+  DOW.forEach(function(d,i){
+    h += '<div class="dow' + (i===5?' s6':i===6?' s7':'') + '">' + d + '</div>';
+  });
+  WEEKS.forEach(function(wk,r){
+    wk.forEach(function(c,i){
+      var cls2 = 'num' + (c[1]==='off'?' off':'') + (i===5?' s6':i===6?' s7':'');
+      var body = '<div class="' + cls2 + '">' + c[0] + '</div>';
+      var e = EV[r + '-' + i];
+      if (e) body += '<div class="ev">' + e + '</div>';
+      if (r===3 && i===3) body += '<div class="hol"><span>추석</span><i></i></div>';
+      if (r===3 && (i===4||i===5)) body += '<div class="hol"><i></i></div>';
+      h += '<div class="cell">' + body + '</div>';
+    });
+  });
+  h += '</div>';
+  h += '<div class="dday">'
+     + '<div class="pill"><i></i><b>4일</b> 잔금일</div>'
+     + '<div class="pill"><i style="background:var(--hol)"></i><b>21일</b> 추석</div>'
+     + '<div class="pill"><i></i><b>64일</b> 잔금일</div></div>';
+  h += '</div>';
+  h += '<div class="panel"><b>9/3 (목)</b>비어 있어요</div>';
+  if (cls === 'v-hang') h += '<div class="ring a"></div><div class="ring b"></div>';
+  return '<div class="w ' + cls + '">' + h + '</div>';
+}
+
+var SECTIONS = [
+  {id:'지금', t:'지금 — 둥근 직사각형 한 장 (기준)', m:'v-now',
+   q:'한 장이 전부를 받칩니다. 어디까지가 위젯인지 제일 분명하고, 벽지가 어떻든 글씨가 읽혀요. 대신 <b>화면에서 흰 덩어리</b>로 남습니다.'},
+  {id:'없이', t:'바탕 없이 — 벽지 위에 바로', m:'v-none',
+   q:'가장 가볍고 벽지를 안 가립니다. 지금도 <b>바탕 진하기를 0</b> 으로 두면 이렇게 돼요. 벽지가 밝거나 어지러우면 글씨가 묻힙니다.'},
+  {id:'두장', t:'두 장 — 달력과 그날 칸이 따로', m:'v-two',
+   q:'격자 한 장, 오른쪽 그날 칸 한 장. 사이로 벽지가 지나가서 <b>둘이 다른 것</b>임이 모양으로 보여요. 삼성 위젯들이 쓰는 방식입니다.'},
+  {id:'옅어짐', t:'아래로 갈수록 옅어짐', m:'v-fade',
+   q:'위는 그대로 받치고 아래로 내려가며 벽지에 녹습니다. 덩어리감이 줄어드는 대신 <b>아래쪽 글씨가 벽지를 탑니다</b> — 마지막 주와 디데이 줄이 그 자리예요.'},
+  {id:'테두리', t:'테두리만 — 속은 거의 비우고', m:'v-edge',
+   q:'얇은 선으로 경계만 긋고 속은 벽지가 비치게. 유리판 같아요. <b>글씨가 벽지 위에 바로</b> 놓이는 건 «없이» 와 같습니다.'},
+  {id:'벽걸이', t:'벽걸이 달력 — 위에 고리 두 개', m:'v-hang',
+   q:'판을 조금 내리고 그 위에 고리를 겁니다. 고리 안쪽은 <b>진짜로 벽지가 보여요</b>. 이름값은 하는데, 위쪽 20dp 를 고리에 내줍니다.'},
+  {id:'머리발', t:'머리와 디데이 줄만 판', m:'v-band',
+   q:'단추와 디데이는 판 위에, 격자는 벽지 위에. <b>누르는 곳</b>만 판을 깔아 «여기가 단추» 라고 말하는 방식이에요.'}
+];
+
+var picked = null;
+function draw(){
+  var h = '';
+  SECTIONS.forEach(function(s){
+    var on = picked === s.id;
+    h += '<div class="opt' + (on?' picked':'') + '">'
+      + '<h2><input type="radio" name="p" data-id="' + s.id + '"' + (on?' checked':'') + '>'
+      + s.t + ' <span class="id">' + s.id + '</span></h2>'
+      + '<p class="q">' + s.q + '</p>'
+      + '<div class="stage">' + widget(s.m) + '</div></div>';
+  });
+  document.getElementById('app').innerHTML = h;
+  document.querySelectorAll('#app input').forEach(function(el){
+    el.onchange = function(){ picked = el.dataset.id; draw(); };
+  });
+}
+document.getElementById('copy').onclick = function(){
+  var txt = picked || '(아직 안 골랐어요)';
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+  document.getElementById('msg').textContent = txt + ' — 복사했어요';
+};
+draw();
+</script>
+</body>
+</html>

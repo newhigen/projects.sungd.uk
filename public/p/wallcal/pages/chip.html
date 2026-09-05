@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>일정 막대 스타일 고르기</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --ink:#1b1d22; --dim:#4a5160; --faint:#767d8c;
+  --hair:#e2e5ea; --accent:#2563eb; --pick:#e8f0ff;
+  --line:#00000014; --wend:#00000008;
+  --sat:#6b7480; --sun:#7d6a68;
+  --paper:#ffffff; --toward:#000000; --fill:20%; --blend:48%;
+}
+html[data-t="dark"]{
+  --bg:#0e1013; --card:#181b20; --ink:#eceff3; --dim:#c3cad6; --faint:#8a93a1;
+  --hair:#282c33; --accent:#4c8dff; --pick:#16243c;
+  --line:#ffffff22; --wend:#ffffff0b;
+  --sat:#98a0ac; --sun:#a79390;
+  --paper:#14161a; --toward:#ffffff; --fill:28%; --blend:48%;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:26px 20px 90px}
+h1{font-size:23px;margin:0 0 6px}
+.lede{color:var(--dim);margin:0 0 4px}
+.note{color:var(--faint);font-size:13.5px;margin:0 0 18px}
+h2{font-size:17px;margin:0;display:flex;align-items:center;gap:9px;font-weight:600}
+h2 input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+h2 .id{color:var(--faint);font-size:11px;font-weight:400}
+.q{color:var(--dim);font-size:13.5px;margin:6px 0 0}
+.q b{color:var(--ink)}
+.opt{background:var(--card);border:1px solid var(--hair);border-radius:16px;
+  padding:14px 16px 16px;margin-top:14px}
+.opt.picked{border-color:var(--accent);box-shadow:0 0 0 2px var(--pick)}
+.stage{margin-top:11px;padding:12px 10px;background:var(--bg);border-radius:12px;
+  display:flex;justify-content:center;overflow-x:auto}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:10px 0 12px;display:flex;gap:10px;align-items:center}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--hair);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+#msg{color:var(--faint);font-size:13px}
+
+/* ── 격자 ─────────────────────────────── */
+.g{width:602px;background:var(--paper);border-radius:12px;padding:7px 6px 9px;
+  display:grid;grid-template-columns:repeat(7,1fr);
+  grid-template-rows:18px 22px 21px 21px 26px 21px 21px}
+.dow{grid-row:1;font-size:11px;color:var(--faint);text-align:center;line-height:18px}
+.dow.s6{color:var(--sat)} .dow.s7{color:var(--sun)}
+.wcol{grid-row:1/-1;grid-column:6/8;background:var(--wend);border-radius:6px}
+.num{font-size:14px;text-align:center;line-height:22px;color:var(--ink)}
+.num.s6{color:var(--sat)} .num.s7{color:var(--sun)}
+
+/* 막대 — 안마다 갈리는 부분 */
+.ev{font-size:12px;line-height:19px;height:19px;margin:0 3px;padding:0 6px;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+  border-radius:4px;
+  background:color-mix(in srgb, var(--c) var(--fill), transparent);
+  color:color-mix(in srgb, var(--c) var(--blend), var(--toward))}
+
+.v-solid .ev{background:var(--c);color:var(--paper);font-weight:500}
+.v-side .ev{background:none;padding-left:9px;border-radius:0;
+  box-shadow:inset 3px 0 0 var(--c);margin-left:4px}
+.v-dot .ev{background:none;padding-left:0;color:var(--ink);
+  display:flex;align-items:center;gap:5px}
+.v-dot .ev::before{content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--c);flex:none}
+.v-under .ev{background:none;padding:0 2px;border-radius:0;
+  box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--c) 60%, transparent)}
+.v-edge .ev{background:none;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent)}
+.v-pill .ev{border-radius:10px;padding:0 8px}
+.v-text .ev{background:none;padding:0 3px;border-radius:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>일정 막대 스타일 고르기</h1>
+<p class="lede">지금은 <b>옅은 색 면 + 그 색을 진하게 쓴 글씨</b> 예요. 면을 걷거나 색을 다른 자리로 옮기는 안 여덟 가지입니다.</p>
+<p class="note">분홍·보라는 실제 달력이 준 두 색이고, 옅기와 글자색은 위젯이 쓰는 계산 그대로예요.
+<b>12~14일 「처가 여행」 은 여러 날에 걸친 일정</b> — 면을 걷으면 이어지는 느낌이 어떻게 되는지 여기서 보세요.</p>
+
+<div class="bar">
+  <button id="copy">고른 것 복사</button>
+  <button id="theme">어둡게 보기</button>
+  <span id="msg"></span>
+</div>
+
+<div id="app"></div>
+</div>
+
+<script>
+var PINK = '#d50000', PURPLE = '#7986cb';
+var DOW = ['월','화','수','목','금','토','일'];
+
+function grid(cls){
+  var h = '<div class="wcol"></div>';
+  DOW.forEach(function(d,i){
+    h += '<div class="dow' + (i===5?' s6':i===6?' s7':'') + '" style="grid-column:'
+       + (i+1) + '">' + d + '</div>';
+  });
+  // 날짜 줄 두 개 — 8~14 는 2행, 15~21 은 5행
+  [[8,2],[15,5]].forEach(function(w){
+    for (var i = 0; i < 7; i++){
+      h += '<div class="num' + (i===5?' s6':i===6?' s7':'') + '" style="grid-column:'
+         + (i+1) + ';grid-row:' + w[1] + '">' + (w[0]+i) + '</div>';
+    }
+  });
+  function ev(col, row, color, text){
+    return '<div class="ev" style="--c:' + color + ';grid-column:' + col
+      + ';grid-row:' + row + '">' + text + '</div>';
+  }
+  // 첫 주 — 3·4행이 일정 줄
+  h += ev('1', 3, PINK, '면접');
+  h += ev('2', 3, PURPLE, '안과');
+  h += ev('4', 3, PINK, '독서모임');
+  h += ev('5', 3, PURPLE, '도서관');
+  h += ev('5/8', 4, PINK, '처가 여행');      // 12~14 여러 날
+  // 둘째 주 — 6·7행
+  h += ev('1', 6, PURPLE, '당근 밋업');
+  h += ev('3', 6, PINK, '경덕, 형준');
+  h += ev('6', 6, PINK, '원티드 마감');
+  return '<div class="g ' + cls + '">' + h + '</div>';
+}
+
+var SECTIONS = [
+  {id:'지금', t:'지금 — 옅은 색 면 + 그 색 진한 글씨', m:'v-now',
+   q:'면이 있어서 <b>어디부터 어디까지</b>인지가 한눈에 보입니다. 여러 날에 걸친 것도 한 줄기로 읽혀요. 대신 칸마다 색 덩어리가 쌓입니다.'},
+  {id:'꽉참', t:'꽉 찬 색 + 흰 글씨', m:'v-solid',
+   q:'제일 또렷하고 색이 정확히 보여요. 구글 캘린더가 쓰는 방식. <b>가장 세게</b> 읽혀서 일정이 많은 주는 색 벽이 됩니다.'},
+  {id:'왼쪽선', t:'왼쪽에 색 세로선 + 글자', m:'v-side',
+   q:'색은 왼쪽 3dp 에만 두고 글자는 그대로. 아주 조용해집니다. 다만 <b>여러 날에 걸친 것도 선이 하나</b>라 길이가 안 보여요.'},
+  {id:'점', t:'앞에 색 점 + 먹색 글자', m:'v-dot',
+   q:'색은 «어느 달력인지»만 말하고 <b>읽는 건 글자</b>가 합니다. 제일 담백하지만 길이는 사라져요.'},
+  {id:'밑줄', t:'글자 아래 색 선', m:'v-under',
+   q:'면 없이도 <b>길이가 남습니다</b> — 선이 글자 폭만큼이 아니라 칸을 채우니까요. 공휴일에 쓴 이어지는 선과 어법이 같아집니다.'},
+  {id:'테두리', t:'속은 비우고 색 테두리만', m:'v-edge',
+   q:'길이는 남고 무게는 반쯤 걷힙니다. 다만 지금 <b>미정 일정</b>이 점선 테두리라 어법이 겹쳐요.'},
+  {id:'알약', t:'옅은 색 면 + 알약 모서리', m:'v-pill',
+   q:'지금과 같은데 모서리만 완전히 둥글게. 아래 디데이 줄과 <b>모양이 같아집니다</b> — 그게 통일로 읽힐지 헷갈림으로 읽힐지가 갈림길이에요.'},
+  {id:'글자만', t:'배경 없이 글자만 그 색으로', m:'v-text',
+   q:'가장 가볍습니다. 기억용 일정을 회색 글자로 두었는데, 그것과 <b>색만 다른 같은 모양</b>이 돼요.'}
+];
+
+var picked = null;
+function draw(){
+  var h = '';
+  SECTIONS.forEach(function(s){
+    var on = picked === s.id;
+    h += '<div class="opt' + (on?' picked':'') + '">'
+      + '<h2><input type="radio" name="p" data-id="' + s.id + '"' + (on?' checked':'') + '>'
+      + s.t + ' <span class="id">' + s.id + '</span></h2>'
+      + '<p class="q">' + s.q + '</p>'
+      + '<div class="stage">' + grid(s.m) + '</div></div>';
+  });
+  document.getElementById('app').innerHTML = h;
+  document.querySelectorAll('#app input').forEach(function(el){
+    el.onchange = function(){ picked = el.dataset.id; draw(); };
+  });
+}
+document.getElementById('copy').onclick = function(){
+  var txt = picked || '(아직 안 골랐어요)';
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+  document.getElementById('msg').textContent = txt + ' — 복사했어요';
+};
+document.getElementById('theme').onclick = function(){
+  var dark = document.documentElement.getAttribute('data-t') === 'dark';
+  document.documentElement.setAttribute('data-t', dark ? 'light' : 'dark');
+  this.textContent = dark ? '어둡게 보기' : '밝게 보기';
+};
+document.documentElement.setAttribute('data-t', 'light');
+draw();
+</script>
+</body>
+</html>
