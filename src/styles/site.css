@@ -451,6 +451,18 @@ a { color: inherit; }
 .doc-head .tagline { view-transition-name: tagline; }
 /* 제목·제호·왼쪽 난은 이름을 갖고 제자리를 지킨다 — 바뀌는 건 본문뿐이다 */
 
+/* 바뀌지 않는 것(제호·칩 글자)이 넘어가는 동안 흐려지지 않게.
+   옛 화면을 그대로 둔 채 새 화면을 그 위에 띄운다 — 두 장이 같이 반투명해지는 구간이 없다. */
+::view-transition-old(root) {
+  animation: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: fade-in 0.28s ease both;
+  mix-blend-mode: normal;
+}
+
 /* 알약은 옮겨 가는 동안 반쯤 비친다 — 지나가는 자리의 글자가 가려지지 않게 */
 ::view-transition-group(tab-thumb) { animation-duration: 0.3s; }
 ::view-transition-old(tab-thumb),
