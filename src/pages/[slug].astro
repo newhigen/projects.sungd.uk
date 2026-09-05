@@ -26,7 +26,7 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
   <header class="doc-head">
     <h1>{d.title}</h1>
     <p class="tagline">{d.tagline}</p>
-    {making && <Tabs here="intro" slug={entry.id} title={d.title} />}
+    {making && <Tabs here="intro" slug={entry.id} />}
   </header>
 
   <div class="doc-body">

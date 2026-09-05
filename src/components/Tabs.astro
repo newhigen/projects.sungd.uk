@@ -3,10 +3,8 @@ interface Props {
   /** 지금 보고 있는 쪽 */
   here: 'intro' | 'making';
   slug: string;
-  /** 떠 있는 띠에 같이 세울 이름 */
-  title: string;
 }
-const { here, slug, title } = Astro.props;
+const { here, slug } = Astro.props;
 const links = [
   { to: `/${slug}`, label: '소개', on: here === 'intro' },
   { to: `/${slug}/making`, label: '개발기', on: here === 'making' },
@@ -17,9 +15,9 @@ const links = [
   {links.map(l => <a href={l.to} class:list={[{ on: l.on }]}>{l.label}</a>)}
 </nav>
 
-{/* 머리의 칩이 화면 밖으로 나가면 대신 떠 있는 띠. 스크립트가 돌 때만 보인다 */}
+{/* 머리의 칩이 화면 밖으로 나가면 같은 칩이 그 자리에서 떠오른다.
+    이름은 안 넣는다 — 넣으면 폭이 달라져 칩이 옆으로 밀린다 */}
 <div class="tabfloat" data-tabfloat aria-hidden="true">
-  <b>{title}</b>
   <nav class="seg">
     {links.map(l => <a href={l.to} class:list={[{ on: l.on }]}>{l.label}</a>)}
   </nav>
