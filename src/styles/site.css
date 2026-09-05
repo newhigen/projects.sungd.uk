@@ -396,6 +396,10 @@ a { color: inherit; }
   backdrop-filter: saturate(180%) blur(22px);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   transition: background 0.22s ease, box-shadow 0.22s ease;
+  /* 흐림을 가진 채 붙어 다니면 크롬이 늦게 다시 그려서 스크롤 중에 한 박자 밀린다.
+     제 층으로 올려 두면 안 밀린다 */
+  will-change: transform;
+  transform: translateZ(0);
 }
 /* 붙었을 때 — 흐림 + 채도는 늘 켜 두고, 바탕과 그림자만 바꾼다. 그래야 매끄럽다 */
 .tabs.stuck {
