@@ -50,4 +50,10 @@ const making = defineCollection({
   }),
 });
 
-export const collections = { projects, making };
+/** 왜 만들었나 — 시작 전. 쓰던 것 · 막힌 지점 · 전 → 후 */
+const why = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/why' }),
+  schema: z.object({ tagline: z.string() }),
+});
+
+export const collections = { projects, why, making };
