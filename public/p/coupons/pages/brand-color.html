@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>쿠폰함 — 브랜드 색을 어떻게</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='7' width='18' height='10' rx='2' fill='%23C9A87A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --ink:#141414;--sec:#3d3d3a;--mut:#6a6a66;--faint:#9b9b96;--hair:#f0f0ee;--rule:#e3e3e0;
+  --sans:"Inter Tight",Pretendard,-apple-system,system-ui,sans-serif;--mono:ui-monospace,Menlo,monospace;
+  /* 앱이 실제로 쓰는 색 */
+  --bg:#FDFDFB;--tx:#1B1E24;--mt:#8A8F86;--soft:#F0F0EC;--card:#FFFFFF;
+  --urgent:#D9432F;--soon:#C98A16;--calm:#3E7D5A;--gone:#9AA0A6;--acc:#2E6BC4;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:15px/1.68 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1980px;margin:0 auto;padding:58px 30px 140px}
+h1{font-size:35px;letter-spacing:-.025em;font-weight:600;margin:0 0 8px}
+.sub{color:var(--mut);font-size:16px;margin:0 0 10px}
+.lead{color:var(--sec);font-size:14.5px;margin:0 0 10px}
+.rule{border-bottom:1px solid var(--rule);margin:0 0 44px;padding-bottom:26px}
+h2{font-size:22px;font-weight:600;margin:56px 0 6px;letter-spacing:-.015em}
+.q{color:var(--mut);font-size:12.5px;margin:0 0 12px;min-height:38px;line-height:1.5}
+.row{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start}
+.cand{width:360px}
+.cap{display:flex;align-items:baseline;gap:9px;margin:0 0 10px}
+.cap .n{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.cap b{font-size:14.5px;font-weight:600}
+.note{font-size:12.5px;color:var(--faint);margin:9px 2px 0;line-height:1.6}
+
+/* ── 폰 판 (360dp 폭 그대로) ── */
+.phone{width:360px;background:var(--bg);border-radius:18px;padding:14px 16px 16px;
+       box-shadow:0 0 0 1px var(--rule);font-family:Pretendard,var(--sans)}
+.gtitle{font-size:13px;font-weight:700;color:var(--mt);margin:2px 2px 8px}
+.gtitle.first{margin-top:0}
+.c{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:16px;
+   padding:14px;margin-bottom:10px;position:relative;overflow:hidden}
+.c .mid{flex:1;min-width:0}
+.place{font-size:12.5px;color:var(--mt);line-height:1.35}
+.title{font-size:17px;font-weight:700;color:var(--tx);line-height:1.3}
+.sub2{font-size:12.5px;color:var(--mt);margin-top:3px}
+.badge{font-size:13px;font-weight:700;color:#fff;border-radius:9px;padding:5px 9px;white-space:nowrap}
+.b-u{background:var(--urgent)} .b-s{background:var(--soon)} .b-c{background:var(--calm)}
+.thumb{width:48px;height:48px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center}
+.thumb.grey{background:var(--soft)}
+.thumb svg{width:26px;height:26px}
+.initial{width:48px;height:48px;border-radius:24px;flex:none;display:flex;align-items:center;
+         justify-content:center;color:#fff;font-weight:700;font-size:16px;letter-spacing:-.02em}
+.ring{width:48px;height:48px;flex:none;position:relative;display:flex;align-items:center;justify-content:center}
+.ring span{position:absolute;font-size:13px;font-weight:700}
+.stripe{position:absolute;left:0;top:0;bottom:0;width:5px}
+.tone-u{background:#FDF0EE} .tone-s{background:#FDF7EA}
+.daytx{font-size:12.5px;font-weight:700}
+
+.wrapleft{flex:none}
+.chip{display:inline-block;background:var(--soft);color:var(--mt);border-radius:6px;
+      padding:1px 6px;font-size:11.5px;font-weight:600;vertical-align:1px}
+.initial svg{width:24px;height:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>브랜드 색을 어떻게 쓸까</h1>
+<p class="sub">쿠폰함 — 시안 넷. 실제 크기(360dp)</p>
+<p class="lead"><b>정해진 것</b> — 남은 날은 「모레까지」 처럼 말로 적는다. 「번호 있음」 은 뺀다(눌러보면 아는 것이라
+목록에 있을 이유가 없다). 그 자리엔 <span class="chip">링크</span> 만 남긴다 — 눌러야 웹이 뜨는 쿠폰은
+계산대에서 꺼내는 방식이 달라서 미리 알면 좋다.</p>
+<p class="lead"><b>남은 질문</b> — 왼쪽 자리에 브랜드 색을 어떻게 쓰나. 기프티콘 브랜드는 한정적이라
+색 사전을 들고 다닐 만하다(스타벅스 초록 · CU 보라 · 투썸 빨강 · 이마트 노랑 …).</p>
+<div class="rule"></div>
+<div class="row">
+  <div class="cand">
+    <div class="cap"><span class="n">A</span><b>브랜드 색 + 첫 글자</b></div>
+    <p class="q">색과 글자 둘 다 브랜드. 업종은 안 쓴다</p>
+<div class="phone">
+<div class="gtitle first">사흘 안</div>
+<div class="c tone-u"><div class="stripe" style="background:#D9432F"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#C8102E">투썸</div></div><div class="mid"><div class="place">투썸플레이스</div><div class="title">스트로베리 케이크</div><div class="sub2"><span class="daytx" style="color:#D9432F">모레까지</span> · 10. 31.</div></div></div>
+<div class="gtitle">이번 달</div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#6D3E91">CU</div></div><div class="mid"><div class="place">CU</div><div class="title">모바일교환권 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">76일 남음</span> · 11. 20.</div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#00704A">스벅</div></div><div class="mid"><div class="place">스타벅스</div><div class="title">카페 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">110일 남음</span> · 12. 24. · <span class="chip">링크</span></div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#FFB300">이마</div></div><div class="mid"><div class="place">이마트</div><div class="title">5천원 할인쿠폰</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">25일 남음</span> · 9. 30.</div></div></div>
+</div>
+    <p class="note">색으로 먼저 갈리고 글자로 확인한다. 브랜드가 한정적이라 색 사전 40개면 거의 덮인다. 모르는 가게는 무채색 + 첫 글자로 떨어진다.</p>
+  </div>
+  <div class="cand">
+    <div class="cap"><span class="n">B</span><b>브랜드 색 + 업종 그림</b></div>
+    <p class="q">색은 브랜드, 그림은 업종. 둘을 겹쳐 쓴다</p>
+<div class="phone">
+<div class="gtitle first">사흘 안</div>
+<div class="c tone-u"><div class="stripe" style="background:#D9432F"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#C8102E"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5.5c0-.8.8-1 .8-2M11 5.5c0-.8.8-1 .8-2"/></svg></div></div><div class="mid"><div class="place">투썸플레이스</div><div class="title">스트로베리 케이크</div><div class="sub2"><span class="daytx" style="color:#D9432F">모레까지</span> · 10. 31.</div></div></div>
+<div class="gtitle">이번 달</div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#6D3E91"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 11H7L6 8Z"/><path d="M9.5 8V6a2.5 2.5 0 0 1 5 0v2"/></svg></div></div><div class="mid"><div class="place">CU</div><div class="title">모바일교환권 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">76일 남음</span> · 11. 20.</div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#00704A"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5.5c0-.8.8-1 .8-2M11 5.5c0-.8.8-1 .8-2"/></svg></div></div><div class="mid"><div class="place">스타벅스</div><div class="title">카페 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">110일 남음</span> · 12. 24. · <span class="chip">링크</span></div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#FFB300"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h2l2.2 9.2a1.5 1.5 0 0 0 1.5 1.2h7.6a1.5 1.5 0 0 0 1.5-1.2L19.5 8H6"/><circle cx="9.5" cy="19" r="1.2"/><circle cx="17" cy="19" r="1.2"/></svg></div></div><div class="mid"><div class="place">이마트</div><div class="title">5천원 할인쿠폰</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">25일 남음</span> · 9. 30.</div></div></div>
+</div>
+    <p class="note">색이 어느 가게인지, 그림이 무엇에 쓰는 쿠폰인지를 동시에 말한다. 모르는 가게도 업종만 알면 그림이 서서 빈자리가 안 생긴다.</p>
+  </div>
+  <div class="cand">
+    <div class="cap"><span class="n">C</span><b>옅은 브랜드 색 + 업종 그림</b></div>
+    <p class="q">같은 브랜드 색이지만 눌러서. 담백한 쪽</p>
+<div class="phone">
+<div class="gtitle first">사흘 안</div>
+<div class="c tone-u"><div class="stripe" style="background:#D9432F"></div><div class="wrapleft" style="margin-left:4px"><div class="thumb" style="background:rgba(200,16,46,0.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5.5c0-.8.8-1 .8-2M11 5.5c0-.8.8-1 .8-2"/></svg></div></div><div class="mid"><div class="place">투썸플레이스</div><div class="title">스트로베리 케이크</div><div class="sub2"><span class="daytx" style="color:#D9432F">모레까지</span> · 10. 31.</div></div></div>
+<div class="gtitle">이번 달</div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="thumb" style="background:rgba(109,62,145,0.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#6D3E91" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 11H7L6 8Z"/><path d="M9.5 8V6a2.5 2.5 0 0 1 5 0v2"/></svg></div></div><div class="mid"><div class="place">CU</div><div class="title">모바일교환권 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">76일 남음</span> · 11. 20.</div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="thumb" style="background:rgba(0,112,74,0.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#00704A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5.5c0-.8.8-1 .8-2M11 5.5c0-.8.8-1 .8-2"/></svg></div></div><div class="mid"><div class="place">스타벅스</div><div class="title">카페 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">110일 남음</span> · 12. 24. · <span class="chip">링크</span></div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="thumb" style="background:rgba(255,179,0,0.14)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFB300" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h2l2.2 9.2a1.5 1.5 0 0 0 1.5 1.2h7.6a1.5 1.5 0 0 0 1.5-1.2L19.5 8H6"/><circle cx="9.5" cy="19" r="1.2"/><circle cx="17" cy="19" r="1.2"/></svg></div></div><div class="mid"><div class="place">이마트</div><div class="title">5천원 할인쿠폰</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">25일 남음</span> · 9. 30.</div></div></div>
+</div>
+    <p class="note">동그라미보다 조용해서 제목이 주인공으로 남는다. 대신 멀리서 훑을 때 색이 덜 튄다.</p>
+  </div>
+  <div class="cand">
+    <div class="cap"><span class="n">D</span><b>B + 날짜까지 뺌</b></div>
+    <p class="q">「모레까지」 만. 정확한 날짜는 눌러서 본다</p>
+<div class="phone">
+<div class="gtitle first">사흘 안</div>
+<div class="c tone-u"><div class="stripe" style="background:#D9432F"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#C8102E"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5.5c0-.8.8-1 .8-2M11 5.5c0-.8.8-1 .8-2"/></svg></div></div><div class="mid"><div class="place">투썸플레이스</div><div class="title">스트로베리 케이크</div><div class="sub2"><span class="daytx" style="color:#D9432F">모레까지</span></div></div></div>
+<div class="gtitle">이번 달</div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#6D3E91"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 11H7L6 8Z"/><path d="M9.5 8V6a2.5 2.5 0 0 1 5 0v2"/></svg></div></div><div class="mid"><div class="place">CU</div><div class="title">모바일교환권 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">76일 남음</span></div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#00704A"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5.5c0-.8.8-1 .8-2M11 5.5c0-.8.8-1 .8-2"/></svg></div></div><div class="mid"><div class="place">스타벅스</div><div class="title">카페 아메리카노</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">110일 남음</span> · <span class="chip">링크</span></div></div></div>
+<div class="c"><div class="stripe" style="background:#3E7D5A"></div><div class="wrapleft" style="margin-left:4px"><div class="initial" style="background:#FFB300"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h2l2.2 9.2a1.5 1.5 0 0 0 1.5 1.2h7.6a1.5 1.5 0 0 0 1.5-1.2L19.5 8H6"/><circle cx="9.5" cy="19" r="1.2"/><circle cx="17" cy="19" r="1.2"/></svg></div></div><div class="mid"><div class="place">이마트</div><div class="title">5천원 할인쿠폰</div><div class="sub2"><span class="daytx" style="color:#3E7D5A">25일 남음</span></div></div></div>
+</div>
+    <p class="note">둘째 줄이 한 마디로 줄어 카드가 가벼워진다. 「11. 20.」 이 필요한 순간이 있는지가 갈림길이다.</p>
+  </div>
+</div>
+</div>
+</body>
+</html>
