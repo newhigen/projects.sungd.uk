@@ -241,6 +241,7 @@ a { color: inherit; }
 .doc-body > * { min-width: 0; }
 
 /* 글은 흰 판 위에 — 바탕(연보라)은 난과 그림이 쓴다 */
+.doc-body > .paper,
 .doc-body > div,
 .doc-body > .prose {
   background: var(--card);
@@ -447,7 +448,8 @@ a { color: inherit; }
    눌린 칩에만 이름을 붙여서, 그 칩이 한쪽에서 다른 쪽으로 자리를 옮겨 간다. */
 @view-transition { navigation: auto; }
 
-.doc-body { view-transition-name: page; }
+/* 흰 판은 두 쪽에 똑같이 있다 — 사라졌다 나타나지 않고 그 자리에서 안쪽 글만 바뀐다 */
+.doc-body > .paper { view-transition-name: card; }
 .doc-head .tagline { view-transition-name: tagline; }
 /* 제목·제호·왼쪽 난은 이름을 갖고 제자리를 지킨다 — 바뀌는 건 본문뿐이다 */
 
@@ -466,12 +468,25 @@ a { color: inherit; }
 /* 알약이 글자 「밑으로」 지나가게 한다.
    넘어가는 동안 화면은 층으로 나뉘는데, 이름을 붙인 것끼리 층 순서를 정할 수 있다.
    글자를 알약보다 위층에 두면 알약이 지나가도 글자가 안 가려진다 — 맥이 그렇게 움직인다. */
+.tabs { view-transition-name: tabs; }
 .tabs a:first-of-type { view-transition-name: tab-left; }
 .tabs a:last-of-type { view-transition-name: tab-right; }
 
 ::view-transition-group(tab-left),
 ::view-transition-group(tab-right) { z-index: 3; }
-::view-transition-group(tab-thumb) { z-index: 2; animation-duration: 0.3s; }
+::view-transition-group(tab-thumb) { z-index: 2; }
+::view-transition-group(tabs) { z-index: 1; }
+
+/* 캡슐·알약·글자가 따로 놀지 않게 — 넷을 같은 속도로 옮긴다.
+   스크롤을 내린 채 누르면 칩이 화면 위(붙은 자리)에서 제자리로 돌아오는데,
+   속도가 다르면 알약만 먼저 도착한다. */
+::view-transition-group(tabs),
+::view-transition-group(tab-thumb),
+::view-transition-group(tab-left),
+::view-transition-group(tab-right) {
+  animation-duration: 0.32s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
 
 /* 글자는 자리도 크기도 그대로다 — 옛 것을 둔 채 새 것(색만 다른)을 위에 띄운다 */
 ::view-transition-old(tab-left),
@@ -480,10 +495,16 @@ a { color: inherit; }
 ::view-transition-new(tab-right) { animation: fade-in 0.28s ease both; }
 
 /* 본문은 움직이지 않고 흐려졌다 밝아진다 — 위아래로 밀면 새로 그린 것처럼 보인다 */
-::view-transition-old(page),
 ::view-transition-old(tagline) { animation: fade-out 0.16s ease both; }
-::view-transition-new(page),
 ::view-transition-new(tagline) { animation: fade-in 0.26s ease 0.06s both; }
+
+/* 판은 자리와 크기가 부드럽게 맞춰지고, 안쪽 글은 그 안에서 서서히 갈린다 */
+::view-transition-group(card) {
+  animation-duration: 0.34s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+::view-transition-old(card) { animation: fade-out 0.18s ease both; }
+::view-transition-new(card) { animation: fade-in 0.3s ease 0.06s both; }
 
 @keyframes fade-out {
   to { opacity: 0; }
@@ -876,6 +897,7 @@ figcaption {
 
   .doc-head { margin: 1.5rem 0 0.7rem; }
   .doc-head h1 { font-size: 2rem; }
+  .doc-body > .paper,
   .doc-body > div,
   .doc-body > .prose { padding: 1.5rem 1.3rem 2rem; border-radius: 12px; }
   .doc-body > div > .prose > figure,

@@ -48,7 +48,7 @@ if (d.shots.length > 0) toc.push({ slug: 'shots', text: '이전 버전' });
       <Toc items={toc} />
     </aside>
 
-    <div>
+    <div class="paper">
       {d.headCover && d.cover && (
         <figure>
           <img src={d.cover} alt="" class:list={[{ 'only-dark': d.coverLight }]} />
