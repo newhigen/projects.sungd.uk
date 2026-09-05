@@ -448,8 +448,11 @@ a { color: inherit; }
    눌린 칩에만 이름을 붙여서, 그 칩이 한쪽에서 다른 쪽으로 자리를 옮겨 간다. */
 @view-transition { navigation: auto; }
 
-/* 흰 판은 두 쪽에 똑같이 있다 — 사라졌다 나타나지 않고 그 자리에서 안쪽 글만 바뀐다 */
+/* 흰 판과 그 안의 글을 따로 뗀다.
+   판은 두 쪽에 똑같이 있으니 흐려질 이유가 없고(그래서 안 건드린다), 갈리는 건 안쪽 글뿐이다.
+   한 덩이로 두면 판까지 같이 흐려져서 바탕이 비쳐 «새로 그렸다» 로 보인다. */
 .doc-body > .paper { view-transition-name: card; }
+.doc-body > .paper > .prose { view-transition-name: card-body; }
 .doc-head .tagline { view-transition-name: tagline; }
 /* 제목·제호·왼쪽 난은 이름을 갖고 제자리를 지킨다 — 바뀌는 건 본문뿐이다 */
 
@@ -503,8 +506,17 @@ a { color: inherit; }
   animation-duration: 0.34s;
   animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
-::view-transition-old(card) { animation: fade-out 0.18s ease both; }
-::view-transition-new(card) { animation: fade-in 0.3s ease 0.06s both; }
+/* 판은 자리와 크기만 맞춘다 — 흰색이 사라지는 구간이 없다 */
+::view-transition-old(card),
+::view-transition-new(card) { animation: none; opacity: 1; }
+
+/* 갈리는 건 판 안의 글 */
+::view-transition-old(card-body) { animation: fade-out 0.16s ease both; }
+::view-transition-new(card-body) { animation: fade-in 0.28s ease 0.08s both; }
+::view-transition-group(card-body) {
+  animation-duration: 0.34s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
 
 @keyframes fade-out {
   to { opacity: 0; }
