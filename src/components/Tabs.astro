@@ -13,7 +13,12 @@ const links = [
 
 {/* 흰 카드 안 오른쪽 위 — 글이 비켜 흐르고, 스크롤하면 카드 안에서 따라 올라붙는다 */}
 <nav class="tabs" data-tabs>
-  {links.map(l => <a href={l.to} class:list={[{ on: l.on }]}>{l.label}</a>)}
+  {links.map(l => (
+    <a href={l.to} class:list={[{ on: l.on }]}>
+      {l.on && <span class="thumb" aria-hidden="true" />}
+      {l.label}
+    </a>
+  ))}
 </nav>
 
 <script>

@@ -414,6 +414,8 @@ a { color: inherit; }
   box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
 }
 .tabs a {
+  position: relative;
+  z-index: 0;
   padding: 0.42rem 1.1rem;
   border-radius: 999px;
   font-size: 0.95rem;
@@ -422,10 +424,18 @@ a { color: inherit; }
   text-decoration: none;
 }
 .tabs a:hover { color: var(--ink); }
-.tabs a.on {
+.tabs a.on { color: var(--chip-on-ink); }
+
+/* 눌린 쪽의 흰 알약 — 글자와 따로 두어야 쪽을 넘길 때 알약만 미끄러진다.
+   맥의 세그먼트 컨트롤이 그렇게 움직인다: 글자는 제자리, 알약만 옮겨 간다. */
+.tabs .thumb {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 999px;
   background: var(--chip-on);
-  color: var(--chip-on-ink);
   box-shadow: 0 1px 3px rgba(40, 35, 80, 0.14);
+  view-transition-name: tab-thumb;
 }
 
 /* 쪽을 넘길 때 — 확 바뀌지 않고 미끄러진다.
@@ -434,11 +444,11 @@ a { color: inherit; }
    눌린 칩에만 이름을 붙여서, 그 칩이 한쪽에서 다른 쪽으로 자리를 옮겨 간다. */
 @view-transition { navigation: auto; }
 
-.tabs a.on { view-transition-name: tab-on; }
 .doc-body { view-transition-name: page; }
 .doc-head .tagline { view-transition-name: tagline; }
+/* 제목·제호·왼쪽 난은 이름을 갖고 제자리를 지킨다 — 바뀌는 건 본문뿐이다 */
 
-::view-transition-group(tab-on) { animation-duration: 0.34s; }
+::view-transition-group(tab-thumb) { animation-duration: 0.3s; }
 
 ::view-transition-old(page),
 ::view-transition-old(tagline) { animation: page-out 0.16s ease both; }
