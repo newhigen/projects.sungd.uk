@@ -19,8 +19,12 @@
   --rule-mid: rgba(34, 31, 43, 0.18);
   --rule-ink: rgba(34, 31, 43, 0.82);
   --link: #4a4b93;
-  /* 칩 바닥과 떠 있는 띠의 유리 — 밤 판에서 값만 바뀐다 */
-  --chip: rgba(34, 31, 43, 0.06);
+  /* 칩 바닥과 떠 있는 띠의 유리 — 밤 판에서 값만 바뀐다.
+     바닥을 짙게 둔다: 눌린 칩이 흰색이라 흰 종이 위로 올라가면 바닥 없이는 사라진다 */
+  --chip: rgba(34, 31, 43, 0.14);
+  --chip-stuck: rgba(34, 31, 43, 0.17);
+  --chip-on: var(--card);
+  --chip-on-ink: var(--ink);
   --glass: rgba(251, 250, 255, 0.62);
   --glass-edge: rgba(255, 255, 255, 0.5);
   --glass-top: rgba(255, 255, 255, 0.75);
@@ -42,7 +46,10 @@
     --card: #1e1c27;
     --card-2: #232733;
     --shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
-    --chip: rgba(236, 233, 244, 0.10);
+    --chip: rgba(236, 233, 244, 0.16);
+    --chip-stuck: rgba(236, 233, 244, 0.19);
+    --chip-on: rgba(255, 255, 255, 0.92);
+    --chip-on-ink: #16151d;
     --glass: rgba(30, 28, 39, 0.62);
     --glass-edge: rgba(255, 255, 255, 0.08);
     --glass-top: rgba(255, 255, 255, 0.10);
@@ -400,7 +407,7 @@ a { color: inherit; }
   transform: translateZ(0);
 }
 .tabs.stuck {
-  background: var(--glass);
+  background: var(--chip-stuck);
   box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
 }
 .tabs a {
@@ -408,13 +415,13 @@ a { color: inherit; }
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--ink-3);
+  color: var(--ink-2);
   text-decoration: none;
 }
-.tabs a:hover { color: var(--ink-2); }
+.tabs a:hover { color: var(--ink); }
 .tabs a.on {
-  background: var(--card);
-  color: var(--ink);
+  background: var(--chip-on);
+  color: var(--chip-on-ink);
   box-shadow: 0 1px 3px rgba(40, 35, 80, 0.14);
 }
 
