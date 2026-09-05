@@ -70,6 +70,8 @@ body {
   font-size: var(--base);
   line-height: 1.72;
   font-variant-numeric: tabular-nums;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 a { color: inherit; }
@@ -215,7 +217,8 @@ a { color: inherit; }
 }
 .doc-head .tagline {
   margin: 0;
-  max-width: var(--measure);
+  /* 읽는 폭(--measure)에 묶여 있어서 넓은 화면에서도 두 줄로 접혔다 */
+  max-width: 56rem;
   font-size: 1.15rem;
   color: var(--ink-2);
 }
@@ -373,17 +376,31 @@ a { color: inherit; }
 
 /* ── 탭 — 소개 · 개발기 ───────────────────────────── */
 
-/* 소개·개발기 — 머리에서는 칩으로 서고, 스크롤하면 유리 띠로 위에 남는다.
+/* 소개·개발기 — 칩 하나가 글과 같이 내려오다 화면 맨 위에 붙는다.
+   붙는 자리는 sticky 가 잡고, 붙은 뒤에는 재질만 유리로 바뀐다(뒤가 비쳐야 떠 있어 보인다).
    밑줄 탭이었을 때는 제목·부제와 같은 층으로 읽혀서 있는 줄도 몰랐다. */
+.tabmark { height: 1px; margin-top: 1.4rem; }
+
 .tabs {
+  position: sticky;
+  top: 0.8rem;
+  z-index: 40;
   display: flex;
   gap: 0.25rem;
   width: max-content;
-  /* 가운데 — 스크롤해서 유리 띠로 떠오를 때 자리가 안 옮겨 다니게 */
-  margin: 1.4rem auto 0;
+  margin: 0 auto;
   padding: 0.28rem;
   border-radius: 999px;
   background: var(--chip);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
+/* 붙었을 때 — 흐림 + 채도는 늘 켜 두고, 바탕과 그림자만 바꾼다. 그래야 매끄럽다 */
+.tabs.stuck {
+  background: var(--glass);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
 }
 .tabs a {
   padding: 0.42rem 1.1rem;
@@ -400,56 +417,8 @@ a { color: inherit; }
   box-shadow: 0 1px 3px rgba(40, 35, 80, 0.14);
 }
 
-/* 떠 있는 띠 — 색을 칠하는 게 아니라 유리로 만든다.
-   뒤를 흐리고(blur) 채도를 올려서 밑으로 지나가는 글과 그림이 비쳐야 «떠 있는 것» 으로 읽힌다.
-   흰 테 1px 이 유리의 모서리, 아래로 넓게 깔리는 그림자가 띄우는 힘이다. */
-.tabfloat {
-  position: fixed;
-  top: 0.8rem;
-  left: 50%;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.34rem;
-  border-radius: 999px;
-  background: var(--glass);
-  -webkit-backdrop-filter: saturate(180%) blur(22px);
-  backdrop-filter: saturate(180%) blur(22px);
-  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-top), 0 0 0 1px var(--glass-edge);
-  opacity: 0;
-  transform: translate(-50%, -0.6rem);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  pointer-events: none;
-}
-.tabfloat.on {
-  opacity: 1;
-  transform: translate(-50%, 0);
-  pointer-events: auto;
-}
-.tabfloat .seg {
-  display: inline-flex;
-  gap: 0.2rem;
-  padding: 0.16rem;
-  border-radius: 999px;
-  background: var(--chip);
-}
-.tabfloat .seg a {
-  padding: 0.28rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--ink-3);
-  text-decoration: none;
-}
-.tabfloat .seg a.on {
-  background: var(--card);
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgba(40, 35, 80, 0.18);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .tabfloat { transition: none; }
+  .tabs { transition: none; }
 }
 
 
@@ -782,9 +751,8 @@ figcaption {
   .tl .nm { display: block; padding-left: 0; font-size: 0.875rem; }
   .tl .ds { display: block; font-size: 0.75rem; }
 
-  .tabs { margin: 1.1rem auto 0; }
+  .tabmark { margin-top: 1.1rem; }
   .tabs a { padding: 0.38rem 0.9rem; font-size: 0.875rem; }
-  .tabfloat { padding: 0.3rem; }
 
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }
   .nums b { font-size: 1.25rem; }
