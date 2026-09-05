@@ -416,6 +416,9 @@ a { color: inherit; }
 .tabs a {
   position: relative;
   z-index: 0;
+  /* 두 칸을 같은 너비로 — 알약이 크기까지 바뀌면 옮겨 갈 때 찌그러져 보인다 */
+  min-width: 5.1rem;
+  text-align: center;
   padding: 0.42rem 1.1rem;
   border-radius: 999px;
   font-size: 0.95rem;
@@ -461,7 +464,7 @@ a { color: inherit; }
 
 @keyframes thumb-slide {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.45; }
+  50% { opacity: 0.6; }
 }
 @keyframes fade-out {
   to { opacity: 0; }
@@ -806,7 +809,7 @@ figcaption {
   .tl .ds { display: block; font-size: 0.75rem; }
 
   .tabs { margin: 0 0 0.6rem auto; }
-  .tabs a { padding: 0.38rem 0.9rem; font-size: 0.875rem; }
+  .tabs a { min-width: 4.6rem; padding: 0.38rem 0.9rem; font-size: 0.875rem; }
 
   .nums { grid-template-columns: 1fr; gap: 0.9rem; }
   .nums b { font-size: 1.25rem; }
