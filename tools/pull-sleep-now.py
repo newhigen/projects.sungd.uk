@@ -41,7 +41,11 @@ def shot(html: pathlib.Path, dst: pathlib.Path, size="1200,1500"):
 
 # ── 1. 글에 쓰는 화면 ────────────────────────────────────────────
 # 앱 화면은 폰에서 직접 찍은 것(app-light/app-dark)을 쓴다. 여기서는 잠금화면만.
-shrink(SRC / "img" / "nowbar.png", OUT / "nowbar.png", 900)
+# Now Bar — 원본 캡처에는 배터리 알림까지 들어 있다. 알약 둘레만 오려 쓴다
+_nb = OUT / "_nowbar.png"
+subprocess.run(["sips", "-c", "277", "857", "--cropOffset", "298", "283",
+                str(SRC / "img" / "nowbar.png"), "--out", str(_nb)], check=True, capture_output=True)
+shrink(_nb, OUT / "nowbar.png", 900); _nb.unlink()
 shutil.copy2(SRC / "img" / "demo.mp4", OUT / "demo.mp4")
 
 # 변천사 — 그때 화면을 그대로 (docs/explore 에 남아 있는 그림)
