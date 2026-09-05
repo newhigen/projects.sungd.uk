@@ -472,11 +472,13 @@ a { color: inherit; }
    넘어가는 동안 화면은 층으로 나뉘는데, 이름을 붙인 것끼리 층 순서를 정할 수 있다.
    글자를 알약보다 위층에 두면 알약이 지나가도 글자가 안 가려진다 — 맥이 그렇게 움직인다. */
 .tabs { view-transition-name: tabs; }
-.tabs a:first-of-type { view-transition-name: tab-left; }
-.tabs a:last-of-type { view-transition-name: tab-right; }
+.tabs a:nth-child(1) { view-transition-name: tab-1; }
+.tabs a:nth-child(2) { view-transition-name: tab-2; }
+.tabs a:nth-child(3) { view-transition-name: tab-3; }
 
-::view-transition-group(tab-left),
-::view-transition-group(tab-right) { z-index: 3; }
+::view-transition-group(tab-1),
+::view-transition-group(tab-2),
+::view-transition-group(tab-3) { z-index: 3; }
 ::view-transition-group(tab-thumb) { z-index: 2; }
 ::view-transition-group(tabs) { z-index: 1; }
 
@@ -485,17 +487,25 @@ a { color: inherit; }
    속도가 다르면 알약만 먼저 도착한다. */
 ::view-transition-group(tabs),
 ::view-transition-group(tab-thumb),
-::view-transition-group(tab-left),
-::view-transition-group(tab-right) {
+::view-transition-group(tab-1),
+::view-transition-group(tab-2),
+::view-transition-group(tab-3) {
   animation-duration: 0.32s;
   animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 /* 글자는 자리도 크기도 그대로다 — 옛 것을 둔 채 새 것(색만 다른)을 위에 띄운다 */
-::view-transition-old(tab-left),
-::view-transition-old(tab-right) { animation: none; opacity: 1; }
-::view-transition-new(tab-left),
-::view-transition-new(tab-right) { animation: fade-in 0.28s ease both; }
+::view-transition-old(tab-1),
+::view-transition-old(tab-2),
+::view-transition-old(tab-3) { animation: none; opacity: 1; }
+::view-transition-new(tab-1),
+::view-transition-new(tab-2),
+::view-transition-new(tab-3) { animation: fade-in 0.28s ease both; }
+
+/* 칸 너비가 다르면(「왜 만들었나」 처럼) 알약이 옮겨 가며 크기도 바뀐다.
+   늘어난 그림이 오래 보이면 찌그러져 보이니 옛 알약을 빨리 걷고 새 알약을 바로 올린다. */
+::view-transition-old(tab-thumb) { animation: fade-out 0.1s ease both; }
+::view-transition-new(tab-thumb) { animation: fade-in 0.12s ease both; }
 
 /* 본문은 움직이지 않고 흐려졌다 밝아진다 — 위아래로 밀면 새로 그린 것처럼 보인다 */
 ::view-transition-old(tagline) { animation: fade-out 0.16s ease both; }
@@ -671,6 +681,8 @@ a { color: inherit; }
   border: 1px solid var(--rule);
   border-radius: 4px;
 }
+.strip.plain { grid-template-columns: repeat(auto-fit, minmax(10rem, 12rem)); }
+.strip.plain img { border: 0; border-radius: 0; }
 .strip figcaption { margin-top: 0.55rem; max-width: none; }
 .strip figcaption b { color: var(--ink-2); font-weight: 600; }
 
@@ -700,6 +712,45 @@ a { color: inherit; }
 }
 .matrix td { color: var(--ink-2); }
 .matrix td:last-child { padding-right: 0; }
+
+/* ── 전 → 후 ─────────────────────────────────────── */
+
+.cmp { max-width: var(--measure); margin: 1.7rem 0 2.5rem; }
+.cmp .hd, .cmp .row {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 0 1.1rem;
+  align-items: start;
+}
+.cmp .hd span {
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  padding: 0 0.95rem 0.45rem;
+}
+.cmp .hd .b { padding-top: 0.7rem; }
+.cmp .hd .a {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--card-2);
+  border-radius: 10px 10px 0 0;
+  padding-top: 0.7rem;
+}
+.cmp .row b {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 0.6rem 0;
+}
+.cmp .row p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 0.6rem 0.95rem;
+  text-wrap: pretty;
+}
+.cmp .row .b { color: var(--ink-2); padding-left: 0.95rem; }
+.cmp .row .a { color: var(--prose); background: var(--card-2); }
+.cmp .row:last-child .a { border-radius: 0 0 10px 10px; padding-bottom: 0.95rem; }
 
 /* ── 이럴 때 이렇게 ───────────────────────────────── */
 
@@ -829,6 +880,14 @@ figcaption {
 }
 
 @media (max-width: 640px) {
+  .cmp .hd { display: none; }
+  .cmp .row { grid-template-columns: 1fr; gap: 0.25rem 0; padding: 0.8rem 0 0; }
+  .cmp .row b { padding: 0; }
+  .cmp .row p { padding: 0.45rem 0.8rem; border-radius: 8px; }
+  .cmp .row p::before { content: attr(data-lb); display: block; font-size: 0.7rem; color: var(--ink-3); margin-bottom: 0.1rem; }
+  .cmp .row .a::before { color: var(--accent); }
+  .cmp .row:last-child .a { border-radius: 8px; padding-bottom: 0.45rem; }
+
   :root {
     --base: 15.5px;
     --gut: 1.15rem;

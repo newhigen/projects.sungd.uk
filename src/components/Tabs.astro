@@ -1,18 +1,25 @@
 ---
+import { getEntry } from 'astro:content';
 interface Props {
   /** 지금 보고 있는 쪽 */
-  here: 'intro' | 'making';
+  here: 'intro' | 'why' | 'making';
   slug: string;
 }
 const { here, slug } = Astro.props;
+// 판이 있는 것만 탭으로 세운다 — 없는 판에 링크를 내지 않는다
+const hasWhy = !!(await getEntry('why', slug));
+const hasMaking = !!(await getEntry('making', slug));
+
 const links = [
-  { to: `/${slug}`, label: '소개', on: here === 'intro' },
-  { to: `/${slug}/making`, label: '개발기', on: here === 'making' },
-];
+  { to: `/${slug}`, label: '소개', on: here === 'intro', show: true },
+  { to: `/${slug}/why`, label: '왜 만들었나', on: here === 'why', show: hasWhy },
+  { to: `/${slug}/making`, label: '개발기', on: here === 'making', show: hasMaking },
+].filter(l => l.show);
 ---
 
-{/* 흰 카드 안 오른쪽 위 — 글이 비켜 흐르고, 스크롤하면 카드 안에서 따라 올라붙는다 */}
-<nav class="tabs" data-tabs>
+{/* 카드 바깥, 설명 줄 오른쪽. 눌린 쪽의 흰 알약은 글자와 따로 두어야
+    쪽을 넘길 때 알약만 미끄러진다 — 맥의 세그먼트 컨트롤처럼. */}
+<nav class="tabs">
   {links.map(l => (
     <a href={l.to} class:list={[{ on: l.on }]}>
       {l.on && <span class="thumb" aria-hidden="true" />}
@@ -20,20 +27,3 @@ const links = [
     </a>
   ))}
 </nav>
-
-<script>
-  const tabs = document.querySelector('[data-tabs]') as HTMLElement | null;
-  if (tabs) {
-    // 붙었는지는 자리로 안다 — 붙은 뒤에 바닥과 그림자만 바뀐다
-    const line = parseFloat(getComputedStyle(tabs).top) + 1;
-    let queued = false;
-    const check = () => {
-      queued = false;
-      tabs.classList.toggle('stuck', tabs.getBoundingClientRect().top <= line);
-    };
-    addEventListener('scroll', () => {
-      if (!queued) { queued = true; requestAnimationFrame(check); }
-    }, { passive: true });
-    check();
-  }
-</script>

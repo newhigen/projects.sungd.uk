@@ -1,0 +1,24 @@
+---
+interface Props {
+  /** 전 → 후 — 두 열 이름과, 행마다 무엇이 어떻게 달라졌나 */
+  before: string;
+  after: string;
+  rows: { head: string; before: string; after: string }[];
+}
+const { before, after, rows } = Astro.props;
+---
+
+<div class="cmp">
+  <div class="hd">
+    <span></span>
+    <span class="b">{before}</span>
+    <span class="a">{after}</span>
+  </div>
+  {rows.map(r => (
+    <div class="row">
+      <b>{r.head}</b>
+      <p class="b" data-lb={before} set:html={r.before} />
+      <p class="a" data-lb={after} set:html={r.after} />
+    </div>
+  ))}
+</div>
